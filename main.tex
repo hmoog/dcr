@@ -590,31 +590,45 @@ composition mechanism that requires separation.
 \begin{definition}[Coarse-Graining]\label{def:coarse-graining}
 Let $\mathcal{C} = (\mathcal{N}, \{X_t\}, \{f_s\}, \mathcal{A})$ be a
 cognitive system with component set $S$, and let
-$\pi : S \twoheadrightarrow S'$ be a surjective \emph{partition map} grouping
-components into macro-components. The \emph{coarse-graining}
-$\Gamma_\pi(\mathcal{C})$ is a new system
-$\mathcal{C}' = \Gamma_\pi(\mathcal{C})$ constructed as follows:
+$\pi : S \twoheadrightarrow S'$ be a surjective \emph{partition map}
+grouping components into macro-components. A \emph{coarse-graining}
+$\Gamma_{\pi,g}(\mathcal{C})$ additionally requires \emph{compression
+maps} $\{g_{s'}\}_{s' \in S'}$ and is constructed as follows:
 
 \begin{enumerate}[nosep]
+  \item \textbf{Compression maps:} For each $s' \in S'$, a measurable
+        surjection $g_{s'} : \prod_{s \in \pi^{-1}(s')} D_s \to
+        \tilde{D}_{s'}$ onto a measurable \emph{macro-state space}
+        $\tilde{D}_{s'}$, typically of lower dimension than the group
+        state space $\prod_{s \in \pi^{-1}(s')} D_s$. The global
+        compression
+        $g : \Omega \to \tilde{\Omega} = \prod_{s'} \tilde{D}_{s'}$ is
+        defined by $g(\omega)_{s'} = g_{s'}(\omega_{\pi^{-1}(s')})$.
   \item \textbf{Macro-components:} $S' = \pi(S)$, with state spaces
-        $D'_{s'} = \prod_{s \in \pi^{-1}(s')} D_s$ for each
-        $s' \in S'$.
+        $\tilde{D}_{s'}$.
   \item \textbf{Macro-constraints:} An edge $\{s'_1, s'_2\} \in E'$ exists
         whenever there exist $s_1 \in \pi^{-1}(s'_1)$ and
         $s_2 \in \pi^{-1}(s'_2)$ with $\{s_1, s_2\} \in E$. The
-        macro-constraint $R'_{\{s'_1,s'_2\}}$ is the projection of
-        $\bigcap_{\{s_1,s_2\} \in E_{\text{cross}}} R_{\{s_1,s_2\}}$
-        onto $D'_{s'_1} \times D'_{s'_2}$.
-  \item \textbf{Macro-exploration:} The projected process
-        $\{X'_t\}$ on $\Omega' = \prod_{s' \in S'} D'_{s'}$ inherits
-        accessibility from $\{X_t\}$.
-  \item \textbf{Macro-resolution:} The effective update rule for
-        macro-component $s'$ is the composition of local updates within
-        $\pi^{-1}(s')$, visible only through the macro-state.
+        macro-constraint
+        $\tilde{R}_{\{s'_1,s'_2\}} \subseteq \tilde{D}_{s'_1} \times
+        \tilde{D}_{s'_2}$ consists of all macro-state pairs
+        $(\tilde{\omega}_{s'_1}, \tilde{\omega}_{s'_2})$ for which there
+        exist group configurations in the preimages
+        $g_{s'_j}^{-1}(\tilde{\omega}_{s'_j})$ satisfying all cross-group
+        micro-constraints between $\pi^{-1}(s'_1)$ and $\pi^{-1}(s'_2)$.
+  \item \textbf{Macro-dynamics:} The compressed process
+        $\{\tilde{X}_t\}$ on $\tilde{\Omega}$ is given by
+        $\tilde{X}_t = g(X_t)$.
   \item \textbf{Macro-attractor:}
-        $\mathcal{A}' = \{\omega' \in \Omega' \mid \exists\, \omega \in
-        \mathcal{A} : \pi(\omega) = \omega'\}$.
+        $\tilde{\mathcal{A}} = g(\mathcal{A})$.
 \end{enumerate}
+The macro-configuration space $\tilde{\Omega}$ has dimension at most
+$\dim\Omega$, with strict inequality whenever any $g_{s'}$ is
+non-injective---the generic and intended case. Concrete choices of
+$g_{s'}$ include empirical averages (mean-field), order parameters,
+sufficient statistics, or information-bottleneck summaries; the
+appropriate choice is determined by the physics of the system and the
+timescale separation structure (\cref{def:timescale}).
 \end{definition}
 
 We now state the conditions precisely and prove closure through three lemmas,
@@ -622,42 +636,63 @@ one for each component of the cognitive triad.
 
 \begin{definition}[Timescale Separation]\label{def:timescale}
 Let $\eta > 0$ be a \emph{scale ratio}. We say the micro-dynamics exhibits
-$\eta$-\emph{timescale separation} with respect to partition $\pi$ if:
+$\eta$-\emph{timescale separation} with respect to partition $\pi$ and
+compression $\{g_{s'}\}$ if:
 \begin{enumerate}[nosep]
-  \item \textbf{Fast intra-group dynamics.} For each macro-component
-    $s' \in S'$, the restricted chain on $D'_{s'} = \prod_{s \in
-    \pi^{-1}(s')} D_s$ (freezing all components outside the group) has a
-    unique stationary distribution $\nu_{s'}$ and mixes in time $\tau_{\text{fast}}$.
+  \item \textbf{Fast intra-group mixing.} For each macro-component
+    $s' \in S'$ and each macro-state
+    $\tilde{\omega}_{s'} \in \tilde{D}_{s'}$, the intra-group dynamics
+    (freezing all components outside the group) admits a unique conditional
+    equilibrium $\nu_{s'}(\cdot \mid \tilde{\omega}_{s'})$ on the fast
+    degrees of freedom---those not captured by $g_{s'}$---and mixes to
+    this equilibrium in time $\tau_{\text{fast}}$.
   \item \textbf{Slow inter-group dynamics.} The inter-group updates (those
     involving edges in $E_{\text{cross}} = \{\{s_1,s_2\} \in E \mid
     \pi(s_1) \neq \pi(s_2)\}$) occur at rate $\eta$ relative to intra-group
     updates.
-  \item $\eta\, \tau_{\text{fast}} \to 0$, i.e., each group equilibrates
-    before the next inter-group update.
+  \item $\eta\, \tau_{\text{fast}} \to 0$, i.e., fast degrees of freedom
+    equilibrate before the next inter-group update.
+  \item \textbf{Macro-sufficiency.} For each inter-group edge
+    $\{s_1, s_2\} \in E_{\text{cross}}$ with $\pi(s_j) = s'_j$, the
+    expected micro-violation under the conditional equilibria,
+    $\mathbb{E}_{\nu_{s'_1}(\cdot \mid \tilde{\omega}_{s'_1}) \otimes
+    \nu_{s'_2}(\cdot \mid \tilde{\omega}_{s'_2})}
+    [v_{\{s_1,s_2\}}]$,
+    is determined by the macro-states
+    $(\tilde{\omega}_{s'_1}, \tilde{\omega}_{s'_2})$ alone.
 \end{enumerate}
+Condition~4 says that the compression maps capture all information
+relevant to inter-group interactions: once the fast degrees of freedom
+have equilibrated, the macro-state is a sufficient statistic for the
+group's contribution to cross-group constraint violation.
 \end{definition}
 
 \begin{definition}[Macro-Violation]\label{def:macro-violation}
-Given the intra-group stationary distributions $\{\nu_{s'}\}_{s' \in S'}$,
-the \emph{macro-violation} of a macro-configuration
-$\omega' = (\omega'_{s'})_{s' \in S'}$ with respect to an inter-group edge
-$e' = \{s'_1, s'_2\} \in E'$ is
+Given the conditional equilibria
+$\{\nu_{s'}(\cdot \mid \tilde{\omega}_{s'})\}_{s' \in S'}$ from
+\cref{def:timescale}, the \emph{macro-violation} of a macro-configuration
+$\tilde{\omega} = (\tilde{\omega}_{s'})_{s' \in S'} \in \tilde{\Omega}$
+with respect to an inter-group edge $e' = \{s'_1, s'_2\} \in E'$ is
 \begin{equation}\label{eq:macro-violation}
-  v'_{e'}(\omega'_{s'_1}, \omega'_{s'_2}) =
+  \tilde{v}_{e'}(\tilde{\omega}_{s'_1}, \tilde{\omega}_{s'_2}) =
   \sum_{\substack{\{s_1,s_2\} \in E_{\text{cross}} \\
   \pi(s_1) = s'_1,\, \pi(s_2) = s'_2}}
-  \mathbb{E}_{(x_1,x_2) \sim \nu_{s'_1} \otimes \nu_{s'_2}}
-  \bigl[v_{\{s_1,s_2\}}(x_1, x_2)\bigr],
+  \mathbb{E}_{\nu_{s'_1}(\cdot\,|\,\tilde{\omega}_{s'_1}) \otimes
+  \nu_{s'_2}(\cdot\,|\,\tilde{\omega}_{s'_2})}
+  \bigl[v_{\{s_1,s_2\}}(x_{s_1}, x_{s_2})\bigr],
 \end{equation}
 and the total macro-violation is
-$\Viol'(\omega') = \sum_{e' \in E'} v'_{e'}$.
+$\widetilde{\Viol}(\tilde{\omega}) = \sum_{e' \in E'}
+\tilde{v}_{e'}$. By macro-sufficiency, this is well-defined as a
+function on $\tilde{\Omega}$.
 \end{definition}
 
 \begin{lemma}[Macro-Resolution Inherits Drift]\label{lem:macro-drift}
-Under $\eta$-timescale separation, if the micro-resolution dynamics satisfies
-the drift condition \ref{cond:drift} of \cref{def:combined} with parameter
-$\alpha$, then the effective macro-dynamics on $\Omega'$ satisfies an analogous
-drift condition with parameter $\alpha' > 0$.
+Under $\eta$-timescale separation (\cref{def:timescale}), if the
+micro-resolution dynamics satisfies the drift condition \ref{cond:drift} of
+\cref{def:combined} with parameter $\alpha$, then the effective
+macro-dynamics on $\tilde{\Omega}$ satisfies an analogous drift condition
+for $\widetilde{\Viol}$ with parameter $\alpha' > 0$.
 \end{lemma}
 
 \begin{proof}
@@ -666,23 +701,30 @@ $\Viol(\omega) = \Viol_{\text{intra}}(\omega) + \Viol_{\text{inter}}(\omega)$.
 Under timescale separation, the fast dynamics drives
 $\Viol_{\text{intra}} \to 0$ within each group (by the micro-level drift
 condition applied to intra-group edges). Once each group has equilibrated to
-$\nu_{s'}$, the remaining violation is purely inter-group:
-$\Viol \approx \Viol_{\text{inter}}$.
+$\nu_{s'}(\cdot \mid \tilde{\omega}_{s'})$, the remaining violation is
+purely inter-group: $\Viol \approx \Viol_{\text{inter}}$. By
+macro-sufficiency, $\Viol_{\text{inter}}$ under local equilibrium depends on
+the micro-state only through the macro-state
+$\tilde{\omega} = g(\omega)$, so
+$\mathbb{E}[\Viol_{\text{inter}} \mid \text{local eq.}]
+= \widetilde{\Viol}(\tilde{\omega})$.
 
 The inter-group updates are local: an update to component $s_1 \in
 \pi^{-1}(s'_1)$ responding to the state of $s_2 \in \pi^{-1}(s'_2)$ reduces
 $v_{\{s_1,s_2\}}$ by the micro-drift condition. Under equilibration within
-each group, this translates to a reduction in the macro-violation
-$v'_{\{s'_1,s'_2\}}$.
+each group, this translates to a reduction in
+$\tilde{v}_{\{s'_1,s'_2\}}$.
 
-Formally, let $\omega'_t$ denote the macro-state at the $t$-th inter-group
-update. Conditioning on the intra-group equilibrium:
+Formally, let $\tilde{\omega}_t$ denote the macro-state at the $t$-th
+inter-group update. Conditioning on the intra-group equilibrium:
 \begin{align*}
-  \mathbb{E}[\Viol'(\omega'_{t+1}) \mid \omega'_t]
-  &= \sum_{e' \in E'} \mathbb{E}[v'_{e'}(\omega'_{t+1}) \mid \omega'_t] \\
-  &\leq \sum_{e' \in E'} (1 - \alpha)\, v'_{e'}(\omega'_t)
+  \mathbb{E}[\widetilde{\Viol}(\tilde{\omega}_{t+1}) \mid \tilde{\omega}_t]
+  &= \sum_{e' \in E'}
+     \mathbb{E}[\tilde{v}_{e'}(\tilde{\omega}_{t+1}) \mid \tilde{\omega}_t] \\
+  &\leq \sum_{e' \in E'} (1 - \alpha)\,
+     \tilde{v}_{e'}(\tilde{\omega}_t)
    + O(\eta\, \tau_{\text{fast}}) \\
-  &= (1-\alpha)\, \Viol'(\omega'_t)
+  &= (1-\alpha)\, \widetilde{\Viol}(\tilde{\omega}_t)
    + O(\eta\, \tau_{\text{fast}}).
 \end{align*}
 The error term $O(\eta\, \tau_{\text{fast}})$ vanishes as the timescale
@@ -693,91 +735,106 @@ strong separation.
 
 \begin{lemma}[Macro-Exploration Inherits Accessibility]\label{lem:macro-explore}
 If the micro-exploration kernel $E$ satisfies the accessibility condition
-(\cref{eq:exploration}) with respect to the micro-feasible set, and the
-partition $\pi$ is finite, then the projected macro-process $\{X'_t\}$
-satisfies the accessibility condition with respect to the macro-feasible set
-$\mathcal{F}'$.
+(\cref{eq:exploration}) with respect to the micro-feasible set, $g$ is
+continuous and surjective, and the partition $\pi$ is finite, then the
+compressed macro-process $\{\tilde{X}_t = g(X_t)\}$ satisfies the
+accessibility condition with respect to the macro-feasible set
+$\tilde{\mathcal{F}} = g(\mathcal{F})$.
 \end{lemma}
 
 \begin{proof}
-Let $A' \subseteq \Omega'$ be a measurable set with
-$\varphi'(A') > 0$, where $\varphi'$ is the pushforward of $\varphi$ under
-$\pi$. Define $A = \pi^{-1}(A') \subseteq \Omega$. Then $\varphi(A) \geq
-\varphi'(A') > 0$ (since $\pi$ is surjective), so by micro-accessibility:
+Let $\tilde{A} \subseteq \tilde{\Omega}$ be a measurable set with
+$\tilde{\varphi}(\tilde{A}) > 0$, where $\tilde{\varphi}$ is the
+pushforward of $\varphi$ under $g$. Define
+$A = g^{-1}(\tilde{A}) \subseteq \Omega$. Since $g$ is surjective,
+$\varphi(A) \geq \tilde{\varphi}(\tilde{A}) > 0$, so by
+micro-accessibility:
 \[
   \Pr[\exists\, t > 0 : X_t \in A] > 0.
 \]
-Since $X'_t = \pi(X_t)$, if $X_t \in A = \pi^{-1}(A')$ then
-$X'_t \in A'$. Therefore $\Pr[\exists\, t > 0 : X'_t \in A'] > 0$,
+Since $\tilde{X}_t = g(X_t)$, if $X_t \in A = g^{-1}(\tilde{A})$ then
+$\tilde{X}_t \in \tilde{A}$. Therefore
+$\Pr[\exists\, t > 0 : \tilde{X}_t \in \tilde{A}] > 0$,
 establishing macro-accessibility.
 \end{proof}
 
 \begin{lemma}[Macro-Coherence]\label{lem:macro-coherence}
 If the macro-constraint graph $G'$ is connected, the macro-feasible set
-$\mathcal{F}'$ does not factor as a product, and the macro-system satisfies
-the full exploration support condition~\ref{cond:full-support}, then any
-stationary distribution $\mu'^*$ arising from the macro-DCR dynamics
-satisfies $\Coh(\mu'^*) > 0$.
+$\tilde{\mathcal{F}} = g(\mathcal{F})$ does not factor as a product
+$\prod_{s'} \tilde{F}_{s'}$, and the macro-system satisfies the full
+exploration support condition~\ref{cond:full-support} on $\tilde{\Omega}$,
+then any stationary distribution $\tilde{\mu}^*$ arising from the
+macro-DCR dynamics satisfies $\Coh(\tilde{\mu}^*) > 0$.
 \end{lemma}
 
 \begin{proof}
-This is a direct application of \cref{lem:coherence} to the macro-system.
-The macro-system has the same formal structure (constraint network, connected
-graph, non-factorable feasible set), and full exploration support on
-$\mathcal{F}'$ guarantees the full-support assumption~(iii) of
-\cref{lem:coherence}.
+This is a direct application of \cref{lem:coherence} to the macro-system
+on $\tilde{\Omega}$. The macro-system has the same formal structure
+(constraint network with connected graph, non-factorable feasible set),
+and full exploration support on $\tilde{\mathcal{F}}$ guarantees the
+full-support assumption~(iii) of \cref{lem:coherence}.
 \end{proof}
 
 \begin{theorem}[Closure Under Coarse-Graining]\label{thm:closure}
-Let $\mathcal{C}$ be a cognitive system and $\pi : S \twoheadrightarrow S'$
-a partition map. If:
+Let $\mathcal{C}$ be a cognitive system, $\pi : S \twoheadrightarrow S'$
+a partition map, and $\{g_{s'}\}$ compression maps with continuous,
+surjective $g : \Omega \to \tilde{\Omega}$. If:
 \begin{enumerate}[nosep]
   \item[(i)] The micro-dynamics exhibits $\eta$-timescale separation with
-    respect to $\pi$ (\cref{def:timescale}).
+    respect to $\pi$ and $\{g_{s'}\}$ (\cref{def:timescale}).
   \item[(ii)] The macro-constraint graph $G'$ is connected.
-  \item[(iii)] The macro-feasible set $\mathcal{F}'$ is non-empty, compact,
-    and does not factor as a product.
+  \item[(iii)] The macro-feasible set $\tilde{\mathcal{F}} = g(\mathcal{F})$
+    is non-empty, compact, and does not factor as a product.
 \end{enumerate}
-Then $\mathcal{C}' = \Gamma_\pi(\mathcal{C})$ is a cognitive system.
+Then $\tilde{\mathcal{C}} = \Gamma_{\pi,g}(\mathcal{C})$ is a cognitive
+system on the compressed macro-state space $\tilde{\Omega}$.
 \end{theorem}
 
 \begin{proof}
-We verify each component of \cref{def:cognitive-system} for $\mathcal{C}'$:
+We verify each component of \cref{def:cognitive-system} for
+$\tilde{\mathcal{C}}$:
 
 \textbf{Constraint network.}
-The macro-network $\mathcal{N}' = (S', \mathcal{D}', G', \mathcal{R}')$ is
-well-defined by the construction in \cref{def:coarse-graining}. The macro-state
-spaces $D'_{s'}$ are products of micro-state spaces (hence compact since
-finite products of compact spaces are compact). The macro-constraints
-$\mathcal{R}'$ are projections of micro-constraints (hence measurable).
+The macro-network
+$\tilde{\mathcal{N}} = (S', \tilde{\mathcal{D}}, G', \tilde{\mathcal{R}})$
+is well-defined by the construction in \cref{def:coarse-graining}. The
+macro-state spaces $\tilde{D}_{s'}$ are images of compact sets under
+continuous maps (hence compact). The macro-constraints
+$\tilde{\mathcal{R}}$ are images of micro-constraints under the
+compression (hence measurable).
 
 \textbf{Exploration.}
-By \cref{lem:macro-explore}, the projected process $\{X'_t\}$ satisfies the
-accessibility condition on $\Omega'$. The aperiodicity of the micro-chain
-projects to aperiodicity of the macro-chain (if the micro-chain can stay
-in place, so can the macro-chain). The weak Feller property is preserved
-under continuous projections ($\pi$ induces a continuous map between compact
-spaces). Full exploration support~\ref{cond:full-support} lifts: if
-$U' \subseteq \Omega'$ is open with $U' \cap \mathcal{F}' \neq \emptyset$,
-then $\pi^{-1}(U')$ is open in $\Omega$ and meets $\mathcal{F}$, so
-$\varphi(\pi^{-1}(U')) > 0$, giving $\varphi'(U') > 0$.
+By \cref{lem:macro-explore}, the compressed process
+$\{\tilde{X}_t = g(X_t)\}$ satisfies the accessibility condition on
+$\tilde{\Omega}$. The aperiodicity of the micro-chain projects through
+continuous $g$ to aperiodicity of the macro-chain. The weak Feller
+property is preserved under continuous surjections ($g$ maps compact
+$\Omega$ to compact $\tilde{\Omega}$). Full exploration
+support~\ref{cond:full-support} lifts: if
+$\tilde{U} \subseteq \tilde{\Omega}$ is open with
+$\tilde{U} \cap \tilde{\mathcal{F}} \neq \emptyset$, then
+$g^{-1}(\tilde{U})$ is open in $\Omega$ and meets $\mathcal{F}$
+(since $g(\mathcal{F}) = \tilde{\mathcal{F}}$), so
+$\varphi(g^{-1}(\tilde{U})) > 0$, giving
+$\tilde{\varphi}(\tilde{U}) > 0$.
 
 \textbf{Resolution.}
 By \cref{lem:macro-drift}, the effective macro-dynamics satisfies a drift
-condition with parameter $\alpha' > 0$, and the updates are local with
-respect to $G'$ (they depend only on the states of neighboring
-macro-components, since inter-group micro-updates involve only micro-components
-in adjacent groups).
+condition on $\tilde{\Omega}$ with parameter $\alpha' > 0$, and the
+updates are local with respect to $G'$ (they depend only on the
+macro-states of neighboring macro-components, by macro-sufficiency).
 
 \textbf{Goal-stabilizing pattern.}
-Applying \cref{thm:convergence} to the macro-system (whose conditions are
-verified above): the macro-dynamics converges to a stationary distribution
-$\mu'^*$ supported on $\mathcal{F}'$ (by the macro-drift condition and
-compactness). By \cref{lem:macro-coherence} and conditions (ii)--(iii),
-$\Coh(\mu'^*) > 0$. The Lyapunov function is $L'(\omega') = \Viol'(\omega')+1$.
+Applying \cref{thm:convergence} to the macro-system on $\tilde{\Omega}$
+(whose conditions are verified above): the macro-dynamics converges to a
+stationary distribution $\tilde{\mu}^*$ supported on
+$\tilde{\mathcal{F}}$ (by the macro-drift condition and compactness).
+By \cref{lem:macro-coherence} and conditions (ii)--(iii),
+$\Coh(\tilde{\mu}^*) > 0$. The Lyapunov function is
+$\tilde{L}(\tilde{\omega}) = \widetilde{\Viol}(\tilde{\omega}) + 1$.
 
 Hence all four components of a cognitive system are present, and
-$\mathcal{C}'$ is cognitive.
+$\tilde{\mathcal{C}}$ is cognitive.
 \end{proof}
 
 \subsection{Dissolution of the Combination Problem}\label{ssec:combination}
@@ -789,39 +846,48 @@ of, say, a human mind? DCR dissolves this problem by replacing the notion of
 
 \begin{corollary}[Combination via Coarse-Graining]\label{cor:combination}
 Let $\mathcal{C}$ be a cognitive system at scale $n$ with partition $\pi$
-satisfying the conditions of \cref{thm:closure}. Then:
+and compression $\{g_{s'}\}$ satisfying the conditions of
+\cref{thm:closure}. Then:
 \begin{enumerate}[nosep]
   \item The intra-group cognitive dynamics at scale $n$ (exploration and
         resolution within each $\pi^{-1}(s')$) constitutes the
         \emph{exploration component} of the scale-$(n+1)$ system---the
-        residual fluctuations of equilibrated groups provide the stochasticity
+        residual fluctuations of equilibrated groups, projected through
+        $g_{s'}$ onto the macro-state space, provide the stochasticity
         that drives macro-exploration (\cref{lem:macro-explore}).
   \item The inter-group constraint resolution at scale $n$ constitutes the
         \emph{resolution component} of the scale-$(n+1)$ system---the
         reduction of macro-violation (\cref{lem:macro-drift}).
-  \item The macro-attractor $\mathcal{A}'$ is the coherent pattern into which
-        the micro-cognitive processes compose (\cref{lem:macro-coherence}).
+  \item The macro-attractor $\tilde{\mathcal{A}} = g(\mathcal{A})$ is the
+        coherent pattern into which the micro-cognitive processes compose
+        (\cref{lem:macro-coherence}).
 \end{enumerate}
 \end{corollary}
 
 \begin{proof}
 Each claim follows directly from the corresponding lemma used in the proof
-of \cref{thm:closure}. The key observation is structural: the coarse-graining
-construction maps the resolution of scale $n$ to the exploration of scale
-$n+1$ because once intra-group constraints are resolved (fast timescale),
-the resulting equilibrium fluctuations are precisely what the macro-level
+of \cref{thm:closure}. The key observation is structural: the compression
+maps $\{g_{s'}\}$ discard the fast, intra-group micro-detail (which has
+already been resolved at scale $n$) and retain only the slow
+macro-observables. The coarse-graining construction maps the resolution of
+scale $n$ to the exploration of scale $n+1$ because once intra-group
+constraints are resolved (fast timescale), the residual fluctuations
+\emph{in the compressed representation} are precisely what the macro-level
 ``explores.'' The construction does not merely aggregate states---it
-\emph{transmutes} one level's resolution into the next level's exploration,
-providing a constructive mechanism for cross-scale composition.
+\emph{compresses and transmutes} one level's resolution into the next
+level's exploration, providing a constructive mechanism for cross-scale
+composition that genuinely reduces degrees of freedom.
 \end{proof}
 
 There is no mystery of ``combination'' because there is no separate substance
 (experience, qualia) that needs combining. There is only the DCR process,
-recurring at each scale via coarse-graining. What we call
-``unified experience'' at the human scale is the coherent attractor of a
-cognitive system whose components are themselves cognitive systems (neural
-circuits), whose components are themselves cognitive systems (neurons), and
-so on.
+recurring at each scale via coarse-graining. The compression maps formalize
+how micro-detail is discarded at each level: a neuron's molecular state is
+compressed to its firing rate; a population's firing rates are compressed to
+a mean-field activation; a cortical column's activations are compressed to a
+feature representation. What we call ``unified experience'' at the human
+scale is the coherent attractor of a cognitive system whose components are
+themselves compressed cognitive systems, recursively.
 
 \subsection{The Depth of Cognition}\label{ssec:depth}
 
@@ -829,12 +895,15 @@ Not all cognitive systems are equally ``intelligent.'' We introduce a measure
 of cognitive depth:
 
 \begin{definition}[Cognitive Depth]\label{def:depth}
-The \emph{cognitive depth} of a system is the number of nested coarse-graining
-levels $k$ at which the DCR triad is simultaneously active:
+The \emph{cognitive depth} of a system is the number of nested
+coarse-graining levels $k$ at which the DCR triad is simultaneously active:
 \begin{equation}\label{eq:depth}
-  \delta(\mathcal{C}) = \max\{k \mid \Gamma_{\pi_1} \circ \cdots \circ
-  \Gamma_{\pi_k}(\mathcal{C}) \text{ is cognitive}\}.
+  \delta(\mathcal{C}) = \max\{k \mid \Gamma_{\pi_k,g_k} \circ \cdots \circ
+  \Gamma_{\pi_1,g_1}(\mathcal{C}) \text{ is cognitive}\},
 \end{equation}
+where the maximum is over all hierarchical sequences of partitions
+$(\pi_1, \ldots, \pi_k)$ and compression maps $(g_1, \ldots, g_k)$
+satisfying the conditions of \cref{thm:closure} at each level.
 \end{definition}
 
 A hydrogen atom has depth 1 (quantum constraint resolution at the particle
@@ -845,9 +914,9 @@ ordering of intelligence without requiring a binary threshold.
 
 \begin{remark}[Computability of depth]\label{rem:depth-computability}
 Computing $\delta(\mathcal{C})$ exactly requires optimizing over all
-hierarchical partition sequences $(\pi_1, \ldots, \pi_k)$ and verifying the
-DCR conditions at each level---a combinatorially intractable problem in
-general. The numerical estimates above are based on \emph{empirically
+hierarchical partition sequences $(\pi_1, \ldots, \pi_k)$ and compression
+maps $(g_1, \ldots, g_k)$, verifying the DCR conditions at each
+level---a combinatorially intractable problem in general. The numerical estimates above are based on \emph{empirically
 observable} organizational levels (e.g., the well-established hierarchy from
 ion channels to brain areas) rather than exhaustive search. In practice,
 $\delta$ serves as a coarse ordinal ranking rather than a precise cardinal
@@ -865,54 +934,216 @@ supporting the claim that the cosmos is cognitive at every scale.
 
 \subsection{Quantum Mechanics}\label{ssec:quantum}
 
-Consider a system of $N$ interacting quantum particles.
+Consider a system of $N$ interacting quantum particles (or field modes).
+The standard decoherence account \citep{zurek2003decoherence} treats
+the suppression of off-diagonal coherences as the mechanism by which
+classical reality emerges, but decoherence alone never yields a definite
+outcome---it produces an improper mixture, not a selected event. The DCR
+structure of quantum mechanics is most transparently exhibited by the
+\emph{Transactional Interpretation} (TIQM)
+\citep{cramer1986transactional}, which builds on the Wheeler--Feynman
+absorber theory \citep{wheeler1945interaction}. In TIQM, every quantum
+event is a \emph{transaction}---a completed handshake between emitter and
+absorber mediated by retarded (offer) and advanced (confirmation) waves.
+This maps onto the DCR triad with structural precision:
 
 \begin{itemize}[nosep]
-  \item \textbf{Components:} Individual particles (or field modes).
-  \item \textbf{Degrees of freedom:} The Hilbert space $\mathcal{H}_s$ of each
-        particle.
-  \item \textbf{Exploration:} Quantum superposition. The Feynman path integral
-        formulation \citep{feynman1948space} makes this explicit: a particle
-        ``explores'' all paths simultaneously, weighted by $e^{iS/\hbar}$.
-  \item \textbf{Constraints:} Interaction Hamiltonians $H_{\text{int}}$ encode
-        constraints between particles. The Schr{\"o}dinger equation propagates
-        these constraints unitarily.
-  \item \textbf{Resolution:} Decoherence \citep{zurek2003decoherence}. When a
-        quantum system interacts with an environment, the density matrix
-        becomes diagonal in the pointer basis---off-diagonal coherences
-        (constraint violations with respect to classicality) are suppressed
-        exponentially.
-  \item \textbf{Stable pattern:} Classical observables. The pointer states are
-        the goal-stabilizing attractors of the decoherence process.
+  \item \textbf{Components:} Emitter and absorber sites---the vertices of
+        the spacetime interaction graph.
+  \item \textbf{Degrees of freedom:} The possible quantum states (energy,
+        momentum, polarization, spin) at each site, drawn from the local
+        Hilbert space $\mathcal{H}_s$.
+  \item \textbf{Exploration:} The \emph{offer wave} $\psi$ (retarded wave)
+        propagates from the emitter to all potential absorbers, exploring
+        every possible transaction partner simultaneously. In the Feynman
+        path integral formulation \citep{feynman1948space}, this is the sum
+        over all paths weighted by $e^{iS/\hbar}$---the emitter explores the
+        entire accessible configuration space.
+  \item \textbf{Constraints:} Conservation laws (energy, momentum, angular
+        momentum, charge) at each interaction vertex. For an edge
+        $\{s,s'\}$ in the interaction graph, the constraint $R_{\{s,s'\}}$
+        requires that the quantum numbers carried by the offer wave from
+        emitter $s$ match those that absorber $s'$ can accept, given $s'$'s
+        own state and the applicable conservation laws.
+  \item \textbf{Resolution:} The \emph{confirmation wave} $\psi^*$ (advanced
+        wave) propagates from each potential absorber back to the emitter.
+        The Wheeler--Feynman handshake is distributed constraint resolution:
+        each absorber independently evaluates the offer against its local
+        constraints and responds; the transaction that forms is the one
+        where all constraints are simultaneously satisfied across both
+        endpoints. There is no central selector choosing the outcome---the
+        definite result emerges from the mutual satisfaction of local
+        conservation laws, distributed across spacetime.
+  \item \textbf{Stable pattern:} The \emph{completed transaction}---a
+        definite, irreversible transfer of conserved quantities between
+        emitter and absorber. Once formed, the transaction is a classical
+        fact: the goal-stabilizing attractor of the handshake process.
 \end{itemize}
 
-The DCR reading of quantum mechanics: \emph{nature explores all possible
-configurations via superposition and resolves into classical reality through the
-distributed constraint of decoherence.}
+The retrocausal structure is not a defect but a feature: constraints
+propagate both forward and backward in time, making the resolution
+genuinely distributed across spacetime rather than confined to a single
+time-slice. What is conventionally called ``wavefunction collapse'' is,
+in DCR terms, the convergence of a distributed constraint satisfaction
+process to its feasible solution.
+
+For $N$ interacting particles, the interaction graph $G$ has particles as
+vertices and pairwise interactions as edges. Each interaction is a
+potential transaction site where conservation constraints must be locally
+satisfied. The global physical outcome---the set of completed
+transactions---is the configuration $\omega \in \mathcal{F}$ where all
+local constraints are simultaneously met: the feasible set of the
+constraint network, reached by distributed resolution without global
+coordination.
+
+\begin{remark}[Selection and collapse]
+The structural identity between quantum collapse and natural selection
+(\cref{ssec:biology}) is not accidental. In both cases, multiple
+possibilities are explored (superposition / genetic variation),
+constraints select which possibilities are realized (conservation laws /
+fitness landscape), and the selection is local and distributed (each
+absorber / each organism evaluates constraints independently). DCR
+identifies both as instances of the same universal process, differing
+only in the physical substrate and timescale.
+\end{remark}
 
 \subsection{Thermodynamic Self-Organization}\label{ssec:thermo}
 
-Consider a dissipative system driven far from equilibrium (e.g., a
-B{\'e}nard convection cell).
+We formalize Rayleigh--B{\'e}nard convection as a cognitive system,
+demonstrating that the verification of DCR conditions can be carried out
+with full mathematical rigor---not merely by metaphorical re-description.
 
-\begin{itemize}[nosep]
-  \item \textbf{Components:} Fluid parcels.
-  \item \textbf{Degrees of freedom:} Velocity, temperature, density of each
-        parcel.
-  \item \textbf{Exploration:} Thermal fluctuations explore the space of
-        possible flow patterns.
-  \item \textbf{Constraints:} Conservation laws (mass, energy, momentum),
-        boundary conditions (heated from below, cooled from above).
-  \item \textbf{Resolution:} The Navier--Stokes equations propagate constraints
-        locally between neighboring parcels.
-  \item \textbf{Stable pattern:} Convection rolls---a coherent, spatially
-        ordered pattern that is an attractor of the driven dynamics
-        \citep{prigogine1984order, haken2004synergetics}.
-\end{itemize}
+Consider a fluid layer between horizontal plates, heated from below
+($T_H$) and cooled from above ($T_C$), in the Boussinesq approximation
+\citep{chandrasekhar1961hydrodynamic}. We discretize the fluid domain on a
+regular $d$-dimensional lattice with $N$ parcels and spacing $h$.
 
-Crucially, the convection pattern is \emph{not} at equilibrium (DCR correctly
-excludes equilibrium), and it arises without any central controller selecting
-the pattern. It is a cognitive system of depth~1.
+\begin{proposition}[B{\'e}nard Convection is Cognitive]\label{prop:benard}
+For Rayleigh number $\mathrm{Ra} > \mathrm{Ra}_c$ (above the convective
+instability threshold), the stochastic lattice Boussinesq system with
+thermal fluctuations constitutes a cognitive system
+$\mathcal{C} = (\mathcal{N}, \{X_t\}, \{f_s\}, \mathcal{A})$ in the
+sense of \cref{def:cognitive-system}.
+\end{proposition}
+
+\begin{proof}
+We construct the DCR tuple and verify conditions
+\ref{cond:drift}--\ref{cond:full-support} of \cref{def:combined}.
+
+\textbf{Constraint network.}
+Let $S = \{1,\ldots,N\}$ index the parcels, with state space
+$D_s = [-v_{\max}, v_{\max}]^d \times [T_C, T_H]$ for each $s$
+(velocity and temperature, bounded by the energy balance). The
+configuration space $\Omega = \prod_s D_s$ is compact. The interaction
+graph $G$ is lattice adjacency (connected for $N \geq 2$). For each edge
+$e = \{s,s'\} \in E$, the constraint relation $R_e$ encodes the
+discretized Boussinesq conservation laws at the interface:
+$(\omega_s, \omega_{s'}) \in R_e$ iff the discrete incompressibility
+condition $\nabla^h_{ss'} \cdot \mathbf{v} = 0$, the discrete momentum
+balance
+$\nu\,\nabla^{h,2}_{ss'}\mathbf{v}
+ - (\mathbf{v}\cdot\nabla^h_{ss'})\mathbf{v}
+ + \beta(T-T_{\mathrm{ref}})\mathbf{g}
+ = \nabla^h_{ss'} p$,
+and the discrete energy balance
+$\kappa\,\nabla^{h,2}_{ss'}T
+ = (\mathbf{v}\cdot\nabla^h_{ss'})T$
+are satisfied at the $\{s,s'\}$ interface, where $\nabla^h_{ss'}$ and
+$\nabla^{h,2}_{ss'}$ denote the standard finite-difference gradient and
+Laplacian operators, $\nu$ is kinematic viscosity, $\kappa$ is thermal
+diffusivity, $\beta$ is the thermal expansion coefficient, and
+$\mathbf{g}$ is gravitational acceleration.
+
+\textbf{Violation.}
+The pairwise violation $v_e(\omega_s, \omega_{s'})$ is the sum of squared
+residuals of the three conservation equations at the $\{s,s'\}$ interface.
+Then $v_e \geq 0$ with equality iff the steady-state Boussinesq equations
+are locally satisfied, and $\Viol$ is continuous on compact $\Omega$.
+
+\textbf{Dynamics.}
+The resolution kernel $R$ is a semi-implicit Gauss--Seidel sweep of the
+discretized Boussinesq equations: each parcel updates its velocity and
+temperature using only the current states of its lattice neighbors,
+satisfying the locality requirement of \cref{def:resolution}. The
+exploration kernel $E$ adds Gaussian noise of variance
+$\sigma^2 \propto k_B T_{\mathrm{ref}}/(\rho\, h^d)$ (fluctuating
+hydrodynamics), projected onto $\Omega$:
+\[
+  E(\omega, \cdot) = \mathrm{Law}\!\bigl(
+    \Pi_\Omega(\omega + \sigma\,\boldsymbol{\xi})\bigr),
+  \qquad \boldsymbol{\xi} \sim \mathcal{N}(0, I_{N(d+1)}).
+\]
+
+\textbf{Verification of conditions.}
+\begin{enumerate}[nosep,label=(\alph*)]
+  \item \emph{Drift.} The energy functional
+    $\mathcal{E}(\omega) = \sum_s\bigl[\tfrac{1}{2}|\mathbf{v}_s|^2
+    + \tfrac{1}{2}|T_s - T_{\mathrm{lin},s}|^2\bigr]$
+    (where $T_{\mathrm{lin}}$ is the linear conduction profile) satisfies
+    \[
+      \mathcal{E}(\omega^{(t+1)}) \leq \mathcal{E}(\omega^{(t)})
+      - \Delta t\bigl[\nu\,\lVert\nabla^h\mathbf{v}\rVert^2
+      + \kappa\,\lVert\nabla^h\theta\rVert^2\bigr]
+      + \Delta t\,\mathrm{Ra}\,(\theta, v_z)
+    \]
+    under the resolution step, where $\theta = T - T_{\mathrm{lin}}$.
+    By the discrete Poincar{\'e} inequality
+    ($\lVert\nabla^h u\rVert^2 \geq \lambda_1\lVert u\rVert^2$ with
+    $\lambda_1 > 0$ the spectral gap of the graph Laplacian), the
+    dissipative terms dominate the buoyancy source in a neighborhood of
+    the convection roll attractor, yielding the drift condition with
+    rate $\alpha \sim \Delta t\,\min(\nu,\kappa)\,\lambda_1$. Near the
+    attractor, $\Viol$ and $\mathcal{E}$ have comparable Hessians (by
+    elliptic regularity of the linearized Boussinesq operator), so the
+    drift transfers to $\Viol$.
+  \item \emph{Bounded exploration.} $\Omega$ is compact and $\Viol$ is
+    continuous, so
+    $\int\Viol(\omega')\,E(\omega,d\omega') \leq \max_\Omega\Viol < \infty$.
+  \item \emph{$\varphi$-irreducibility.} The Gaussian kernel $E$ has
+    positive density on $\mathrm{int}(\Omega)$, so
+    $K(\omega,A) \geq \epsilon\,E(\omega,A) > 0$ for any $A$ with
+    positive Lebesgue measure $\lambda(A) > 0$. The chain is
+    $\lambda$-irreducible.
+  \item \emph{Aperiodicity.} Immediate from the positive-density
+    transition kernel on a continuous state space.
+  \item \emph{Weak Feller.} The Boussinesq update is polynomial in
+    $\omega$ and neighbor states (hence continuous); the Gaussian density
+    is smooth. Their convex combination $K$ is weak Feller.
+  \item \emph{Full exploration support.} The Lebesgue-equivalent
+    irreducibility measure charges every open set, in particular those
+    meeting $\mathcal{F}$.
+\end{enumerate}
+
+\textbf{Attractor and coherence.}
+For $\mathrm{Ra} > \mathrm{Ra}_c$, the feasible set $\mathcal{F}$
+(steady-state solutions of the discretized Boussinesq equations) includes
+the convection roll patterns \citep{cross1993pattern}. The roll solutions
+do not factor as a product $\prod_s F_s$: the constraint that rising hot
+fluid at parcel $s$ requires sinking cool fluid at its lateral neighbor
+$s'$ creates irreducible inter-component dependence. Since $G$ is
+connected and $\mathcal{F}$ is non-factorable, \cref{thm:convergence}
+yields convergence to a stationary distribution $\mu^*$ with
+$\Coh(\mu^*) > 0$. The Lyapunov function is $L = \Viol + 1$, and the
+convection rolls constitute the goal-stabilizing pattern $\mathcal{A}$.
+\end{proof}
+
+The convection pattern is \emph{not} at equilibrium (DCR correctly
+excludes equilibrium), and it arises without any central controller
+selecting the pattern. It is a cognitive system of depth~1.
+
+\begin{remark}[Formalizability of other physical examples]
+The quantum (\cref{ssec:quantum}), biological (\cref{ssec:biology}), and
+neural (\cref{ssec:neural}) examples admit analogous formalizations. In
+each case, the construction follows the same six-step template as
+\cref{prop:benard}: identify components and pairwise constraints, define
+the violation via squared residuals of the governing equations, specify
+the resolution and exploration kernels, and verify conditions
+\ref{cond:drift}--\ref{cond:full-support}. We present these examples
+informally below, noting that the exploration mechanism (quantum
+fluctuations, genetic mutation, stochastic neural firing) and constraint
+structure (interaction Hamiltonians, fitness landscapes, synaptic weights)
+change while the verification structure remains the same.
+\end{remark}
 
 \subsection{Biological Adaptation}\label{ssec:biology}
 
@@ -1191,19 +1422,35 @@ falsifiable claims:
 \subsection{The Cosmos as Cognitive}
 
 If DCR is correct, then cognition is not an emergent property of brains---it is
-what physics \emph{does}. Quantum superposition explores; decoherence resolves;
-classical reality stabilizes. Thermal fluctuations explore; conservation laws
-resolve; dissipative structures stabilize. Mutation explores; selection resolves;
-adaptation stabilizes. The same formal process, recurring at every scale,
-connected by the coarse-graining construction.
+what physics \emph{does}. The offer wave explores all possible absorbers; the
+Wheeler--Feynman handshake resolves conservation constraints; the completed
+transaction stabilizes into a classical fact. Thermal fluctuations explore the
+space of flow configurations; the Navier--Stokes equations resolve constraints
+locally between neighboring parcels; convection rolls stabilize. Mutation
+explores genotype space; natural selection resolves fitness constraints;
+adapted species stabilize. The same formal process, recurring at every
+scale, connected by the coarse-graining construction.
+
+The TIQM framing (\cref{ssec:quantum}) reveals a further unity: what physics
+calls ``collapse'' and what biology calls ``selection'' are not merely
+analogous but structurally identical---both are instances of distributed
+constraint resolution in which multiple possibilities are explored and
+local constraints determine which are realized (see \cref{ssec:quantum},
+Remark). The retrocausal structure of the transactional interpretation
+suggests that constraint resolution need not respect the arrow of time;
+it is a relation among boundary conditions, not a process confined to one
+temporal direction.
 
 This is not panpsychism in the traditional sense. We do not claim that an
-electron ``has experiences.'' We claim that the process by which an electron
-participates in decoherence is \emph{the same kind of process} as the one by
-which a neuron participates in perception---formally, structurally the same.
-``Cognition'' is the name we give to this process. Whether one wishes to call
-this ``experience'' at the quantum level is a separate philosophical question
-that DCR does not adjudicate.
+emitter--absorber pair ``has experiences.'' We claim that the transaction
+by which a photon is emitted and absorbed is \emph{the same kind of
+process} as the one by which a neuron participates in perception---formally,
+structurally the same, as verified through the explicit construction in
+\cref{prop:benard} and the structural mappings of
+\cref{ssec:quantum,ssec:biology,ssec:neural}. ``Cognition'' is the name we
+give to this process. Whether one wishes to call this ``experience'' at the
+quantum level is a separate philosophical question that DCR does not
+adjudicate.
 
 \subsection{Relationship to Process Philosophy}
 
@@ -1213,8 +1460,20 @@ substances but of ``actual occasions''---events of experience that
 ``prehend'' (take account of) their environment and ``concresce'' into
 definite outcomes. In DCR language: prehension is exploration of degrees of
 freedom given the constraints imposed by neighboring occasions, and
-concrescence is the resolution into a coherent, stabilized pattern. DCR
-can be read as a mathematization of Whitehead's ontology.
+concrescence is the resolution into a coherent, stabilized pattern.
+
+The TIQM framing sharpens this resonance considerably. A Wheeler--Feynman
+transaction is arguably the closest physical realization of a Whiteheadian
+actual occasion: a discrete event in which multiple possibilities are
+explored (the offer wave prehends all potential absorbers), constraints are
+propagated bidirectionally (the confirmation wave), and a definite outcome
+concresces (the completed transaction). The retrocausal structure of TIQM
+mirrors Whitehead's insistence that actual occasions are not built up
+sequentially from past to future but are constituted by their relations
+to both past and future occasions. DCR, read through TIQM, can be
+understood as a mathematization of process ontology in which each
+transaction is an actual occasion and the constraint network is the nexus
+of prehensive relations.
 
 \subsection{Implications for Artificial Intelligence}
 
@@ -1254,6 +1513,18 @@ resolution.
         notion of goal---perhaps involving the \emph{maintenance} of
         exploration capacity, connecting to autopoiesis---may be needed.
 
+  \item \textbf{Temporal structure and retrocausality.} The TIQM framing
+        of quantum DCR (\cref{ssec:quantum}) involves advanced waves
+        propagating backward in time, suggesting that constraint resolution
+        can be atemporal---a relation among boundary conditions rather than
+        a process with a definite temporal direction. The current DCR
+        formalism (\cref{sec:framework}) is built on forward-time Markov
+        chains, which cannot accommodate retrocausal constraint propagation.
+        Extending the framework to atemporal or bidirectional constraint
+        resolution---perhaps using the two-state vector formalism or
+        path-integral methods---is needed to fully capture the quantum case
+        and may reveal a deeper temporal structure underlying the DCR triad.
+
   \item \textbf{Consciousness.} DCR is a theory of cognition, not of
         consciousness. It explains the process by which systems explore,
         resolve, and stabilize, but does not address the ``hard problem''
@@ -1279,8 +1550,13 @@ that:
   \item Under timescale separation, it is closed under coarse-graining,
         dissolving the combination problem and providing a natural measure
         of cognitive depth (\cref{sec:scale-free}).
-  \item Fundamental physical processes---quantum, thermodynamic, biological,
-        neural---satisfy the DCR axioms (\cref{sec:physics}).
+  \item Fundamental physical processes satisfy the DCR axioms: rigorously
+        for thermodynamic self-organization (\cref{prop:benard}), and
+        structurally for quantum transactions, biological adaptation, and
+        neural dynamics (\cref{sec:physics}). The quantum case, framed
+        through the Transactional Interpretation, reveals that wavefunction
+        collapse and natural selection are structurally identical instances
+        of distributed constraint resolution.
   \item The Free Energy Principle and Integrated Information Theory are
         recoverable as special cases (\cref{sec:recovery}).
   \item The framework makes falsifiable predictions about coherence--exploration
@@ -1291,7 +1567,9 @@ that:
 If DCR is correct, then cognition is not a biological accident but a
 fundamental feature of physical reality---the process by which the universe
 explores its own degrees of freedom and resolves into the coherent structures
-we observe at every scale.
+we observe at every scale. The offer wave and the mutation, the handshake
+and the selection, the transaction and the adapted species: one process,
+many substrates.
 
 \bigskip
 \bibliographystyle{plainnat}
