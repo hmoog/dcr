@@ -38,6 +38,7 @@
 \DeclareMathOperator{\Coh}{Coh}
 \DeclareMathOperator{\Ent}{H}
 \DeclareMathOperator{\Viol}{V}
+\DeclareMathOperator{\supp}{supp}
 
 \title{%
   Distributed Constraint Resolution as Universal Cognition:\\
@@ -60,14 +61,16 @@ convergence through distributed constraint resolution into coherent,
 goal-stabilizing patterns.  We formalize this
 triad---\emph{exploration}, \emph{resolution}, and
 \emph{stabilization}---as dynamical systems on constraint networks
-equipped with an information-theoretic coherence measure.  Under
+equipped with an information-theoretic coordination witness.  Under
 explicit timescale-separation and macro-sufficiency conditions, we
-prove a closure theorem: a coarse-graining construction maps cognitive
-systems at one scale to cognitive systems at the next, providing a
-constructive account of composition addressing the combination problem.  We present
+prove a conditional closure theorem: given that coarse-graining
+yields an effective Markovian macro-description, the DCR triad is
+preserved at the next scale, providing a conditional composition
+scheme that reframes the combination problem.  We present
 structural witnesses that nonequilibrium self-organization,
-evolutionary adaptation, and quantum measurement instantiate the DCR
-triad, and argue that this triad appears across physical scales;
+evolutionary adaptation, and quantum measurement admit structural
+mappings onto the DCR triad, and argue that this triad appears
+across physical scales;
 we discuss the stronger ontological identification---the cosmos is
 cognitive at every scale---explicitly as a metaphysical postulate,
 with what we colloquially call ``intelligence'' being a particularly
@@ -137,15 +140,18 @@ The three components are, informally:
         coherent, low-violation attractor
         (\cref{def:attractor,def:stabilization}).
 \end{enumerate}
-We treat \emph{goal} as \emph{attractor under the dynamics}
-(\cref{def:attractor}), avoiding teleological connotations.
-The key claim is that this triad constitutes the \emph{minimal and
-universal} signature of cognition, and that it is realized by
-physical law itself at every scale.
+We treat \emph{goals} purely operationally: a goal is any attractor
+that is robust under perturbations at the timescale of interest
+(noise, model mismatch, or environmental variation), not a
+representation of future states (\cref{def:attractor}).
+The key claim is that this triad constitutes the \emph{minimal}
+structural signature of cognition; we discuss how broadly it appears
+across physical scales and what would falsify that universality
+claim in \cref{sec:predictions,sec:discussion}.
 
 The paper is organized as follows. \Cref{sec:framework} formalizes the DCR
-framework. \Cref{sec:scale-free} proves closure under coarse-graining (given
-timescale separation), providing a constructive account of composition addressing the combination problem.
+framework. \Cref{sec:scale-free} proves a conditional closure theorem under
+explicit timescale-separation and macro-sufficiency assumptions.
 \Cref{sec:physics} exhibits structural witnesses that fundamental physical
 processes instantiate the DCR triad. \Cref{sec:recovery} recovers FEP and IIT as special cases.
 \Cref{sec:predictions} derives falsifiable predictions. \Cref{sec:discussion}
@@ -153,9 +159,9 @@ discusses implications and limitations.
 
 \paragraph{Contributions.}
 Beyond the structural definition of cognition, this paper makes four
-specific technical contributions: (1)~a closure theorem showing DCR is
-preserved under coarse-graining (given timescale separation and
-macro-sufficiency); (2)~recovery of the Free Energy Principle and
+specific technical contributions: (1)~a conditional closure theorem
+establishing form-stability of DCR under coarse-graining (given
+timescale separation and macro-sufficiency); (2)~recovery of the Free Energy Principle and
 Integrated Information Theory as special cases corresponding to
 particular constraint structures and coherence refinements;
 (3)~structural witnesses that physical processes across scales
@@ -193,6 +199,22 @@ sufficient condition, not a necessary one; the framework's axioms are
 themselves scale-free, and it is specifically the composition mechanism
 that requires separation (see \cref{sec:discussion}, Limitation~1).
 
+\begin{remark}[Against biological exceptionalism]%
+\label{rem:biological-exceptionalism}
+A common tacit assumption in foundations is \emph{biological
+exceptionalism}: that genuine ``agency''---selection among
+alternatives---only appears in organisms (or observers), rendering
+measurement and self-organization mysterious outside biology.  DCR
+rejects this exclusivity claim.  In DCR, ``agency'' is operational
+and graded (\cref{def:operational-agency}): it is the capacity of a
+system to \emph{select and stabilize} a concrete behavior from a
+latent space of possible behaviors under distributed constraints.
+Biological agency is then a deep-nesting special case (high
+cognitive depth, \cref{def:depth}), not a different ontological
+category.  This stance does not diminish biology; it situates
+biological complexity within a wider dynamical landscape.
+\end{remark}
+
 \begin{remark}[Ontological postulate]%
 \label{rem:metaphysical}
 The claim that the DCR triad \emph{is} cognition---that the cosmos is
@@ -205,10 +227,10 @@ compatible with two readings:
   \item \emph{Ontological identity (optional):} the DCR triad
         \emph{is} cognition; the cosmos is cognitive at every scale.
 \end{enumerate}
-We adopt reading~(2) because it yields the most parsimonious
-ontology: one process at every scale, rather than cognition as a
-sui generis phenomenon.  All formal results hold under either
-reading.
+We explore reading~(2) as an optional, parsimonious ontological
+identification---one process at every scale, rather than cognition
+as a sui generis phenomenon.  All formal results hold under either
+reading; the choice between them is philosophical, not mathematical.
 \end{remark}
 
 \begin{remark}[Engineering witness: consensus as DCR]%
@@ -228,6 +250,19 @@ attractor.  We emphasize this is a \emph{witness} rather than a
 reduction: the purpose is to exhibit a familiar, explicitly
 mechanistic system where global coherence arises from local
 constraint processing under partial information.
+\end{remark}
+
+\begin{remark}[Engineering witness: self-play as DCR]%
+\label{rem:selfplay}
+Self-play in machine learning provides a second engineering witness:
+rollouts generate a branching space of candidate trajectories
+(exploration), credit assignment and constraint propagation prune
+or reweight trajectories (resolution), and training concentrates on
+stable policy attractors (stabilization).  This is a witness, not a
+reduction; the point is that global coherence can arise from local
+update rules under delayed, nonlocal feedback, paralleling
+\cref{rem:consensus-witness} and the branch-selection picture in
+\cref{rem:collapse-selection}.
 \end{remark}
 
 % ==========================================================================
@@ -262,7 +297,15 @@ compact Polish state spaces~$D_s$ (hence compact metrizable~$\Omega$)
 in order to invoke standard Markov-chain stability results
 \citep{meyn1993markov}; the definitions above are stated in greater
 generality to clarify which results depend on compactness and which
-do not.
+do not.  Compactness is a genuine modeling restriction: many physical
+systems (e.g., unbounded velocities, Gaussian fields) naturally live
+on non-compact spaces.  For such systems, the Foster--Lyapunov drift
+machinery of \cref{ssec:convergence} remains the correct tool (it
+was designed for non-compact state spaces), but our main theorems are
+stated in compact-space language for simplicity.  Extending the
+results to locally compact or Polish spaces with appropriate moment
+conditions is standard but notationally heavier; we do not pursue it
+here.
 
 \paragraph{Notation.}
 Throughout, $K$ denotes the combined transition kernel of the DCR
@@ -348,11 +391,12 @@ Kullback--Leibler divergence from the product of marginals:
 \begin{equation}\label{eq:coherence}
   \Coh(\mu) = D_{\mathrm{KL}}\!\!\left(\mu \;\Big\|\; \bigotimes_{s \in S} \mu_s\right),
 \end{equation}
-where $\mu_s$ is the marginal of $\mu$ on $D_s$.  In the discrete case
-(or for continuous distributions admitting densities with respect to a
-product reference measure), this equals
+where $\mu_s$ is the marginal of $\mu$ on $D_s$.  In the finite/discrete
+case this reduces to
 $\sum_{s \in S} \Ent(\mu_s) - \Ent(\mu)$, where $\Ent$ denotes Shannon
-(or differential) entropy.  The KL formulation is preferred because it is
+entropy.  In general we use the KL form, which is always well-defined
+(possibly $+\infty$); the entropy decomposition is not safe for
+arbitrary continuous measures.  The KL formulation is preferred because it is
 non-negative by construction, invariant under reparametrization, and
 well-defined for arbitrary probability measures on Polish spaces
 (with the convention $D_{\mathrm{KL}} = +\infty$ when $\mu$ is not
@@ -390,6 +434,52 @@ violation-reducing resolution---and convergence to a
 goal-stabilizing regime.  Accordingly, $\Coh$ is used as a
 structural \emph{witness} of coordinated stabilization, not as an
 isolated definition of cognition.
+\end{remark}
+
+\begin{remark}[Coherence in the unique-attractor limit]%
+\label{rem:coherence-delta}
+If the feasible set $\mathcal{F}^*$ is a singleton
+$\{\omega^\star\}$ and $\mu^*_\epsilon \to \delta_{\omega^\star}$
+as $\epsilon \to 0$, then $\Coh(\delta_{\omega^\star}) = 0$
+(each marginal is a point mass and the product of marginals
+equals~$\mu^*$).  This is not a defect but a feature of the
+framework's design: the coherence condition $\Coh(\mu^*_\epsilon)
+> 0$ is evaluated at \emph{fixed} $\epsilon > 0$, where the
+stationary measure retains genuine statistical spread due to ongoing
+exploration.  A system with $\epsilon = 0$ has no exploration and is
+therefore not a DCR-system (\cref{def:cognitive-system}).  In the
+fixed-$\epsilon$ regime, if condition~(H1) of
+\cref{thm:convergence} holds, then $\Coh(\mu^*_\epsilon) > 0$ by
+\cref{lem:coherence}---even when $\mathcal{F}^*$ is a singleton.
+Note that exploration-induced spread alone does \emph{not} guarantee
+(H1): componentwise independent noise can leave $\mu^*_\epsilon$ a
+product.  The non-product condition must be verified for each system
+(cf.\ \cref{prop:non-product-gibbs} for the Gibbs case,
+\cref{ex:ising} for a direct argument).  The
+vanishing-$\epsilon$ limit is relevant only for
+the concentration statements ($\mu^*_\epsilon$ concentrates near
+$\mathcal{F}^*$), not for the coherence witness.
+\end{remark}
+
+\begin{remark}[Alternative coordination witnesses]%
+\label{rem:alt-coherence}
+Total correlation is a convenient global witness of statistical
+dependence, but other choices may be preferable in continuous or
+high-dimensional settings.  Two common substitutes are:
+\begin{enumerate}[nosep]
+  \item \emph{Edge-sum mutual information:}
+    $\Coh_E(\mu) = \sum_{\{s,s'\} \in E} I_\mu(X_s; X_{s'})$,
+    which makes the locality of the constraint graph more salient
+    and avoids the global KL computation.
+  \item \emph{Cut-based dependence measures} that quantify
+    information loss under graph partitions (e.g., graph-cut
+    multi-information).
+\end{enumerate}
+All results in this paper that use $\Coh$ as a \emph{witness} go
+through with any nonnegative dependence functional that vanishes on
+product measures and is positive whenever a non-product marginal
+exists.  The choice of total correlation is made for analytical
+convenience; it is not essential to the framework.
 \end{remark}
 
 \subsection{The Cognitive Triad}\label{ssec:triad}
@@ -485,6 +575,30 @@ may exist as an \emph{analysis tool}---it certifies
 convergence---but is not computed or accessed by any component.
 \end{definition}
 
+\begin{remark}[Stochastic resolution variant]%
+\label{rem:stochastic-resolution}
+The strict supermartingale condition~\cref{eq:monotone} excludes
+kernels that occasionally increase violation (e.g., stochastic
+gradient steps with noisy evaluations, thermal kicks in Langevin
+dynamics).  Many realistic local solvers reduce violation
+\emph{on average over a drift region} but not at every point.  A
+relaxed variant replaces~\cref{eq:monotone} with
+\[
+  \int \Viol(\omega')\,R(\omega,d\omega')
+  \;\leq\; \Viol(\omega) - \alpha(\omega) + \beta\,\mathbf{1}_C(\omega),
+\]
+where $\alpha(\omega) \geq 0$ outside~$C$, $\beta < \infty$, and
+$C$ is a compact sublevel set.  This is the drift-outside-a-set
+form that connects directly to the Foster--Lyapunov
+condition~\ref{cond:drift} on the combined kernel~$K$.  All
+convergence results (\cref{thm:convergence}) go through under this
+relaxation, since the theorem uses the drift on~$K$ rather than the
+pointwise monotonicity on~$R$.  We retain~\cref{eq:monotone} as
+the default because it is the cleanest axiom; the relaxed form is
+available for applications where strict monotonicity is too
+demanding.
+\end{remark}
+
 \begin{definition}[Vanishing-Noise Attractor]\label{def:attractor}
 A subset $\mathcal{A} \subseteq \Omega$ is a \emph{vanishing-noise
 attractor}\footnote{This is \emph{not} the random-dynamical-systems
@@ -514,8 +628,11 @@ A vanishing-noise attractor $\mathcal{A}$ is a \emph{coherent attractor}
 (or \emph{goal-stabilizing pattern}) if additionally it is both
 coordinated and robust to small exploration noise:
 \begin{enumerate}[nosep]
-  \item \emph{Coherent}: For at least one stationary distribution
-        $\mu^*$ of the dynamics, $\Coh(\mu^*) > 0$.
+  \item \emph{Coherent}: For the unique stationary distribution
+        $\mu^*_\epsilon$ of $K_\epsilon$ (when uniqueness holds,
+        cf.\ \cref{lem:unique}), $\Coh(\mu^*_\epsilon) > 0$; or,
+        in the non-unique case, for at least one ergodic stationary
+        distribution.
   \item \emph{Lyapunov-stable in expectation}: There exists a
         measurable function $L : \Omega \to \mathbb{R}_{\geq 0}$
         that achieves its minimum on $\mathcal{A}$ and satisfies
@@ -544,6 +661,34 @@ regime we write $(\mathcal{N}, E, R; \mathcal{A})$.  We use
 \cref{rem:metaphysical}.
 \end{definition}
 
+\begin{definition}[Operational Agency]\label{def:operational-agency}
+A DCR-system $(\mathcal{N}, E, R; \mathcal{A})$ exhibits
+\emph{operational agency} if there exists a measurable function
+$L : \Omega \to [1,\infty)$ achieving its minimum on~$\mathcal{A}$
+and a compact set $C \supseteq \mathcal{A}$ such that the combined
+dynamics $K_\epsilon = (1-\epsilon)R + \epsilon\,E$ satisfies
+\begin{equation}\label{eq:expected-contraction}
+  \int L(\omega')\; K_\epsilon(\omega, d\omega')
+  \;\leq\; \lambda\, L(\omega) + b\,\mathbf{1}_C(\omega)
+\end{equation}
+for some $\lambda < 1$ and $b < \infty$.
+
+This is precisely the Foster--Lyapunov drift condition
+(\ref{cond:drift}).  The definition makes agency a
+substrate-independent dynamical property: outside the compact
+``return set''~$C$, the system contracts toward~$\mathcal{A}$ in
+expectation; inside~$C$ the bounded additive term~$b$ accounts for
+exploration noise that can temporarily increase~$L$.  Every
+DCR-system satisfying the drift condition~\ref{cond:drift}
+therefore exhibits operational agency by construction.  The purpose
+of the definition is not to impose an additional requirement but to
+\emph{name} the directed-contraction property that the DCR axioms
+already guarantee, separating the \emph{fact} of directed selection
+from any particular physical mechanism and making agency a graded,
+substrate-independent concept
+(cf.\ \cref{rem:biological-exceptionalism}).
+\end{definition}
+
 \begin{remark}
 The interplay between exploration and resolution is critical. Pure exploration
 without resolution yields noise (high entropy, zero coherence). Pure resolution
@@ -558,7 +703,9 @@ temperature) can generate high statistical dependence, hence high
 $\Coh(\mu^*)$, but they typically \emph{fail} the directed
 violation-reduction condition~\cref{eq:monotone}: at thermal
 equilibrium, the kernel is as likely to increase as to decrease
-$\Viol$ on average (energy is a martingale under detailed balance).
+$\Viol$ on average (under stationarity,
+$\mathbb{E}_{\mu^*}[\Delta\Viol] = 0$; there is no systematic
+drift toward lower violation).
 Thus they are generally not DCR-systems under
 \cref{def:cognitive-system} unless one can exhibit a decomposition
 into a directed resolution kernel~$R$ satisfying~\cref{eq:monotone}
@@ -748,12 +895,21 @@ By Markov's inequality, for any fixed threshold $\delta > 0$:
   \leq \frac{O(\epsilon)}{\delta} \;\to\; 0
   \quad \text{as } \epsilon \to 0.
 \end{equation}
-That is, for any fixed neighborhood of $\mathcal{F}$, the stationary
-measure assigns mass tending to~$1$ as $\epsilon \to 0$.  This is
-\emph{weak} concentration: it does not imply that $\mu^*_\epsilon$
-is supported on an $O(\epsilon)$-neighborhood of $\mathcal{F}$
-(which would require exponential tail bounds, e.g., from a spectral
-gap or log-Sobolev inequality for the stationary measure).
+That is, for any fixed neighborhood $U \supseteq \mathcal{F}^*$,
+$\mu^*_\epsilon(U) \to 1$ as $\epsilon \to 0$.  (The implication
+$\mu^*_\epsilon(\Viol > \delta) \to 0 \;\Rightarrow\;
+\mu^*_\epsilon(U) \to 1$ uses a standard compactness--continuity
+argument: since $\Viol$ is continuous on compact $\Omega$ and
+$\mathcal{F}^* = \arg\min\Viol$, for every open
+$U \supseteq \mathcal{F}^*$ there exists $\delta > 0$ with
+$\{\omega : \Viol(\omega) < \min\Viol + \delta\} \subseteq U$;
+this is because sublevel sets of a continuous function on a compact
+space form a neighborhood basis of the minimizer set.)
+This is \emph{weak} concentration: it does not imply that
+$\mu^*_\epsilon$ is supported on an $O(\epsilon)$-neighborhood of
+$\mathcal{F}^*$ (which would require exponential tail bounds, e.g.,
+from a spectral gap or log-Sobolev inequality for the stationary
+measure).
 \end{lemma}
 
 \begin{proof}
@@ -781,7 +937,7 @@ $\propto \exp(-\Viol/T_t)$ with a logarithmic cooling schedule
 $T_t = c/\log(t+2)$, classical simulated annealing results
 \citep{hajek1988cooling} imply convergence of the occupation measures
 to a distribution supported on the global minimizers of $\Viol$
-(i.e., $\mathcal{F}$), provided the constant $c$ exceeds the
+(i.e., $\mathcal{F}^*$), provided the constant $c$ exceeds the
 maximum ``depth'' of the energy landscape.  Our convex-mixture kernel
 \cref{eq:combined} can be modified to this Metropolis--Hastings form;
 the precise annealing analysis of general DCR kernels---which do not
@@ -792,7 +948,7 @@ future work.
 For the present paper, the fixed-$\epsilon$ result
 (\cref{thm:convergence}) suffices: it establishes convergence
 to a unique ergodic distribution that concentrates near
-$\mathcal{F}$, with the concentration sharpening as $\epsilon \to 0$.
+$\mathcal{F}^*$, with the concentration sharpening as $\epsilon \to 0$.
 \end{remark}
 
 \begin{lemma}[Positive Coherence]\label{lem:coherence}
@@ -880,7 +1036,7 @@ that would yield a product measure.
 
 \begin{remark}[Heuristic criterion for non-product stationary
 measure]\label{rem:non-product-heuristic}
-In practice, the non-product hypothesis~\ref{eq:non-product-hyp}
+In practice, condition~(H1) in \cref{thm:convergence}
 holds whenever the resolution kernel introduces genuine dependence
 between neighbors and the exploration kernel does not wash it out.
 Concretely, if $K$ is irreducible on a finite state space,
@@ -923,6 +1079,13 @@ of product distributions is closed, $\mu^*_\epsilon$ remains
 non-product for all sufficiently small~$\epsilon$.
 \end{proof}
 
+Note that a non-product stationary measure (high coherence) is
+\emph{necessary but not sufficient} for a DCR-system: the
+proposition above verifies condition~(H1), but the system also
+requires a directed resolution kernel~$R$ satisfying the
+violation-reduction condition~\cref{eq:monotone}
+(cf.\ \cref{rem:equilibrium}).
+
 We can now state and prove the main convergence theorem:
 
 \begin{theorem}[Convergence of DCR Dynamics]\label{thm:convergence}
@@ -954,17 +1117,21 @@ dynamics.) Then:
     (\cref{lem:concentration}).  For any fixed $\delta > 0$,
     $\mu^*_\epsilon(\Viol > \delta) \to 0$ as $\epsilon \to 0$
     (\cref{eq:markov-concentration}): the stationary measure
-    concentrates near $\mathcal{F}$ in the weak sense.
+    concentrates near $\mathcal{F}^*$ in the weak sense.
   \item $\Coh(\mu^*_\epsilon) > 0$.
-  \item $\mathcal{F}$ is a goal-stabilizing pattern with Lyapunov
+  \item $\mathcal{F}^*$ is a goal-stabilizing pattern with Lyapunov
     function $L = \Viol + 1$: the drift condition ensures
     $L$ is decreasing in expectation outside any sublevel set, the
-    ergodic distribution concentrates near $\mathcal{F}$
+    ergodic distribution concentrates near $\mathcal{F}^*$
     (\cref{eq:markov-concentration}), and $\Coh(\mu^*_\epsilon) > 0$
-    by~(ii).  For fixed $\epsilon > 0$ the chain is ergodic with full
-    support (due to the exploration kernel), so the ``attraction'' is
-    stochastic: the chain spends most of its time near $\mathcal{F}$,
-    with the fraction increasing as $\epsilon \to 0$.
+    by~(ii).  For fixed $\epsilon > 0$ the chain is ergodic and
+    $\mu^*_\epsilon$ charges every $\varphi$-positive open set (a
+    consequence of $\varphi$-irreducibility; when $E$ has full
+    topological support, e.g., by condition~\ref{cond:full-support},
+    this yields full topological support of $\mu^*_\epsilon$).  The
+    ``attraction'' is stochastic: the chain spends most of its time
+    near $\mathcal{F}^*$, with the fraction increasing as
+    $\epsilon \to 0$.
 \end{enumerate}
 \end{theorem}
 
@@ -975,25 +1142,48 @@ By \cref{lem:stationary}, a stationary distribution $\mu^*_\epsilon$ exists.
 By \cref{lem:unique}, $\mu^*_\epsilon$ is unique and the chain is ergodic.
 By \cref{lem:concentration}, $\mathbb{E}_{\mu^*_\epsilon}[\Viol] =
 O(\epsilon)$, and \cref{eq:markov-concentration} gives weak
-concentration near $\mathcal{F}$.
+concentration near $\mathcal{F}^*$.
 By the non-product hypothesis~\ref{eq:non-product-hyp},
 $\Coh(\mu^*_\epsilon) > 0$ by \cref{lem:coherence}.
 
 $L(\omega) = \Viol(\omega) + 1$ is continuous and bounded on
-compact $\Omega$, achieves its minimum on $\mathcal{F}$, and
+compact $\Omega$, achieves its minimum on $\mathcal{F}^*$, and
 satisfies the drift condition~\ref{cond:drift}.  The ergodic theorem
 gives $T^{-1}\sum_{t=0}^{T-1} L(X_t) \to \int L\,d\mu^*_\epsilon
 = O(\epsilon)$ a.s., confirming that the time-averaged violation
 is small.  Since $\mu^*_\epsilon$ charges every open set that
 the chain can reach (a consequence of $\varphi$-irreducibility
 and condition~\ref{cond:full-support}), the chain does not converge
-to $\mathcal{F}$ in the pathwise sense $d(X_t,\mathcal{F}) \to 0$;
-rather, $\mathcal{F}$ is the high-probability region of the ergodic
+to $\mathcal{F}^*$ in the pathwise sense $d(X_t,\mathcal{F}^*) \to 0$;
+rather, $\mathcal{F}^*$ is the high-probability region of the ergodic
 distribution, and the concentration sharpens as $\epsilon \to 0$.
 
 For convergence under cooling schedules (where pathwise convergence
-to $\mathcal{F}$ can be recovered), see \cref{rem:annealing}.
+to $\mathcal{F}^*$ can be recovered), see \cref{rem:annealing}.
 \end{proof}
+
+\begin{remark}[How the triad axioms connect to the theorem]%
+\label{rem:triad-theorem-connection}
+\Cref{thm:convergence} is stated in terms of the combined kernel~$K$
+and its Foster--Lyapunov drift condition~\ref{cond:drift}.  The
+triad structure enters as follows: the violation-reducing property
+of~$R$ (\cref{eq:monotone}) together with the bounded-violation
+property of~$E$ on compact~$\Omega$ jointly \emph{imply} the drift
+condition for~$K$ (\cref{rem:drift-sufficient}).  Thus the theorem's
+hypotheses are not independent of the triad---they are
+\emph{consequences} of the DCR axioms under the quantitative
+strengthening (uniform $\alpha$-contraction outside~$\mathcal{F}^*$)
+spelled out in \cref{rem:drift-sufficient}.  The base monotonicity
+condition~\cref{eq:monotone} alone (without $\alpha > 0$) guarantees
+that $\Viol$ is a supermartingale under pure~$R$, which implies
+$\mathbb{E}[\Viol_t]$ is non-increasing but does \emph{not} by
+itself yield the $O(\epsilon)$ concentration bound; the latter
+requires the quantitative contraction.  We retain both levels---the
+qualitative axiom~\cref{eq:monotone} (which defines resolution) and
+the quantitative drift~\ref{cond:drift} (which drives the
+theorem)---to separate the \emph{definition} of a DCR-system from
+the \emph{sufficient conditions} for strong convergence guarantees.
+\end{remark}
 
 \subsection{What DCR Excludes}\label{ssec:exclusions}
 
@@ -1002,16 +1192,15 @@ three classes of systems:
 
 \begin{enumerate}
   \item \textbf{Equilibrium systems.} A system at thermodynamic equilibrium
-        occupies a maximum-entropy state with no net flows. There is no
-        directed exploration--resolution dynamics: the system does not
-        undergo a constraint-reducing process converging toward a coherent
-        attractor---it is already at the fixed point of entropy
-        maximization.  (An interacting equilibrium system, e.g., an Ising
-        model below $T_c$, may have high statistical correlations, but
-        these correlations are not \emph{maintained by} an ongoing
-        explore--resolve--stabilize cycle; they are a static consequence
-        of the Hamiltonian.  DCR requires the \emph{process}, not merely
-        the correlations.)
+        exhibits no directed constraint reduction and no maintained
+        far-from-equilibrium stabilization.  (An interacting equilibrium
+        system, e.g., an Ising model below $T_c$, may have high
+        statistical correlations and nontrivial mixing dynamics, but the
+        kernel is as likely to increase as to decrease $\Viol$ on
+        average---see \cref{rem:equilibrium}---so no directed
+        explore--resolve--stabilize cycle is present; the correlations
+        are a static consequence of the Hamiltonian, not maintained by
+        an ongoing DCR process.)
         \emph{A rock at thermal equilibrium is not cognitive.}
 
   \item \textbf{Unconstrained stochastic systems.} A system with exploration
@@ -1114,14 +1303,20 @@ $E$ is $\varphi$-irreducible with $\varphi$ the counting measure.
     where no single-site flip reduces $\Viol$); the exploration
     kernel $E$ ensures the chain escapes these.
   \item \emph{Non-product marginal:}
-    The Ising model is a pairwise Gibbs measure with
-    $J_{s,s'}(\omega_s,\omega_{s'}) = -J\,\omega_s\omega_{s'}$
-    and $J \neq 0$.  The Metropolis update $R$ is reversible
-    with respect to this Gibbs measure.
-    By \cref{prop:non-product-gibbs},
-    $(\mu^*_\epsilon)_{s,s'} \neq
-    (\mu^*_\epsilon)_s \otimes (\mu^*_\epsilon)_{s'}$
-    for sufficiently small~$\epsilon$.
+    The greedy kernel~$R$ is \emph{not} reversible with respect to
+    the Gibbs measure (it is a deterministic descent rule), so
+    \cref{prop:non-product-gibbs} does not apply directly.  Instead,
+    we verify condition~(H1) by a continuity argument.  On the
+    finite state space $\{-1,+1\}^N$, $\mu^*_\epsilon$ depends
+    continuously on~$\epsilon$ (perturbation theory for irreducible
+    chains).  As $\epsilon \to 0$, $\mu^*_\epsilon$ concentrates on
+    the absorbing states of~$R$---configurations where no single-flip
+    reduces $\Viol$.  On bipartite graphs, these include the ground
+    states (perfect 2-colorings) at which neighboring spins are
+    maximally anti-correlated:
+    $(\mu^*_0)_{s,s'} \neq (\mu^*_0)_s \otimes (\mu^*_0)_{s'}$.
+    Since the set of product distributions is closed, non-product
+    is preserved for all sufficiently small~$\epsilon > 0$.
 \end{itemize}
 
 \textbf{Result.}
@@ -1130,9 +1325,15 @@ $\mu^*_\epsilon$ with $\Coh(\mu^*_\epsilon) > 0$ (the spins are
 correlated under the stationary distribution---knowing one spin's
 state constrains its neighbor's).  As $\epsilon \to 0$, the
 stationary measure concentrates on the absorbing configurations of
-$R$ (local minima of $\Viol$); on bipartite graphs, these are
-exactly the ground states in $\mathcal{F}$, so
-$\mu^*_\epsilon(\mathcal{F}) \to 1$.  This is a cognitive system:
+$R$ (one-flip-stable local minima of $\Viol$).  On bipartite graphs
+$\mathcal{F}$ is non-empty and contains the ground states; the set
+of one-flip-stable configurations includes $\mathcal{F}$ but may be
+strictly larger (metastable states where no single flip improves
+$\Viol$, yet $\Viol > 0$).  Hence
+$\mu^*_\epsilon(\mathcal{F}) \to 1$ is guaranteed only when the
+ground states are the unique one-flip-stable configurations
+(e.g., on trees or small lattices); in general,
+$\mu^*_\epsilon$ concentrates on the full set of local minima.  This is a cognitive system:
 the spins explore configurations via random flips, resolve
 constraints by locally reducing frustration, and stabilize into a
 coherent antiferromagnetic pattern.  It is cognitive of depth~1.
@@ -1162,10 +1363,10 @@ cognitive systems, not only in engineered solvers.
 \section{Scale-Freeness and the Combination Problem}\label{sec:scale-free}
 % ==========================================================================
 
-The central mathematical contribution of this paper is showing that DCR is
-closed under coarse-graining: cognitive systems at one scale compose into
-cognitive systems at the next, providing a constructive account of
-composition addressing the combination problem.
+The central mathematical contribution of this paper is a conditional
+closure result: under explicit assumptions, the DCR form is stable
+under coarse-graining---cognitive systems at one scale compose into
+cognitive systems at the next.
 
 The closure result (\cref{thm:closure}) requires \emph{timescale separation}
 between intra-group and inter-group dynamics---a condition that holds in many
@@ -1254,7 +1455,7 @@ measures arising in the construction are universally measurable
 (though not Borel in general).
 \end{definition}
 
-We now state the conditions precisely and prove closure through three lemmas,
+We now state the conditions precisely and prove conditional closure through three lemmas,
 one for each component of the cognitive triad.
 
 \begin{definition}[Timescale Separation]\label{def:timescale}
@@ -1390,10 +1591,44 @@ Under $\eta$-timescale separation and macro-sufficiency
     $g^{-1}(\tilde{\omega}')$.  The lifting measure
     $\rho_{\tilde{\omega}}$ used in~\cref{eq:macro-kernel} is
     $\rho_{\tilde{\omega}'}\big|_{\tilde{\omega}'=\tilde{\omega}}$.
-    On standard Borel spaces (which includes all compact metrizable
-    $\Omega$), regular conditional probabilities exist
-    unconditionally; we require additionally that the map
-    $\tilde{\omega} \mapsto \rho_{\tilde{\omega}}$ is measurable
+
+    \emph{Well-posedness.}  On standard Borel spaces (which includes
+    all compact metrizable~$\Omega$), a regular conditional
+    probability $\tilde{\omega}' \mapsto \rho_{\tilde{\omega}'}$
+    of~$\omega$ given $g(\omega) = \tilde{\omega}'$ under
+    $\mu_{\tilde{\omega}}$ exists and is essentially unique
+    ($g_\# \mu_{\tilde{\omega}}$-a.e.).  We define
+    $\rho_{\tilde{\omega}}$ as this regular conditional distribution
+    evaluated at $\tilde{\omega}' = \tilde{\omega}$.
+    The macro-kernel~\cref{eq:macro-kernel} is therefore defined for
+    $g_\# \mu_{\tilde{\omega}}$-a.e.\ $\tilde{\omega}$.
+
+    Two regimes arise:
+    \begin{itemize}[nosep]
+      \item \emph{Discrete / finite case.}
+        When~$\tilde{\Omega}$ is finite or countable,
+        $(g_\# \mu_{\tilde{\omega}})(\{\tilde{\omega}\}) > 0$
+        automatically, so $\rho_{\tilde{\omega}}$ is canonically
+        defined at every point.  This includes the exact-lumpability
+        setting (\cref{rem:closure-scope}, item~1).
+      \item \emph{Continuous case.}
+        When~$\tilde{\Omega}$ is a continuum (e.g., $\mathbb{R}^k$),
+        singletons typically have $g_\# \mu_{\tilde{\omega}}$-measure
+        zero, so $\rho_{\tilde{\omega}}$ is defined only
+        $g_\# \mu_{\tilde{\omega}}$-a.e.\ and must be selected via
+        disintegration.  This is standard measure theory
+        (disintegration on standard Borel spaces) and poses no
+        obstruction in principle, but it means the macro-kernel is
+        an a.e.-defined object.  Verifying that $\tilde{K}$ inherits
+        regularity (e.g., weak Feller) from the micro-kernel requires
+        additional smoothness of~$g$ and of the fiber measures
+        $\rho_{\tilde{\omega}'}$---conditions that hold in the
+        metastable Markov-state-model setting but which we do not
+        develop in full generality here.
+    \end{itemize}
+    We require additionally that the map
+    $\tilde{\omega} \mapsto \rho_{\tilde{\omega}}$ (defined
+    a.e.) admits a version that is measurable
     in the weak topology.
 \end{enumerate}
 
@@ -1518,12 +1753,26 @@ strong separation.
 \label{lem:macro-explore}
 If the micro-kernel $K$ is $\varphi$-irreducible
 (\cref{def:exploration}) with full exploration support, $g$ is
-continuous and surjective, and the partition $\pi$ is finite, then
-the effective macro kernel $\tilde{K}$ (\cref{lem:effective-markov})
-is $\tilde{\varphi}$-irreducible on $\tilde{\Omega}$, where
+continuous and surjective, the partition $\pi$ is finite, and the
+slow-time skeleton $K_{\mathrm{slow}}$ includes inter-group
+exploration events with positive probability (i.e., for every pair
+of macro-states $\tilde{\omega}, \tilde{\omega}'$ there exists $n$
+such that $K_{\mathrm{slow}}^n$ assigns positive probability to
+transitions moving the system from $g^{-1}(\tilde{\omega})$ into
+$g^{-1}(\tilde{\omega}')$), then the effective macro kernel
+$\tilde{K}$ (\cref{lem:effective-markov}) is
+$\tilde{\varphi}$-irreducible on $\tilde{\Omega}$, where
 $\tilde{\varphi} = g_\# \varphi$ is the pushforward of $\varphi$
 under $g$.  Moreover, $\tilde{\varphi}$ has full exploration
 support with respect to $\tilde{\mathcal{F}} = g(\mathcal{F})$.
+
+The inter-group exploration condition is automatically satisfied
+when the micro exploration kernel~$E$ has full support on~$\Omega$
+(since $K = (1-\epsilon)R + \epsilon\,E$ then gives positive
+probability to any inter-group move in a single step); it is stated
+separately because, in general, $K_{\mathrm{slow}}$---the
+inter-group skeleton---need not inherit full irreducibility from
+the micro chain without this condition.
 \end{lemma}
 
 \begin{proof}
@@ -1534,11 +1783,10 @@ $A = g^{-1}(\tilde{A}) \subseteq \Omega$.  Since
 $\varphi(A) = \tilde{\varphi}(\tilde{A}) > 0$ (by definition of
 pushforward), $\varphi$-irreducibility of $K$ gives: for any
 $\omega \in g^{-1}(\tilde{\omega})$,
-$\sum_{n \geq 1} K^n(\omega, A) > 0$.  In particular, there exists
-$n$ such that $K^n(\omega, A) > 0$, so the slow-time skeleton
-chain (which includes the full-kernel transitions at inter-group
-update times) also reaches $A$ with positive probability.  Since
-$\tilde{X}_k = g(X_{t_k})$ and $A = g^{-1}(\tilde{A})$,
+$\sum_{n \geq 1} K^n(\omega, A) > 0$.  By the inter-group
+exploration condition, the slow-time skeleton chain reaches $A$
+with positive probability (not merely the full chain at micro time).
+Since $\tilde{X}_k = g(X_{t_k})$ and $A = g^{-1}(\tilde{A})$,
 $\sum_{k \geq 1} \tilde{K}^k(\tilde{\omega}, \tilde{A}) > 0$.
 
 For full exploration support: if $\tilde{U} \subseteq \tilde{\Omega}$
@@ -1638,8 +1886,11 @@ from the micro-chain, which would require stronger lumpability
 conditions.)
 
 \textbf{Exploration.}
+The inter-group exploration condition (stated in
+\cref{lem:macro-explore}) ensures that $K_{\mathrm{slow}}$ can
+move the system between macro-states with positive probability.
 By \cref{lem:macro-explore}, the effective macro kernel $\tilde{K}$
-is $\tilde{\varphi}$-irreducible on $\tilde{\Omega}$ with
+is then $\tilde{\varphi}$-irreducible on $\tilde{\Omega}$ with
 $\tilde{\varphi} = g_\# \varphi$ having full exploration support
 with respect to $\tilde{\mathcal{F}}$.
 
@@ -1664,15 +1915,30 @@ least one macro-edge, so $\Coh(\tilde{\mu}^*) > 0$ by
 \cref{lem:macro-coherence}. The Lyapunov function is
 $\tilde{L}(\tilde{\omega}) = \widetilde{\Viol}(\tilde{\omega}) + 1$.
 
+Conditions~(ii)--(iv) and Lemmas
+\ref{lem:macro-explore}--\ref{lem:macro-coherence} verify the
+hypotheses of \cref{def:combined} for~$\tilde{K}$, so
+\cref{thm:convergence} applies verbatim on~$\tilde{\Omega}$.
 Hence all four components of a cognitive system are present, and
 $\tilde{\mathcal{C}}$ is cognitive.
 \end{proof}
 
-\begin{remark}[When the closure assumptions hold]\label{rem:closure-scope}
-The closure theorem is conditional: DCR is closed under
-coarse-graining \emph{when coarse-graining yields an effective
-Markovian theory}.  Two concrete classes where the assumptions are
-standard:
+\begin{remark}[Logical status of the closure theorem]%
+\label{rem:closure-scope}
+The closure theorem is conditional: it shows that \emph{if}
+coarse-graining yields an effective Markov macro-model satisfying
+DCR-type drift, irreducibility, and non-product conditions, \emph{then}
+the macro-model is a DCR-system.  It does \emph{not} derive these
+macro-conditions from the micro-DCR axioms alone; conditions
+(ii)--(iv) are explicitly assumed at the macro level.  In the
+language of renormalization, the theorem establishes that the DCR
+\emph{form} is stable under coarse-graining, not that all
+micro-DCR-systems automatically produce well-behaved
+macro-descriptions.
+
+The question ``under what physical conditions do the macro
+assumptions hold?''\ is answered system-by-system.  Two concrete
+classes where the assumptions are standard:
 \begin{enumerate}[nosep]
   \item \emph{Finite-state chains with exact lumpability.}  If the
     partition $\pi$ is a \emph{lumpable} partition of a finite
@@ -1694,14 +1960,27 @@ a new DCR-system rather than a non-Markovian mess.  When those
 conditions fail (overlapping timescales, strong memory effects),
 DCR still applies at each scale individually---it is the
 \emph{composition} across scales that requires the separation.
+
+We acknowledge that the macro-sufficiency condition
+(\cref{def:timescale}, item~4) is particularly demanding: it
+requires that expected cross-group violation after fast
+equilibration depends on the macro-boundary alone, not on the
+specific micro-configuration within each group.  Most realistic
+coarse-grainings satisfy only approximate versions of this
+condition.  The closure theorem should therefore be read as
+establishing the \emph{form-stability} of DCR under idealized
+coarse-graining; verifying that a particular physical system's
+coarse-graining satisfies the assumptions to within acceptable
+approximation error is a system-specific empirical question.
 \end{remark}
 
-\subsection{Dissolution of the Combination Problem}\label{ssec:combination}
+\subsection{Conditional Composition and the Combination Problem}\label{ssec:combination}
 
 The combination problem in panpsychism asks: if fundamental entities have
 experience, how do micro-experiences combine into the unified macro-experience
-of, say, a human mind? DCR addresses this problem constructively by replacing the notion of
-``combining experiences'' with a formal construction:
+of, say, a human mind? Subject to the conditions of \cref{thm:closure},
+DCR provides a conditional answer by replacing the notion of
+``combining experiences'' with a formal coarse-graining construction:
 
 \begin{corollary}[Combination via Coarse-Graining]\label{cor:combination}
 Let $\mathcal{C}$ be a cognitive system at scale $n$ with partition $\pi$
@@ -1738,9 +2017,11 @@ level's exploration, providing a constructive mechanism for cross-scale
 composition that genuinely reduces degrees of freedom.
 \end{proof}
 
-There is no mystery of ``combination'' because there is no separate substance
-(experience, qualia) that needs combining. There is only the DCR process,
-recurring at each scale via coarse-graining. The compression maps formalize
+Under the conditions of the closure theorem, the ``combination'' question
+is reframed: there is no separate substance (experience, qualia) that needs
+combining---there is the DCR process, recurring at each scale via
+coarse-graining, \emph{when} the physics admits an effective Markov
+macro-description. The compression maps formalize
 how micro-detail is discarded at each level: a neuron's molecular state is
 compressed to its firing rate; a population's firing rates are compressed to
 a mean-field activation; a cortical column's activations are compressed to a
@@ -1782,15 +2063,16 @@ group contains more than one component).  Since $|S|$ is finite, this
 ensures $\delta(\mathcal{C}) \leq |S| - 1 < \infty$.
 \end{definition}
 
-To illustrate the scale: a hydrogen atom has depth~1 (quantum constraint
-resolution at the particle level); a bacterium has depth $\sim$3--4
-(molecular, metabolic, behavioral); a human brain has depth $\sim$6--8
-(ionic, synaptic, columnar, areal, network, behavioral, social).  These
-estimates are based on empirically identifiable organizational levels and
-should be read as illustrative ordinal rankings, not precise measurements
-(see \cref{rem:depth-computability}).  The definition provides a
+The definition provides a
 qualitative, non-anthropocentric ordering of intelligence without
-requiring a binary threshold.
+requiring a binary threshold.\footnote{Illustrative ordinal
+rankings: a hydrogen atom has depth~$\sim$1 (quantum constraint
+resolution at the particle level); a bacterium $\sim$3--4
+(molecular, metabolic, behavioral); a human brain $\sim$6--8
+(ionic, synaptic, columnar, areal, network, behavioral, social).
+These estimates are based on empirically identifiable
+organizational levels and should not be read as precise
+measurements; see \cref{rem:depth-computability}.}
 
 \begin{remark}[Computability of depth]\label{rem:depth-computability}
 Computing $\delta(\mathcal{C})$ exactly requires optimizing over all
@@ -1854,8 +2136,11 @@ event is a \emph{transaction}---a completed handshake between emitter and
 absorber mediated by retarded (offer) and advanced (confirmation) waves.
 We use TIQM as a \emph{structural witness} that quantum dynamics can be
 read as a distributed constraint-resolution process; DCR does not require
-endorsing any particular interpretation of quantum mechanics.  The mapping
-onto the DCR triad is as follows:
+endorsing any particular interpretation of quantum mechanics, and no
+claim is made that DCR solves or dissolves the measurement problem.
+A second, interpretation-neutral witness based on decoherence and
+einselection is given in \cref{rem:interpretation-independence}.
+The TIQM mapping onto the DCR triad is as follows:
 
 \begin{itemize}[nosep]
   \item \textbf{Components:} Emitter and absorber sites---the vertices of
@@ -1893,9 +2178,11 @@ onto the DCR triad is as follows:
 The retrocausal structure is not a defect but a feature: constraints
 propagate both forward and backward in time, making the resolution
 genuinely distributed across spacetime rather than confined to a single
-time-slice. What is conventionally called ``wavefunction collapse'' is,
-in DCR terms, the convergence of a distributed constraint satisfaction
-process to its feasible solution.
+time-slice. What is conventionally called ``wavefunction collapse''
+can be viewed, as a structural witness, as the convergence of a
+distributed constraint satisfaction process to its feasible
+solution---without implying a solution to the outcome-selection
+problem.
 
 \begin{remark}[Collapse as selection over branches]%
 \label{rem:collapse-selection}
@@ -1923,23 +2210,65 @@ constraint network, reached by distributed resolution without global
 coordination.
 
 \begin{remark}[Selection and collapse]
-The structural identity between quantum collapse and natural selection
-(\cref{ssec:biology}) is not accidental. In both cases, multiple
-possibilities are explored (superposition / genetic variation),
-constraints select which possibilities are realized (conservation laws /
-fitness landscape), and the selection is local and distributed (each
-absorber / each organism evaluates constraints independently). DCR
-identifies both as instances of the same universal process, differing
-only in the physical substrate and timescale.
+Quantum collapse and constraint-mediated selection
+(\cref{rem:constraint-mediated-selection}) share the abstract
+template: variation $\to$ constraint filtering $\to$ retention.
+In both cases, multiple possibilities are explored (superposition /
+genetic variation), constraints select which possibilities are realized
+(conservation laws / fitness landscape), and the selection is local and
+distributed (each absorber / each organism evaluates constraints
+independently).  We reserve ``natural selection'' for the biological,
+inheritance-based instance; the shared structure is the DCR triad,
+differing only in the physical substrate and timescale.
 \end{remark}
 
-\begin{remark}[Interpretation-independence]\label{rem:interpretation-independence}
-The DCR mapping does not depend on retrocausality.  One can equally
-express the same constraint-resolution structure using path-integral
-or decoherence-based language, where ``resolution'' corresponds to
-consistency of histories and environment-induced selection.  TIQM is
-used only because the constraint-satisfaction structure is explicit
-in that formulation.
+\begin{remark}[Constraint-mediated selection]%
+\label{rem:constraint-mediated-selection}
+The recurring pattern across physical scales can be distilled into an
+abstract selection template:
+\begin{enumerate}[nosep]
+  \item \emph{Variation} --- the exploration kernel~$E$ generates a
+        population of candidate configurations.
+  \item \emph{Constraint filtering} --- the resolution dynamics~$R$
+        retains configurations that locally reduce constraint violations
+        (\cref{eq:monotone}).
+  \item \emph{Retention / stabilization} --- surviving configurations
+        accumulate near the coherent attractor~$\mathcal{A}$, which
+        acts as the long-run ``memory'' of the process.
+\end{enumerate}
+We call this \emph{constraint-mediated selection} rather than
+``natural selection'' to emphasize that the filtering step is
+driven by compatibility constraints on the network, not by
+reproductive fitness specifically.  Darwinian selection is the
+biological instance; quantum collapse is the physical instance;
+simulated annealing is the computational instance.  In each case,
+the formal structure is the same DCR triad.
+\end{remark}
+
+\begin{remark}[Interpretation-independence and decoherence witness]%
+\label{rem:interpretation-independence}
+The DCR mapping does not depend on retrocausality.  TIQM is used
+above because the constraint-satisfaction structure is explicit in
+that formulation; no claim is made that TIQM is correct or that DCR
+solves the measurement problem.
+
+A second, less interpretationally loaded witness uses
+\emph{decoherence and einselection}
+\citep{zurek2003decoherence}.  In this framing: (i)~\emph{exploration}
+is the unitary spreading of the system--environment state over the
+full Hilbert space; (ii)~\emph{resolution} is the
+environment-induced suppression of off-diagonal coherences---a
+local, distributed process in which each environmental degree of
+freedom independently constrains the system's phase relations;
+(iii)~\emph{stabilization} is einselection: the emergence of
+pointer states as the unique basis robust to ongoing
+decoherence---the coherent attractor of the DCR triad.  This
+mapping avoids retrocausality entirely and relies only on standard
+open-quantum-systems theory; it does not, however, address the
+``definite outcome'' question (the same limitation as decoherence
+itself).  The two witnesses are complementary: TIQM makes the
+constraint-satisfaction structure vivid; decoherence makes the
+distributional character of resolution rigorous.
 \end{remark}
 
 \begin{remark}[Unpredictability and tie-breaking]\label{rem:tiebreak}
@@ -2144,12 +2473,14 @@ selecting the pattern. It is a cognitive system of depth~1.
 \begin{remark}[Proof-sketch character of the B{\'e}nard verification]%
 \label{rem:benard-caveat}
 Three aspects of the above verification merit further care in a
-fully rigorous treatment.  (i)~The constraints encode the
-\emph{steady-state} Boussinesq equations, while the dynamics is
-\emph{time-evolution}; the violation functional therefore measures
-departure from stationarity, and the drift argument implicitly
-conflates energy dissipation (a property of the PDE) with violation
-reduction (a property of the discretized update rule).  The
+fully rigorous treatment.  (i)~The constraints should be read as
+local consistency conditions of the \emph{discretized time-step
+update}: at each step the violation functional measures the residual
+of the one-step Boussinesq update, not the steady-state PDE
+residual.  The drift argument then requires that the discretized
+update reduces this residual on average---a statement about the
+time-stepping scheme, not about the energy functional of the PDE
+directly.  The
 transfer from the energy functional $\mathcal{E}$ to
 $\Viol$ near the attractor requires comparability of their
 respective Hessians under the linearized Boussinesq operator---a
@@ -2167,7 +2498,12 @@ $\lambda, b$ depend on $h$ and $N$; the verification is for a fixed
 discretization and does not address the continuum limit $h \to 0$.
 These issues are standard in the numerical analysis of stochastic
 PDE discretizations; we highlight them to be explicit about the
-level of rigor.
+level of rigor.  The example should be read as a detailed
+\emph{verification sketch} exhibiting the structural
+correspondence between B\'enard convection and the DCR axioms, not
+as a fully rigorous proof that conditions
+\ref{cond:drift}--\ref{cond:full-support} hold for a specific
+discretization with explicit constants.
 \end{remark}
 
 \begin{remark}[Formalizability of other physical examples]
@@ -2274,9 +2610,12 @@ The Free Energy Principle is a special case of DCR obtained when:
   \item The constraints encode a generative model
         $p(\tilde{s}, \psi \mid m)$ relating external causes $\psi$ to
         sensory observations $\tilde{s}$.
-  \item The coherence measure is replaced by the negative variational free
-        energy: $\Coh \mapsto -F = \mathbb{E}_q[\ln p(\tilde{s}, \psi)] -
-        \mathbb{E}_q[\ln q(\psi)]$.
+  \item The \emph{stabilization criterion} uses variational free energy
+        $F$ as the Lyapunov functional (in place of $\Viol + 1$).
+        Note that $-F$ does not play the same mathematical role as
+        $\Coh$: it is not nonnegative and does not vanish on product
+        measures.  The analogy is functional (both witness
+        ``convergence to an attractor''), not structural.
   \item The resolution dynamics is gradient descent on $F$
         (recognition dynamics).
 \end{enumerate}
@@ -2303,12 +2642,17 @@ model: for $s \in S_\mu$, $s' \in S_b$,
 encoding which internal states are consistent with which sensory observations.
 
 \textbf{Step 2: Violation as surprise.}
+Assume the generative model satisfies
+$p(\tilde{s}_{s'} \mid \mu_s) > 0$ for all $(\mu_s, \tilde{s}_{s'})$
+in the model's support (this ensures finite violations; models that
+assign zero probability to observable events are degenerate).
 The constraint violation functions are:
 \[
   v_{\{s,s'\}}(\mu_s, b_{s'}) = -\ln p(\tilde{s}_{s'} \mid \mu_s).
 \]
 The total violation is then
-$\Viol(\omega) = -\sum_{\{s,s'\}} \ln p(\tilde{s}_{s'} \mid \mu_s)$.
+$\Viol(\omega) = -\sum_{\{s,s'\}} \ln p(\tilde{s}_{s'} \mid \mu_s)$,
+which is finite under the positivity assumption.
 Note that $\Viol = 0$ requires $p(\tilde{s}_{s'} \mid \mu_s) = 1$
 for all blanket components, which is generically impossible in
 non-degenerate probabilistic models; accordingly, we use the
@@ -2519,6 +2863,30 @@ falsifiable claims:
         emergent constraint-resolution effects.
 \end{enumerate}
 
+\noindent
+We elevate the transactional-density mechanism to an explicit
+conjecture:
+
+\medskip
+\noindent\fbox{\parbox{0.95\textwidth}{%
+\textbf{Conjecture (Gravity and inertia from transaction-density
+gradients).}
+Let $\rho_\tau(\mathbf{x})$ denote the local transactional density
+(completed constraint-satisfying couplings per unit volume per unit
+time) in a DCR substrate.  Two bodies mutually shield the
+transaction field along their connecting axis, producing a
+$\rho_\tau$-gradient and hence a net drift toward each other; an
+accelerating body creates a horizon-like cutoff behind it,
+producing a $\rho_\tau$-anisotropy opposing acceleration.  If
+gravity and inertia admit such a reformulation, then (i)~the
+gravitational ``constant'' is a derived function of the ambient
+$\rho_\tau$, and (ii)~inertial mass equals the integrated
+$\rho_\tau$-anisotropy at fixed acceleration.  This is speculative
+and untested; we record it because it illustrates how far the
+DCR+optimization reading might extend, and because it generates
+concrete simulation targets.}}
+\medskip
+
 % ==========================================================================
 \section{Discussion}\label{sec:discussion}
 % ==========================================================================
@@ -2536,14 +2904,25 @@ adapted species stabilize. The same formal process, recurring at every
 scale, connected by the coarse-graining construction.
 
 The TIQM framing (\cref{ssec:quantum}) reveals a further unity: what physics
-calls ``collapse'' and what biology calls ``selection'' are not merely
-analogous but structurally identical---both are instances of distributed
-constraint resolution in which multiple possibilities are explored and
-local constraints determine which are realized (see \cref{ssec:quantum},
-Remark). The retrocausal structure of the transactional interpretation
+calls ``collapse'' and what biology calls ``selection'' are both instances
+of constraint-mediated selection (\cref{rem:constraint-mediated-selection}):
+multiple possibilities are explored, distributed constraints determine
+which are realized, and a stable outcome is retained. The retrocausal structure of the transactional interpretation
 suggests that constraint resolution need not respect the arrow of time;
 it is a relation among boundary conditions, not a process confined to one
 temporal direction.
+
+A single motif unifies the three engineering/physical witnesses
+discussed earlier---distributed consensus
+(\cref{rem:consensus-witness}), quantum transactions
+(\cref{ssec:quantum}), and machine-learning self-play
+(\cref{sec:discussion}, \emph{Self-play as engineered DCR}): in
+all three, global stabilization arises from local compatibility
+constraints under partial, delayed information.  No central
+controller possesses the full constraint set at any instant; yet the
+system converges to a coherent outcome because local
+violation-reducing steps compose into a globally directed drift
+(\cref{thm:convergence}).
 
 The discrete ontic model of \citet{powers2024statistical} lends additional
 support to this picture.  If quantum probabilities arise from counting
@@ -2578,6 +2957,27 @@ principles (least/stationary action) at the level of metaphor and
 motivation, but it is \emph{not} assumed by the formal results:
 the theorems require only local violation-reduction and ergodic
 exploration, not a globally computed objective.
+\end{remark}
+
+\begin{remark}[Transactional density as a witness]%
+\label{rem:tx-density}
+In many substrates, one can define a \emph{transaction} as an event
+in which distributed constraints are jointly satisfied across an
+interface (e.g., emitter--absorber completion, message commit in
+consensus, trade execution).  The \emph{transactional
+density}~$\rho_\tau$ is the rate (or expected count) of such events
+in the stabilized regime.  DCR does not assume that physical
+dynamics maximizes transactional density, but $\rho_\tau$ can serve
+as an empirical \emph{witness} correlated with coherence and
+persistence in self-organizing systems: in the TIQM setting,
+$\rho_\tau$ counts completed Wheeler--Feynman handshakes; in
+thermodynamic self-organization, it counts realized exchanges across
+Rayleigh--B\'enard cell boundaries; in neural dynamics, it counts
+successful synaptic transmissions.  Regions of high $\rho_\tau$ are
+regions where constraints are being resolved most intensively.  The
+formal results of \cref{sec:framework} do not require $\rho_\tau$,
+but it provides a physically measurable proxy for the abstract
+coherence functional~$\Coh$.
 \end{remark}
 
 \subsection{Relationship to Process Philosophy}
@@ -2723,18 +3123,20 @@ that:
   \item The framework is mathematically precise, built on constraint networks,
         stochastic dynamics, and information-theoretic coherence
         (\cref{sec:framework}).
-  \item Under timescale separation, it is closed under coarse-graining,
-        providing a constructive account of composition addressing the combination problem
-        and a natural measure
-        of cognitive depth (\cref{sec:scale-free}).
+  \item Under explicit timescale-separation and macro-sufficiency
+        assumptions, the DCR form is stable under coarse-graining
+        (conditional closure), providing a conditional composition
+        scheme that reframes the combination problem and a natural
+        measure of cognitive depth (\cref{sec:scale-free}).
   \item Fundamental physical processes satisfy the DCR axioms: as a
         detailed verification sketch for thermodynamic self-organization
         (\cref{ex:benard}), and structurally for quantum transactions,
         biological adaptation, and neural dynamics
         (\cref{sec:physics}). The quantum case, framed
         through the Transactional Interpretation, reveals that wavefunction
-        collapse and natural selection are structurally identical instances
-        of distributed constraint resolution. The discrete ontic model of
+        collapse and biological selection share the same abstract
+        template---constraint-mediated selection
+        (\cref{rem:constraint-mediated-selection}). The discrete ontic model of
         \citet{powers2024statistical} provides independent evidence that
         quantum mechanics is compatible with---and may emerge from---the
         kind of finite combinatorial structure that DCR assumes
@@ -2756,6 +3158,13 @@ explores its own degrees of freedom and resolves into the coherent structures
 we observe at every scale. The offer wave and the mutation, the handshake
 and the selection, the transaction and the adapted species, the symbol
 ordering and the quantum outcome: one process, many substrates.
+
+\paragraph{Acknowledgments.}
+The transactional-interpretation framing in \cref{ssec:quantum} was
+sharpened by discussions of Ruth Kastner's Possibilist Transactional
+Interpretation and its engineering analogues in distributed-ledger
+consensus; we thank anonymous reviewers for pressing us to clarify
+the interpretation-independence of the formal results.
 
 \bigskip
 \bibliographystyle{plainnat}
