@@ -1,0 +1,371 @@
+The Self-Optimizing Universe: Exploring the Quantum Origins of Gravity and Life
+
+For aeons, humans have gazed at the stars and pondered the most fundamental questions of existence: What is our place within the cosmos, what is its purpose and what lies beneath its observable behavior? These timeless mysteries have ignited the imagination of philosophers, driven the pursuits of scientists and inspired generations of dreamers to probe ever deeper into the foundations of existence.
+
+Today, we stand at a unique crossroads where quantum mechanics, computer science and our beginning understanding of intelligence and consciousness converge to offer tantalizing new perspectives on these age-old questions. What if the universe isn't merely an empty stage where physics plays out, but rather an active computational entity – one that continuously explores, optimizes and evolves? What if the mathematical abstractions of quantum mechanics aren't just useful tools, but glimpses into the fundamental nature of reality as a vast information-processing system?
+
+This essay proposes a radical yet intuitive framework for understanding not just quantum phenomena, but the fundamental nature of reality itself: the universe as a self-optimizing system that continuously explores and selects paths that maximize information exchange and computational complexity.
+
+Through theoretical analysis and preliminary simulations, we'll explore how this framework offers fresh insights into quantum mechanics while suggesting deeper connections between physics, computation and biological complexity. While some elements remain speculative, our framework builds upon established theories and offers testable predictions, potentially illuminating one of humanity's most profound questions: why our universe appears fine-tuned for the emergence of life and consciousness.
+
+Join us on an intellectual adventure as we explore the possibility that the deepest mysteries of quantum mechanics, consciousness and the nature of reality itself might be understood through the lens of computation and self-optimization. In doing so, we may find that ancient philosophical insights about the universe's intrinsic nature and modern scientific understanding are not as far apart as they might seem.
+
+Our exploration begins in an unexpected place - the world of distributed computing systems.
+
+1. Replicated State Machine Protocols
+
+Replicated State Machine Protocols allow a set of spatially distributed computers to agree on an evolving ledger state and they are usually used to provide a decentralized infrastructure for users to exchange financial assets (e.g. Bitcoin).
+
+1.1 Double-Spend Problem
+
+The reason why we need sophisticated protocols and can not just send funds in a similar way as we send e-mails is the so called double-spend problem:
+
+While physical coins can only be spent once, digital coins can be spent several times by crafting multiple conflicting transactions containing different instructions on how to modify a shared ledger state.
+
+1.2 Distributed Turing Machines
+
+Traditionally this is solved by making these protocols operate like distributed Turing machines: We agree on a starting ledger state, we agree on a growing list of transactions and then we apply them in order to our copy of the shared ledger state to eventually arrive at the same result. If there are transactions that try to spend funds that no longer exist, then we ignore them.
+
+This is a pretty simple solution but it has the problem that the validity of transactions depends on their execution order, which limits state changes to be executed one-by-one on a single CPU, which severely limits the computational throughput of these kind of systems.
+
+1.3 Superpositions and Retro-Causal Collapse
+
+A new and different way of approaching this problem is based on tracking the causal structure of state changes in an evolving hyper-graph and creating superpositioned versions of the ledger state in the presence of double spends (transactions touching the same objects).
+
+If we for example create two conflicting transactions: One that sends two coins to Bob and his father, and one that sends the same coins to Alice and her mother — then this results in two possible outcomes:
+
+One where Bob and his father received the coins
+
+and one where Alice and her mother received the coins.
+
+The network then globally collapses this branching space of possibilities into the version that was seen to be first by the majority of network participants (ties are broken by picking a random winner).
+
+Since this information only becomes available slightly delayed (it takes time to collect nonlocal knowledge), this collapse happens in the form of a retro-causal selection process.
+
+2. Analogies To Physics
+
+Although we are discussing the evolution of a virtual universe containing digital assets, we draw upon terminology and concepts traditionally associated with physics and quantum mechanics.
+
+Considering that one of the most foundational papers in the field of distributed systems — Time, Clocks, and the Ordering of Events in a Distributed System — dwells on the idea of invariant spacetime intervals from special relativity, we want to explore if the discussed concepts might as well have some underlying connection to physics.
+
+2.1 Wave-Function Collapse Through Selection Process
+
+Picturing the collapse of the wave function as a selection over a space of superpositioned versions that evolve in parallel provides an intuitive way to make sense of nonlocal effects like entanglement as choosing the version where Bob receives a coin automatically determines that his dad receives the other one, regardless of their spatial separation (the only thing that matters for the collapse is the causal structure in the branching space of superpositioned evolutions).
+
+Another source of analogies emerges from viewing quantum interactions as transactions (computational processes that require the inputs of two or more spatially separated entities that become available at different times).
+
+2.2 Quantum Interactions as Transactions
+
+Transactions are modeled as handshakes (an offer followed by a confirmation) and we want to use the real-life analogy of selling a house to expand our intuition about quantum mechanics.
+
+Uncertainty
+
+When offering a house on the market, we enter a state of uncertainty about the transaction’s outcome. The final price and buyer are unknown, mirroring the indeterminate state in quantum systems before measurement.
+
+Unpredictability
+
+The house-selling process, while deterministic and governed by rules, is not simply random like rolling dice. Instead, it involves a complex chain of events leading to the final transaction between seller and buyer. The outcome is unpredictable at the time of deciding to sell because it depends on a highly dynamic environment with numerous variables yet to be determined. This mirrors the apparent randomness in quantum systems, where outcomes are unpredictable.
+
+Probabilistic Treatment
+
+While the exact outcome is uncertain, we can apply probabilistic analysis to the house-selling process. Based on property type and market conditions, we can make reasonable estimates of the likely sale price. However, the precise outcome remains unknown until the transaction is finalized.
+
+This probabilistic approach parallels quantum mechanics, where we can calculate probabilities for various outcomes, but the exact result is only determined upon measurement.
+
+Interference
+
+Even before a transaction is finalized, the mere existence of an offer can influence the market. For example, listing a property on a real estate agency’s website may alter the site’s appearance, potentially affecting other offers. This phenomenon mirrors quantum interference, where the presence of one possibility can impact the probabilities of others.
+
+Self-Interference
+
+An offer can potentially even interfere with its own outcome, analogous to quantum self-interference. For instance, attempting to sell multiple properties simultaneously may depress the market, resulting in lower prices for each. This self-interaction mirrors the quantum phenomenon where a particle’s wave function can interfere with itself, affecting its own probability distribution.
+
+Retro-Causality
+
+In real estate transactions, the future buyer influences the final price, even though the transaction was initiated in the past. This apparent backward influence mirrors quantum retro-causality, where future measurements seem to affect past states. The final sale price is determined by the buyer’s future decision, yet it is intricately linked to the initial listing and subsequent negotiations.
+
+Contextuality
+
+In the real estate market, the value of a property can depend on the context in which it’s evaluated. For instance, a house might be valued differently based on:
+
+Its individual features (e.g., size, condition)
+
+Its neighborhood (e.g., school district, crime rate)
+
+Current market trends (e.g., buyer’s vs. seller’s market)
+
+Interestingly, the combined effect of these contexts on the property’s value may not simply be the sum of their individual effects. A house in a desirable school district might command a premium that exceeds what one would expect from evaluating the school and the house separately.
+
+This phenomenon mirrors quantum contextuality, where the outcome of a measurement depends on the specific set of measurements performed, and these outcomes can’t be explained by pre-existing properties alone. Just as the value of a house can’t be fully determined by looking at its features in isolation, quantum properties often can’t be assigned definite values independent of the measurement context.
+
+3. Similarities to Existing Work in Physics
+
+The discussed perspective seems to offer a very intuitive framework for understanding a wide range of quantum-mechanical phenomena, rendering them almost mundane in their simplicity. However, this raises an important question: Do these analogies extend beyond mere metaphors to reveal deeper connections with established physics?
+
+To explore this possibility, we’ll examine similarities between the discussed model and existing work in physics.
+
+3.1 Stephen Wolfram: Multiway Causal Graphs
+
+We find the first similarities in Stephen Wolfram’s work on his physics project, where he uses similar hypergraphs to model the evolution of a system that fans out into a branchial space of superpositioned evolutions (he calls them multiway causal graphs).
+
+Infographic from Wolframs Physics Project
+
+While there are many similarities, some subtle differences exist:
+
+We use an object-centric model where state changes take on the form of transactions to mimic a virtual universe with digital assets, while Wolfram employs more abstract graph rewriting systems. Despite these differences, the emerging hypergraph is conceptually identical.
+
+To arrive at a single causally consistent evolution, we use a collapse of the branchial space. In contrast, Wolfram looks for systems that automatically converge back to the same result, a property he terms causal invariance.
+
+An example of causal invariance would be a scenario where both Bob and Alice (with their respective parents) donate all of their received coins to the same entity. In this case, the macroscopic outcome would be the same despite having temporarily gone through conflicting evolutions.
+
+While causal invariance provides an interesting perspective on system convergence, we are particularly interested in approaches that incorporate an actual selection mechanism.
+
+3.2 Transactional Interpretation of Quantum Mechanics
+
+This interest led us to explore other interpretations of quantum mechanics, where we find significant overlap with the Transactional Interpretation of Quantum Mechanics (TIQM).
+
+The TIQM views quantum interactions as Wheeler–Feynman handshakes or transactions. In this interpretation, the wave function of standard quantum formalism and its complex conjugate are seen as retarded (forward-in-time) and advanced (backward-in-time) waves, respectively.
+
+Ruth Kastner’s Possibilist Transactional Interpretation (PTI) appears to be an especially close match to our approach. In PTI, space-time itself — the causal graph of realized interactions — emerges through transactions. These transactions manifest as a retro-causal selection process over a space of superpositioned possibilities, forming a realm of proto-time or computational exploration.
+
+This perspective aligns remarkably well with our model, and it is noteworthy that this seems to be the first time that an engineering effort arrives at an existing interpretation of quantum mechanics.
+
+Like Wolfram's approach with multiway causal graphs, the PTI has been explored in the context of causal sets theory and remains consistent with Bell's Theorem.
+
+4. Engineering Perspective on PTI
+
+While the Possibilist Transactional Interpretation (PTI) is mathematically complete — in that it reproduces all predictions of standard quantum mechanics — our engineering insights might contribute to answering a question often overlooked in science: “Why would the universe operate in this manner?”
+
+4.1 Universal Optimization Process
+
+The discussed model is not some arbitrary form of computation but a form of optimized distributed computation where every state change of the system is preceded by a search process that aims to minimize a nonlocal loss function (requiring inputs from two or more spatially separated entities).
+
+While not resolving conflicts like distributed systems do, the universe still seems to fan out into a search-space to select the first optimal transaction, analogous to the spreading of an offer wave seeking a compatible receiver for information exchange.
+
+4.2 Randomness and Computational Irreducibility
+
+The undetermined state of possible receivers at the time of emitting the offer makes this problem computationally irreducible — it cannot be simplified or accelerated beyond its natural course and to arrive at the result, one must perform all steps of the computation.
+
+The random and probabilistic outcomes observed in quantum mechanics might simply be the result of solving such an unpredictable optimization problem which depends on the input of at least two parties (randomness is used to break ties between equally optimal solutions).
+
+4.3 Universe as a Computational Agent
+
+If the universe does indeed engage in a nonlocal optimization process with a specific loss function, this could have far-reaching implications:
+
+The universe itself could be viewed as a computational entity with an actual goal.
+
+It would provide an active computational substrate rather than a passive stage for events.
+
+If classical reality emerges as an optimized form of underlying computational processes, this suggests that reality may be, to some degree, holographic in nature.
+
+It is important to note that when we say computational, we mean that the universe evolves according to some underlying rules, not necessarily that it is simulated in a classical computer. This distinction is crucial for understanding the framework’s implications.
+
+The importance of minimizing loss functions in machine learning and their role in the emergence of intelligent behavior raises an intriguing question: Could this perspective eventually point towards a connection between quantum mechanics and the emergence of life?
+
+4.4 The Universe's Goal
+
+If we make the minimal assumption and postulate that the offer wave’s purpose is to find the first receiver able to form a handshake with the emitter, then this essentially describes a universe where information always flows along the path that takes the least time (predicting Fermat’s principle).
+
+This optimization behavior has concrete foundations in physics — it’s fundamentally embedded in the laws of physics through the principle of stationary action (also known as the principle of least action). This principle, which underlies virtually all of modern physics from classical mechanics to quantum field theory, demonstrates that particles always follow paths that minimize or maximize the action integral. The fact that nature universally adheres to this variational principle provides strong evidence that the universe does indeed operate through optimization processes at its most fundamental level.
+
+The loss function in this context is the inverse of the total amount of information exchanged or interactions realized within a given number of computational cycles that it takes the offer wave to propagate.
+
+By minimizing this loss function (or equivalently, maximizing information exchange), the universe essentially allows its contained computational entities to explore all possible wirings while always selecting the one that first leads to a transfer of information.
+
+This presents a fascinating model of computation that, instead of minimizing the loss function at a specific point (e.g., at an output layer in a neural network), fractally self-optimizes the interactions themselves, leading to computations that try to maximize their computational complexity. This loss function is extremely minimal while at the same time being open-ended.
+
+The universe seems to be engaging in the creation of computational circuits of ever-increasing complexity through a simple mechanism of a brute force tree search.
+
+4.5 The Embedded Agents' Goals
+
+If we switch our perspective from the substrate to the embedded agents, then their goal in respect to the aforementioned loss function would be to minimize uncertainty and in larger collectives to minimize their prediction error about the environment by locally coming into a thermodynamic equilibrium state.
+
+This draws interesting parallels to Karl Friston’s work around the Free Energy Principle (which posits that biological systems work to minimize the difference between their model of the world and their sensory inputs) and hints at a possible connection between our framework and the field of neuroscience.
+
+In this context, we can view creativity and curiosity as natural consequences of the universe’s computational nature. Creativity, the ability to explore different and new ways of interacting, emerges as agents seek novel pathways to minimize uncertainty. Curiosity, the willingness to reach out to others across time and space, becomes a fundamental drive as agents strive to gather information and reduce prediction errors. These cognitive processes, often considered uniquely human, may in fact be intrinsic properties of the universe’s optimization mechanism, manifesting at higher levels of complexity.
+
+4.6 Machine Learning Self-Play as a Model System
+
+Building on our earlier discussion of loss functions and their role in the emergence of intelligent behavior, we find a powerful empirical validation in modern machine learning systems. Non-linguistic AI models that achieve superhuman performance in complex domains (like AlphaGo, MuZero, and others) rely heavily on self-play mechanisms where agents gradually improve through repeated competition and selection. These systems provide a concrete demonstration of how our theoretical framework might operate in practice.
+
+The success of self-play in machine learning offers compelling evidence that parallel exploration coupled with selection pressure can indeed give rise to remarkable complexity and sophistication. Just as our framework describes reality exploring quantum possibilities in parallel before selecting optimal paths, self-play systems explore vast strategy spaces through parallel simulations. This parallel exploration, combined with a selection mechanism that preserves successful strategies, leads to the emergence of increasingly sophisticated behaviors that weren’t explicitly programmed.
+
+Perhaps most intriguingly, these systems exhibit a form of retro-causality that mirrors our framework’s quantum selection process. In self-play, the discovery of winning strategies retroactively determines which past moves were “optimal”, much like how our framework suggests future measurements influence the selection of quantum paths. This similarity extends beyond mere analogy — it suggests a fundamental pattern in how complex systems optimize themselves through time.
+
+The key difference lies in the scope and nature of the optimization target. While machine learning systems typically optimize for specific objectives within defined problem spaces, our framework describes optimization at the fundamental level of reality itself. The universe’s “loss function” of maximizing information exchange is more open-ended, allowing for endless growth in complexity. Nevertheless, the emergence of sophisticated strategies in ML systems provides tangible evidence that simple selection pressures can generate complex, organized behavior.
+
+The striking parallels between machine learning and our theoretical framework reveal something deeper. They suggests that our most successful AI architectures may be inadvertently replicating the fundamental computational patterns we’ve identified in quantum mechanics and cosmology. This insight offers new directions for both physics simulation and AI architecture design, while providing empirical support for our core hypothesis about the self-optimizing nature of reality.
+
+4.7 The Emergence of Time
+
+Our framework suggests a radical but intuitive perspective on the nature of time: rather than being a fundamental dimension, time emerges from the series of state changes as perceived by each object. What we perceive as "now" is not just a single fixed state, but includes that brief moment of quantum superposition before collapse - the instant where multiple possibilities exist simultaneously.
+
+This isn't merely philosophical speculation - it's a technical requirement of our framework. To model entities in our virtual universe, each must maintain not only its current definite state but also track and manage all the uncollapsed waves it has emitted. Each entity remains "connected to" and "aware of" these waves until they find their receivers and collapse. This quantum "moment of cessation" before collapse might be what gives us our sense of time's flow - like a wave folding at its crest before breaking, consciousness might perceive this moment of pure possibility before it crystallizes into definite reality.
+
+Memory, then, is not a direct perception of the past, but information encoded in the current state of matter. The future exists as superpositioned possibilities until collapse. We exist eternally in this quantum present, simultaneously experiencing both the definite results of past collapses and the quantum possibilities of imminent ones.
+
+This explains why time is relative - different objects exist in different states based on their history of interactions through the universe's optimization landscape. Time dilation emerges naturally from changes in interaction rates (more on that later).
+
+Most profoundly, this suggests that consciousness doesn't flow through time - it exists in an eternal present, participating in both the collapsed "now" and the moment of possibility before the next collapse. We are not passive observers of a timeline, but active computational entities in reality's ongoing optimization, each necessarily maintaining awareness of both our definite state and our uncollapsed possibilities.
+
+4.8 Quantum Tunneling as Wave Interference
+
+Traditional explanations of quantum tunneling often present it as a mysterious phenomenon where particles pass through energy barriers they classically shouldn't be able to traverse. However, our framework might offer a more intuitive explanation: what we perceive as "empty space" is actually filled with uncollapsed wave functions and potential transactions.
+
+When we consider an incident wave encountering a barrier, we typically model this against an empty background. But if we consider that the background itself contains waves from countless other potential transactions, tunneling becomes almost trivial to understand: it occurs when our incident wave constructively interferes with background waves, creating pathways through what we perceive as barriers.
+
+This perspective aligns with our framework's view of space as an active computational medium rather than a passive backdrop. What we call tunneling might simply be our incident wave finding and utilizing existing patterns of potential transactions in the quantum substrate - like a surfer catching an existing wave to traverse a barrier they couldn't cross on their own.
+
+This also explains why tunneling probabilities depend on barrier properties - they reflect how likely our incident wave is to find compatible background patterns to interfere with constructively. The thicker or higher energy the barrier, the less likely such favorable interference patterns become.
+
+4.9 Simulation Framework and Emergent Effects
+
+In an attempt to test these ideas, we started our work on a project called global optimization descriptor (god). At its core, this framework is planned to provide a flexible foundation for exploring emitter-receiver matching algorithms, allowing us to easily experiment with different rulesets and loss functions for computational agents. This modular approach will help us investigate what minimal conditions are necessary for the emergence of self-replicating processes (i.e. autocatalytic sets).
+
+Although we are still in an extremely early stage of development, we performed some tests with a simplified toy model and it looks like we already see effects resembling gravity and inertia. The space between objects is not empty but filled with uncollapsed wave functions (potential interactions) searching for receivers. If emitters are isotropically distributed in space, a non-accelerating object floating freely will receive interactions from all sides equally. An accelerating object, however, moves away from emitters in one direction (forming a relativistic horizon behind it) and towards emitters in the other direction, leading to asymmetries in the amount and directionality of interactions.
+
+Similarly, two objects in close proximity mutually shield each other from receiving transactions from their respective side of the cosmos, resulting in fewer interactions and a net push between the objects. The reduced interaction rate due to this shielding effect mirrors the phenomenon of gravitational time dilation.
+
+4.10 Quantized Inertia
+
+Remarkably, we find an existing theory that aligns with our observations: Mike McCulloch's Quantized Inertia (QI), which describes the emergence of gravity and inertia through shielding and horizon effects.
+
+The theory suggests that inertia arises from a fundamental asymmetry in the quantum vacuum. When an object accelerates, it creates a Rindler horizon behind it - a boundary beyond which information cannot catch up with the accelerating object. This horizon causes an imbalance in the quantum vacuum fluctuations (or in our framework: potential transactions) around the object. There are fewer possible interactions on the horizon side compared to the front of the object, resulting in a net force opposing acceleration - what we experience as inertia.
+
+Similarly, QI proposes that gravity emerges because matter creates a gradient in the density of possible quantum interactions. Large masses shield each other from cosmic quantum fluctuations, leading to a mutual attraction that we interpret as gravity.
+
+With its simpler mathematical framework, QI explains various cosmic anomalies including galaxy rotation curves without requiring the existence of dark matter. But the theory's implications extend beyond theoretical physics into practical applications. QI suggests the possibility of engineering artificial horizon gradients, potentially enabling novel propulsion systems without exotic matter or energy. These predictions have gained empirical support through independent laboratory experiments, with ongoing efforts to extend testing to space-based environments.
+
+Most compellingly, McCulloch's theory also relies on the Transactional Interpretation of Quantum Mechanics, as without it, an accelerating object would be unable to retro-causally create a horizon in the past. This unexpected convergence of independently developed theories - one from engineering and one from physics - suggests we might be uncovering fundamental patterns in how the universe processes information.
+
+5. Conclusion
+
+While this line of thought contains speculative elements, it builds upon existing theories that not only show remarkable consistency with each other but also align with recent insights from the field of machine learning
+
+One of the major questions surrounding the family of transactional interpretations has been why we should assume backwards time causation when it produces the same mathematics as conventional approaches. By framing this mechanism as an optimization process, our engineering perspective provides a compelling answer.
+
+The accessibility of this framework — the fact that we can explain it without resorting to complex mathematical formulas — might suggest a lack of rigor. However, this simplicity of explanation masks the mathematical foundations: both PTI and Quantized Inertia are firmly grounded in established mathematical formalisms.
+
+If we consider the wave-function collapse as the first step of natural selection, we arrive at a profound implication: the existence of a noetic (from Greek ‘noētikos’ meaning ‘intellectual’ or ‘relating to the mind’) universe — a godlike nonlocal computational entity that, despite its cosmic scale, can be understood through mechanistic principles.
+
+This perspective suggests a subtle but important shift in how we think about our universe. Instead of viewing it as fine-tuned for life, we might better understand it as an agent actively fine-tuning itself and continuously manifesting those versions of the possibility space where the most interactions occur in the least time.
+
+Similarly, what we typically interpret as randomness might actually be a consequence of nonlocal optimization processes operating beyond our immediate view.
+
+6. Related Work and Ideas
+
+In the spirit of acknowledging that ideas rarely emerge in isolation, we want to highlight several thinkers who have explored ideas and concepts that seem related.
+
+6.1 Jeremy England
+
+Jeremy England, a physicist at MIT, proposed the theory that life is nature’s way of efficiently dissipating energy and increasing entropy — what he called dissipative adaptation.
+
+He published his ideas around 2013–2014, suggesting that when a group of atoms is driven by an external source of energy (like the sun) and surrounded by a heat bath (like the ocean or atmosphere), it will often gradually restructure itself to dissipate more energy.
+
+His theory connects thermodynamics to the origin of life, suggesting that life emerged because it was an efficient way for matter to dissipate energy and increase entropy in accordance with the Second Law of Thermodynamics which aligns with the proposed framework of reality self-optimizing for maximum information exchange and computational complexity.
+
+6.2 Gerald Pollack
+
+Gerald Pollack’s work on the fourth phase of water (also known as structured water or EZ water) provides another fascinating perspective on the emergence of agency in physical systems. Through extensive research at the University of Washington, Pollack discovered that water adjacent to hydrophilic surfaces forms a structured, gel-like phase with distinct properties from bulk water.
+
+This fourth phase of water exhibits remarkable self-organizing behavior:
+
+It actively excludes solutes, earning it the name exclusion zone (EZ)
+
+It builds and maintains a negative charge, creating potential differences
+
+It responds to light energy, particularly infrared radiation
+
+It demonstrates the capacity to perform work and store information
+
+Most intriguingly, Pollack argues that this behavior represents a form of proto-life or primitive agency. The water molecules’ ability to self-organize, respond to environmental stimuli, and maintain far-from-equilibrium states mirrors many characteristics we associate with living systems. This aligns with our framework’s suggestion that agency and self-optimization may be fundamental properties of reality rather than emergent phenomena unique to biological life.
+
+Pollack’s observations of water’s self-organizing capabilities provide empirical support for the idea that matter, given the right conditions, naturally tends toward states of increased order and complexity — seemingly in violation of traditional interpretations of the Second Law of Thermodynamics. This apparent paradox can be resolved within our framework by understanding that local increases in order can serve the universe’s broader optimization goals by enabling more sophisticated forms of information exchange and computation.
+
+6.3 Assembly Theory
+
+Lee Cronin and his team at the University of Glasgow developed Assembly Theory, which provides a framework for measuring molecular complexity based on the number of steps required to construct molecules. This theory suggests that complex molecules requiring many assembly steps are more likely to be associated with life processes.
+
+Their work introduces a mathematical framework for quantifying molecular complexity and demonstrates that high assembly numbers consistently correlate with biological and technological processes. While Assembly Theory identifies a selection process favoring increasingly complex assembled structures, it currently leaves open the question of why this selection occurs.
+
+Our framework offers a potential mechanism for this selection process, suggesting why the universe naturally tends to assemble existing computational circuits into larger structures. The drive to maximize information exchange and computational complexity provides a fundamental reason for nature’s apparent preference for building and maintaining complex assembled structures.
+
+6.4 Michael Levin
+
+Michael Levin’s work on “Classical Sorting Algorithms as a Model of Morphogenesis” demonstrates how virtual agents in a shared environment, implementing basic sorting algorithms, naturally form emergent patterns and exhibit self-organizing behavior. His simulations show that even simple sorting rules lead to agents clustering and organizing themselves in ways that suggest rudimentary computational competencies.
+
+Our framework can be seen as a natural extension of his approach, but with a key distinction: rather than implementing specific algorithms within the agents, we propose that the computational substrate implements a universal loss function, which in contrast to a local algorithm can lead to open-ended goals.
+
+We can confirm a similar effect of clustering but not due to differences in behavior but due to differences in spatial position and mutual shielding. Entities get pushed together due to interactions with the residual waves of the surrounding cosmos.
+
+6.5 Ernst Mach
+
+Ernst Mach’s ideas from the late 19th century show remarkable alignment with our framework. His most profound insight, known as Mach’s Principle, suggests that inertia arises from an object’s relationship with the rest of the universe rather than being an intrinsic property. This precisely matches our framework’s emergence of inertial effects through asymmetries in cosmic interaction patterns when objects accelerate.
+
+Mach insisted that all physical phenomena must be understood in terms of observable relationships between objects rather than absolute properties or metaphysical abstractions. This philosophical stance finds a concrete computational implementation in our framework, where reality emerges from patterns of interactions (transactions) rather than fundamental particles.
+
+While Mach identified these relational effects, he lacked a mechanism to explain them. Our framework’s computational perspective might provide exactly that — showing how these relationships arise naturally from a universe optimizing its information exchange.
+
+6.6 Panpsychism and Information Awareness
+
+Our framework offers an intriguing perspective on panpsychist ideas. If the universe naturally tends toward forms of higher computational complexity, then all matter inherently responds to and interacts with its environment in ways that mirror our own consciousness, just at different scales of complexity.
+
+We typically assume that consciousness requires an entity to actively model and be “aware” of information. However, what if the information stored in matter’s structure is inherently aware of its own content? Consciousness might simply be the ability to perceive, model, and interact with the world — a fundamental property that scales with computational complexity.
+
+This suggests that everything that interacts with the world through its inner causal structure is conscious to some degree, with humans being “more conscious” only in the sense that we can model and process larger amounts of structured information. This isn’t a metaphysical claim about consciousness being magical or fundamental, but rather a natural consequence of how information and computation are structured in our universe.
+
+6.7 Penrose-Hameroff Orchestrated Objective Reduction
+
+Our framework shares some common ground with Penrose and Hameroff’s Orchestrated Objective Reduction (Orch-OR) theory. Both approaches associate consciousness with quantum wave-function collapse and agree that this collapse is objective rather than subjective or observer-dependent.
+
+We diverge from Penrose’s argument that consciousness requires uncomputable processes. Our framework suggests that the apparent non-computability might simply reflect the inherent unpredictability of distributed optimization problems that depend on nonlocal information.
+
+However, Hameroff’s insights about microtubules are compelling, particularly given how anesthetics work by targeting them. If we understand consciousness as awareness of information about our environment and our internal model, then microtubules might indeed be where this integrated awareness is generated. Rather than being the source of consciousness itself, they could be the biological machinery that evolved to maintain coherent quantum states necessary for integrating and being aware of complex informational models.
+
+This view reconciles the empirical evidence for microtubules’ role in consciousness with our framework’s more fundamental perspective on the computational nature of reality.
+
+6.8 Platonic Anticipation
+
+In Plato’s Timaeus, we find a remarkably prescient description of our framework: 
+
+This world came to be in very truth a living creature with soul and reason. A single visible living creature containing within itself all living things whose nature is of the same order.
+
+Written over two millennia ago, this characterization of the universe as a living, reasoning entity that contains and shapes all other living things strikingly parallels our description of reality as a computational substrate that optimizes for maximum complexity and information exchange.
+
+Where Plato spoke of soul and reason, we describe computational processes and loss functions. Where he saw a living creature containing all living things, we see a self-optimizing system that gives rise to increasingly complex forms of organization.
+
+This isn’t merely poetic coincidence. Plato’s insight that the universe itself might possess attributes we typically associate with life and intelligence — rather than being a passive stage for events — anticipates our framework’s core proposition about reality’s active, computational nature.
+
+6.9 Dirac Sea and the Quantum Substrate
+
+Our framework's notion of being surrounded by a "sea of potentiality" bears an interesting historical parallel to Dirac's sea hypothesis from the early days of quantum mechanics. In 1929, Paul Dirac proposed the existence of an infinite sea of negative energy states to resolve the problem of negative energy solutions in his relativistic wave equation. This "Dirac sea" was imagined to be completely filled, with observable positrons appearing as "holes" in this infinite ocean of negative energy states.
+
+While the specific concept of the Dirac sea was eventually superseded by the more complete mathematical framework of quantum field theory, there's something profoundly intuitive about these "sea-like" models in physics. They capture an essential truth about the nature of space - that what appears empty is actually filled with potential.
+
+Our framework's "sea of potentiality" differs from Dirac's sea in that it describes an active computational medium of possible transactions rather than filled energy states. Importantly, since these potential transactions manifest as seemingly random quantum fluctuations rather than consistent signals over time, we don't directly perceive this quantum substrate - much like we don't see individual waves in a choppy ocean, only their aggregate effects. This helps explain why the quantum realm appears so different from our classical experience, despite underlying all of it.
+
+This historical parallel suggests that even early quantum pioneers were grasping towards the idea that space itself is an active participant in physical processes rather than a passive backdrop. While their specific models may have been superseded, their intuitions about the fullness of apparent emptiness may have been more profound than initially realized.
+
+6.10 Adam Smith
+
+Our framework of reality as a self-optimizing computational system finds a striking parallel in economic markets, particularly capitalism. Just as the universe optimizes for maximum information exchange through parallel exploration and transaction selection, market economies optimize for value exchange through similar decentralized mechanisms.
+
+In capitalist systems, profit maximization acts as a shared loss function that drives the behavior of independent agents. This creates a form of distributed intelligence remarkably similar to our quantum framework: Individual agents like companies and individuals continuously explore possible transactions in parallel, while price signals act like offer waves propagating through the market seeking optimal exchanges. Just as quantum transactions only manifest when both emitter and receiver agree on a handshake, economic transactions only materialize when both parties agree on terms.
+
+The effectiveness of market economies might stem precisely from how closely they mirror the universe’s fundamental computational nature. Both systems operate through decentralized optimization, processing vast numbers of parallel possibilities before selecting outcomes through actual transactions rather than central planning. This naturally leads to the emergence of system-level intelligence and increasingly complex structures over time, all without requiring central coordination.
+
+What we traditionally call the invisible hand of the market might be better understood as an emergent property of distributed optimization systems, similar to how complex quantum behaviors emerge from countless local interactions. Markets aren’t merely human constructs — they appear to be implementations of the same optimization principles we observe at the quantum level.
+
+This deep connection between quantum mechanics and economics offers potential insights in both directions: economic principles might inform our understanding of quantum processes, while quantum optimization patterns might suggest new approaches to economic system design.
+
+The fact that capitalism has proven so effective at generating complex adaptive behavior might be precisely because it implements the universe’s fundamental computational patterns at a societal scale.
+
+7. Closing Remarks
+
+We acknowledge that the discussed examples are simplifications that cannot be directly compared to the high-dimensional Hilbert space of quantum mechanics. However, we believe they sufficiently illustrate the core concept of parallel exploration of computational evolutions and we deliberately want to keep this document as accessible as possible for non-domain experts.
+
+For readers interested in the mathematical foundations underlying this framework, we encourage exploring Ruth Kastner's work on the Possibilist Transactional Interpretation (PTI), Stephen Wolfram's technical writings on multiway causal graphs, and Mike McCulloch's mathematical formulation of Quantized Inertia. These provide rigorous mathematical treatments that complement our more intuitive presentation while fully preserving quantum-mechanical predictions.
+
+Given the apparent elegance and explanatory power of viewing reality as a self-optimizing computational process, it seems peculiar that such a framework hasn’t been proposed before. Perhaps our modern mechanistic worldview, which tends to view the universe as a passive stage for mechanistic events rather than an active computational agent, has inadvertently limited our ability to consider certain possibilities — much as religious doctrine once constrained scientific inquiry.
+
+Breaking free from these implicit assumptions might be essential for developing a deeper understanding of reality’s fundamental nature.
