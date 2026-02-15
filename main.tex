@@ -2,18 +2,18 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{mathtools}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{natbib}
 \usepackage[hidelinks]{hyperref}
 \usepackage[nameinlink,capitalize,noabbrev]{cleveref}
 
 \hypersetup{
   pdftitle={Distributed Constraint Resolution as Universal Cognition},
-  pdfauthor={Author},
-  colorlinks=false
+  pdfauthor={Author}
 }
-\usepackage[margin=2.5cm]{geometry}
-\usepackage{natbib}
 \usepackage{enumitem}
 \usepackage{microtype}
 
@@ -81,9 +81,9 @@ principle, integrated information, scale-free, coarse-graining, self-organizatio
 \section{Introduction}\label{sec:introduction}
 % ==========================================================================
 
-The search for a general, principled definition of intelligence remains one of
-the deepest open problems across cognitive science, physics, and philosophy of
-mind. Existing frameworks each illuminate a facet of the problem but fall short
+The search for a general, principled definition of intelligence remains a
+long-standing open problem across cognitive science, physics, and philosophy
+of mind. Existing frameworks each illuminate a facet of the problem but fall short
 of universality:
 
 \begin{itemize}[nosep]
@@ -125,11 +125,23 @@ goal-stabilizing patterns.}
 \end{quote}
 
 We call this the \textbf{Distributed Constraint Resolution} (DCR) framework.
+The three components are, informally:
+\begin{enumerate}[nosep]
+  \item \emph{Exploration} --- a mechanism that generates variability
+        across the configuration space (formalized as a mixing kernel~$E$;
+        \cref{def:exploration}).
+  \item \emph{Resolution} --- local updates that reduce constraint
+        violations between neighboring components (a violation-reducing
+        kernel~$R$; \cref{def:resolution}).
+  \item \emph{Stabilization} --- convergence in distribution to a
+        coherent, low-violation attractor
+        (\cref{def:attractor,def:stabilization}).
+\end{enumerate}
 We treat \emph{goal} as \emph{attractor under the dynamics}
 (\cref{def:attractor}), avoiding teleological connotations.
-The key claim is that this triad---exploration, resolution,
-stabilization---constitutes the \emph{minimal and universal} signature of
-cognition, and that it is realized by physical law itself at every scale.
+The key claim is that this triad constitutes the \emph{minimal and
+universal} signature of cognition, and that it is realized by
+physical law itself at every scale.
 
 The paper is organized as follows. \Cref{sec:framework} formalizes the DCR
 framework. \Cref{sec:scale-free} proves closure under coarse-graining (given
@@ -169,6 +181,10 @@ intelligence.  The ontological claim is that this process is
 fundamental and universal; whether one additionally identifies it with
 experience is a separate philosophical question that DCR does not
 adjudicate (see \cref{sec:discussion}, Limitation~5).
+As a universality claim, DCR is falsified by any robust cognitive
+phenomenon that lacks (i)~genuine exploration, (ii)~local
+constraint-processing, or (iii)~convergence to a coherent attractor
+under coarse-graining.
 
 The coarse-graining closure result (\cref{thm:closure}) requires
 timescale separation between intra-group and inter-group dynamics---a
@@ -182,10 +198,36 @@ that requires separation (see \cref{sec:discussion}, Limitation~1).
 The claim that the DCR triad \emph{is} cognition---that the cosmos is
 cognitive at every scale---is a metaphysical identification, not a
 theorem derivable from the definitions.  The formal machinery is
-compatible with a conservative reading (DCR as a unifying modelling
-framework).  We adopt the stronger reading because it yields the most
-parsimonious ontology: one process at every scale, rather than
-cognition as a sui generis phenomenon.
+compatible with two readings:
+\begin{enumerate}[nosep]
+  \item \emph{Modelling framework (minimal):} DCR provides a unified
+        dynamical vocabulary applicable across scales.
+  \item \emph{Ontological identity (optional):} the DCR triad
+        \emph{is} cognition; the cosmos is cognitive at every scale.
+\end{enumerate}
+We adopt reading~(2) because it yields the most parsimonious
+ontology: one process at every scale, rather than cognition as a
+sui generis phenomenon.  All formal results hold under either
+reading.
+\end{remark}
+
+\begin{remark}[Engineering witness: consensus as DCR]%
+\label{rem:consensus-witness}
+Distributed consensus protocols provide an instructive engineering
+witness for DCR\@.  In replicated-state-machine settings,
+independent agents maintain local copies of a shared state and must
+reconcile conflicting updates (e.g., competing spends) without a
+central controller.  A natural strategy is to allow local proposal,
+temporary branching into mutually incompatible candidate evolutions,
+and subsequent convergence via a selection rule informed by delayed
+nonlocal information.  Read through the DCR lens: proposal
+corresponds to exploration, local validity checks and compatibility
+propagation correspond to distributed constraint resolution, and
+eventual agreement on a single ledger state is a coherent
+attractor.  We emphasize this is a \emph{witness} rather than a
+reduction: the purpose is to exhibit a familiar, explicitly
+mechanistic system where global coherence arises from local
+constraint processing under partial information.
 \end{remark}
 
 % ==========================================================================
@@ -312,7 +354,9 @@ product reference measure), this equals
 $\sum_{s \in S} \Ent(\mu_s) - \Ent(\mu)$, where $\Ent$ denotes Shannon
 (or differential) entropy.  The KL formulation is preferred because it is
 non-negative by construction, invariant under reparametrization, and
-well-defined for arbitrary probability measures on Polish spaces.
+well-defined for arbitrary probability measures on Polish spaces
+(with the convention $D_{\mathrm{KL}} = +\infty$ when $\mu$ is not
+absolutely continuous with respect to $\bigotimes_s \mu_s$).
 
 \end{definition}
 
@@ -327,6 +371,8 @@ provided by the weak Feller property and the smoothness of the
 exploration kernel.  When $\Coh(\mu) = +\infty$---indicating
 maximal statistical dependence---all coherence comparisons should
 be read as applying only within the finite-coherence regime.
+This assumption ensures $\Coh$ is a usable real-valued witness
+rather than an extended-real quantity.
 \end{assumption}
 
 Coherence equals zero if and only if the components are statistically
@@ -380,6 +426,19 @@ of~$\mathbb{R}^n$.  The convergence results in
 \cref{ssec:convergence} use $\varphi$-irreducibility (conditions
 \ref{cond:irreducibility} and~\ref{cond:full-support}) directly.
 \end{definition}
+
+\begin{remark}[Branching exploration variant]\label{rem:branching-explore}
+In some domains it is natural to treat exploration not as additive
+noise but as \emph{branching}: from a given configuration, the
+system generates a family of candidate next states (a ``multiway''
+step), temporarily maintaining a set of possible evolutions.
+Constraint resolution then prunes or reweights these branches, and
+stabilization corresponds to selecting (or concentrating on) a
+single consistent history.  The Markov-kernel formalism still
+applies by viewing a branching--selection step as an induced
+stochastic kernel obtained by marginalizing over the latent branch
+variable.
+\end{remark}
 
 \begin{definition}[Distributed Constraint Resolution]\label{def:resolution}
 A \emph{resolution dynamics} on $\mathcal{N}$ is a Markov kernel
@@ -452,7 +511,8 @@ not yet been established.
 
 \begin{definition}[Coherent Attractor]\label{def:stabilization}
 A vanishing-noise attractor $\mathcal{A}$ is a \emph{coherent attractor}
-(or \emph{goal-stabilizing pattern}) if additionally:
+(or \emph{goal-stabilizing pattern}) if additionally it is both
+coordinated and robust to small exploration noise:
 \begin{enumerate}[nosep]
   \item \emph{Coherent}: For at least one stationary distribution
         $\mu^*$ of the dynamics, $\Coh(\mu^*) > 0$.
@@ -493,18 +553,18 @@ requires both: the system must \emph{explore to discover} and
 \end{remark}
 
 \begin{remark}[Equilibrium systems]\label{rem:equilibrium}
-An equilibrium Glauber or Metropolis sampler formally satisfies the
-DCR axioms (it has constraints, a resolution kernel, and an
-exploration kernel).  However, such systems are excluded by the
-\emph{interpretive} thesis unless the kernel decomposes into
-exploration~$E$ and a \emph{directed} resolution~$R$ that
-preferentially reduces violation
-(\cref{rem:drift-sufficient}).  A reversible sampler at thermal
-equilibrium does not exhibit this directedness:
-$\mathbb{E}[\Viol(X_{t+1}) \mid X_t] = \Viol(X_t)$ on average,
-and the resolution kernel does not systematically drive the system
-toward lower violation.  Cognition in the DCR sense requires
-ongoing, directed constraint resolution---not merely
+Equilibrium Gibbs samplers (Glauber/Metropolis at fixed
+temperature) can generate high statistical dependence, hence high
+$\Coh(\mu^*)$, but they typically \emph{fail} the directed
+violation-reduction condition~\cref{eq:monotone}: at thermal
+equilibrium, the kernel is as likely to increase as to decrease
+$\Viol$ on average (energy is a martingale under detailed balance).
+Thus they are generally not DCR-systems under
+\cref{def:cognitive-system} unless one can exhibit a decomposition
+into a directed resolution kernel~$R$ satisfying~\cref{eq:monotone}
+and an exploration kernel~$E$.  The exclusion is
+\emph{definitional}, not merely interpretive: cognition in the DCR
+sense requires ongoing, directed constraint resolution, not
 constraint-consistent fluctuation.
 \end{remark}
 
@@ -737,8 +797,8 @@ $\mathcal{F}$, with the concentration sharpening as $\epsilon \to 0$.
 
 \begin{lemma}[Positive Coherence]\label{lem:coherence}
 Let $\mu^*$ be a probability measure on
-$\Omega = \prod_{s \in S} D_s$.  If there exist adjacent components
-$s, s' \in S$ (with $\{s,s'\} \in E$) such that the $(s,s')$-marginal
+$\Omega = \prod_{s \in S} D_s$.  If there exist components
+$s, s' \in S$ such that the $(s,s')$-marginal
 of $\mu^*$ is not a product:
 \begin{equation}\label{eq:non-product}
   \mu^*_{s,s'} \;\neq\; \mu^*_s \otimes \mu^*_{s'},
@@ -764,6 +824,11 @@ components $s$ and~$s'$ under~$\mu^*$.  The final strict inequality
 holds because $\mu^*_{s,s'} \neq \mu^*_s \otimes \mu^*_{s'}$ by
 assumption, and KL divergence vanishes if and only if its arguments
 agree.
+The lemma does not require $\{s,s'\}$ to be an edge; any
+non-product pair suffices.  In DCR applications we state the
+condition on edges because dependence is induced locally along
+the constraint graph (\cref{def:resolution}), so edges are where
+non-product marginals arise.
 \end{proof}
 
 \begin{remark}[Why DCR dynamics produce non-product stationary measures]%
@@ -815,7 +880,7 @@ that would yield a product measure.
 
 \begin{remark}[Heuristic criterion for non-product stationary
 measure]\label{rem:non-product-heuristic}
-In practice, the non-product hypothesis~\cref{eq:non-product-hyp}
+In practice, the non-product hypothesis~\ref{eq:non-product-hyp}
 holds whenever the resolution kernel introduces genuine dependence
 between neighbors and the exploration kernel does not wash it out.
 Concretely, if $K$ is irreducible on a finite state space,
@@ -826,7 +891,7 @@ kernel), then the stationarity equation for the $(s,s')$-marginal
 forces a cancellation between the dependence introduced by $R$ and
 the mixing by $E$, which generically fails.  However, contrived
 counterexamples exist (cf.\ \cref{rem:coherence-application}), so
-we state~\cref{eq:non-product-hyp} as an explicit hypothesis in
+we state~\ref{eq:non-product-hyp} as an explicit hypothesis in
 \cref{thm:convergence} rather than deriving it from these
 conditions alone.
 \end{remark}
@@ -837,9 +902,10 @@ Let $\Omega = \prod_s D_s$ be a finite state space with pairwise
 interaction Gibbs measure
 $\pi(\omega) \propto \exp\!\bigl(-\sum_{\{s,s'\} \in E}
 J_{s,s'}(\omega_s, \omega_{s'})\bigr)$,
-and let $R$ be reversible with respect to $\pi$ (e.g., Metropolis
-or Glauber dynamics).  Let $K = (1-\epsilon)R + \epsilon\,E$ with
-$K$ irreducible.  If $J_{s,s'} \not\equiv \mathrm{const}$ for some
+and let $R$ be irreducible and reversible with respect to $\pi$
+(e.g., single-site Metropolis or Glauber dynamics on a connected
+graph).  Let $K = (1-\epsilon)R + \epsilon\,E$ with $K$
+irreducible.  If $J_{s,s'} \not\equiv \mathrm{const}$ for some
 edge $\{s,s'\}$, then for all sufficiently small $\epsilon > 0$
 the unique stationary distribution $\mu^*_\epsilon$ satisfies
 $(\mu^*_\epsilon)_{s,s'} \neq (\mu^*_\epsilon)_s \otimes
@@ -910,7 +976,7 @@ By \cref{lem:unique}, $\mu^*_\epsilon$ is unique and the chain is ergodic.
 By \cref{lem:concentration}, $\mathbb{E}_{\mu^*_\epsilon}[\Viol] =
 O(\epsilon)$, and \cref{eq:markov-concentration} gives weak
 concentration near $\mathcal{F}$.
-By the non-product hypothesis~\cref{eq:non-product-hyp},
+By the non-product hypothesis~\ref{eq:non-product-hyp},
 $\Coh(\mu^*_\epsilon) > 0$ by \cref{lem:coherence}.
 
 $L(\omega) = \Viol(\omega) + 1$ is continuous and bounded on
@@ -918,8 +984,9 @@ compact $\Omega$, achieves its minimum on $\mathcal{F}$, and
 satisfies the drift condition~\ref{cond:drift}.  The ergodic theorem
 gives $T^{-1}\sum_{t=0}^{T-1} L(X_t) \to \int L\,d\mu^*_\epsilon
 = O(\epsilon)$ a.s., confirming that the time-averaged violation
-is small.  Since $\mu^*_\epsilon$ has full support on $\Omega$
-(the exploration kernel ensures this), the chain does not converge
+is small.  Since $\mu^*_\epsilon$ charges every open set that
+the chain can reach (a consequence of $\varphi$-irreducibility
+and condition~\ref{cond:full-support}), the chain does not converge
 to $\mathcal{F}$ in the pathwise sense $d(X_t,\mathcal{F}) \to 0$;
 rather, $\mathcal{F}$ is the high-probability region of the ergodic
 distribution, and the concentration sharpens as $\epsilon \to 0$.
@@ -1112,8 +1179,10 @@ composition mechanism that requires separation.
 \subsection{The Coarse-Graining Construction}\label{ssec:coarse-graining}
 
 \begin{definition}[Coarse-Graining]\label{def:coarse-graining}
-Let $\mathcal{C} = (\mathcal{N}, \{X_t\}, R, \mathcal{A})$ be a
-cognitive system with component set $S$, and let
+Let $\mathcal{C} = (\mathcal{N}, E, R; \mathcal{A})$ be a
+cognitive system (\cref{def:cognitive-system}) with combined
+dynamics $K = (1-\epsilon)R + \epsilon\,E$ and component set
+$S$, and let
 $\pi : S \twoheadrightarrow S'$ be a surjective \emph{partition map}
 grouping components into macro-components. A \emph{coarse-graining}
 $\Gamma_{\pi,g}(\mathcal{C})$ additionally requires \emph{compression
@@ -1501,6 +1570,13 @@ for the specific macro-dynamics; the heuristic of
 does not replace it.)
 \end{proof}
 
+\noindent
+The content of the following theorem is that if an effective
+Markovian macro-description exists (fast intra-group equilibration
++ macro-sufficiency), then it inherits the full DCR triad---not
+merely a dynamics, but exploration, directed resolution,
+convergence, and positive coherence.
+
 \begin{theorem}[Closure Under Coarse-Graining (conditional)]\label{thm:closure}
 Let $\mathcal{C}$ be a cognitive system, $\pi : S \twoheadrightarrow S'$
 a partition map, and $\{g_{s'}\}$ compression maps with continuous,
@@ -1581,8 +1657,8 @@ Applying \cref{thm:convergence} to the macro-system on $\tilde{\Omega}$
 unique stationary distribution $\tilde{\mu}^*$ that concentrates near
 $\tilde{\mathcal{F}}_{\min}$ in the sense of
 \cref{eq:markov-concentration} (by the macro-drift condition and
-compactness; as with the micro-level result, the chain is ergodic with
-full support, so ``attraction'' is stochastic).
+compactness; as with the micro-level result, the chain is ergodic and
+charges all reachable open sets, so ``attraction'' is stochastic).
 By condition~(iii), $\tilde{\mu}^*$ has a non-product marginal along at
 least one macro-edge, so $\Coh(\tilde{\mu}^*) > 0$ by
 \cref{lem:macro-coherence}. The Lyapunov function is
@@ -1821,6 +1897,22 @@ time-slice. What is conventionally called ``wavefunction collapse'' is,
 in DCR terms, the convergence of a distributed constraint satisfaction
 process to its feasible solution.
 
+\begin{remark}[Collapse as selection over branches]%
+\label{rem:collapse-selection}
+A complementary structural picture treats quantum ``collapse'' as
+selection over a branching space of candidate transactions
+(cf.\ \cref{rem:branching-explore}).  An emission event generates a
+set of potential absorber-matched outcomes (branches); confirmation
+waves implement distributed feasibility checks; and the realized
+event corresponds to selecting a branch once sufficiently global
+consistency information is available.  The selection can appear
+retrocausal because the constraints relevant to branch feasibility
+depend on spacelike-separated absorbers whose responses are only
+available after finite propagation delays.  This provides an
+engineering-style intuition for why ``late'' information can fix an
+``earlier'' outcome without invoking a centralized chooser.
+\end{remark}
+
 For $N$ interacting particles, the interaction graph $G$ has particles as
 vertices and pairwise interactions as edges. Each interaction is a
 potential transaction site where conservation constraints must be locally
@@ -1848,6 +1940,20 @@ or decoherence-based language, where ``resolution'' corresponds to
 consistency of histories and environment-induced selection.  TIQM is
 used only because the constraint-satisfaction structure is explicit
 in that formulation.
+\end{remark}
+
+\begin{remark}[Unpredictability and tie-breaking]\label{rem:tiebreak}
+In distributed constraint-resolution problems with delayed nonlocal
+inputs, the outcome can be unpredictable even when the local rules
+are fixed: the relevant constraints are not simultaneously available
+at any single location.  In such settings, stochasticity can be
+interpreted operationally as a symmetry-breaking device among
+near-equally feasible resolutions, rather than as ``unstructured
+noise.''  This perspective is compatible with the DCR formalism: it
+amounts to placing the stochasticity in the resolution kernel (or
+in the branch-selection kernel of
+\cref{rem:branching-explore,rem:collapse-selection}) rather than
+exclusively in the exploration kernel.
 \end{remark}
 
 \begin{remark}[Discrete ontic structure and micro-choices]\label{rem:micro-choices}
@@ -2395,6 +2501,22 @@ falsifiable claims:
         vs.\ whole-brain dynamics). Specifically, the ratio of exploration
         timescale to resolution timescale should be approximately preserved
         under coarse-graining.
+
+  \item \textbf{Transaction-density gradients and inertial analogues
+        (speculative).}
+        In substrate models where ``exploration'' is mediated by a sea
+        of uncollapsed potential interactions (transactions),
+        accelerated motion can induce anisotropies in the accessible
+        interaction field (via horizon-like cutoffs), producing
+        effective resistance-to-acceleration terms and mutual
+        ``shielding'' effects between nearby bodies.  DCR does not
+        assume this mechanism, but if such a substrate description is
+        correct then controlled simulations should exhibit
+        acceleration-dependent force terms that scale with the induced
+        interaction anisotropy and with transaction-density gradients.
+        This would provide a concrete route to testing whether certain
+        gravitational/inertial phenomena can be re-expressed as
+        emergent constraint-resolution effects.
 \end{enumerate}
 
 % ==========================================================================
@@ -2445,6 +2567,18 @@ structurally the same, as verified through the explicit construction in
 give to this process. Whether one wishes to call this ``experience'' at the
 quantum level is a separate philosophical question that DCR does not
 adjudicate.
+
+\begin{remark}[Optional optimization reading]\label{rem:optimization-reading}
+An optional interpretive strengthening is to view the DCR process as
+optimizing a system-level functional: exploration generates candidate
+interactions, and resolution selects those that maximize realized
+interaction (information exchange) subject to local conservation
+constraints.  This reading aligns DCR with ubiquitous variational
+principles (least/stationary action) at the level of metaphor and
+motivation, but it is \emph{not} assumed by the formal results:
+the theorems require only local violation-reduction and ergodic
+exploration, not a globally computed objective.
+\end{remark}
 
 \subsection{Relationship to Process Philosophy}
 
@@ -2517,6 +2651,17 @@ levels at which the explore--resolve--stabilize cycle operates simultaneously.
 This suggests that advances in AI may come not from scaling individual layers
 but from increasing organizational depth---more levels of nested constraint
 resolution.
+
+\paragraph{Self-play as engineered DCR.}
+Self-play systems in modern machine learning provide an engineered
+instance of the DCR triad: parallel rollouts implement exploration;
+selection and credit-assignment propagate constraints; and training
+converges to stable policy attractors.  From a DCR perspective, the
+apparent ``retroactive'' assignment of credit to earlier moves is a
+benign analogue of retrocausal selection
+(\cref{rem:collapse-selection}): later outcomes determine which
+earlier degrees of freedom were effectively feasible given the
+constraints.
 
 \subsection{Limitations and Open Problems}
 
