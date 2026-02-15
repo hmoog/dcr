@@ -1,0 +1,154 @@
+\begin{thebibliography}{25}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bak et~al.(1987)Bak, Tang, and Wiesenfeld]{bak1987self}
+Per Bak, Chao Tang, and Kurt Wiesenfeld.
+\newblock Self-organized criticality: An explanation of the 1/f noise.
+\newblock \emph{Physical Review Letters}, 59\penalty0 (4):\penalty0 381, 1987.
+
+\bibitem[Chalmers(1995)]{chalmers1995facing}
+David~J Chalmers.
+\newblock Facing up to the problem of consciousness.
+\newblock \emph{Journal of Consciousness Studies}, 2\penalty0 (3):\penalty0
+  200--219, 1995.
+
+\bibitem[Chandrasekhar(1961)]{chandrasekhar1961hydrodynamic}
+Subrahmanyan Chandrasekhar.
+\newblock \emph{Hydrodynamic and Hydromagnetic Stability}.
+\newblock Oxford University Press, 1961.
+
+\bibitem[Cramer(1986)]{cramer1986transactional}
+John~G Cramer.
+\newblock The transactional interpretation of quantum mechanics.
+\newblock \emph{Reviews of Modern Physics}, 58\penalty0 (3):\penalty0 647--687,
+  1986.
+
+\bibitem[Cross and Hohenberg(1993)]{cross1993pattern}
+Mark~C Cross and Pierre~C Hohenberg.
+\newblock Pattern formation outside of equilibrium.
+\newblock \emph{Reviews of Modern Physics}, 65\penalty0 (3):\penalty0
+  851--1112, 1993.
+
+\bibitem[Feynman(1948)]{feynman1948space}
+Richard~P Feynman.
+\newblock Space-time approach to non-relativistic quantum mechanics.
+\newblock \emph{Reviews of Modern Physics}, 20\penalty0 (2):\penalty0 367,
+  1948.
+
+\bibitem[Friston(2010)]{friston2010free}
+Karl Friston.
+\newblock The free-energy principle: a unified brain theory?
+\newblock \emph{Nature Reviews Neuroscience}, 11\penalty0 (2):\penalty0
+  127--138, 2010.
+
+\bibitem[Friston(2019)]{friston2019free}
+Karl Friston.
+\newblock A free energy principle for a particular physics.
+\newblock \emph{arXiv preprint arXiv:1906.10184}, 2019.
+
+\bibitem[Gammaitoni et~al.(1998)Gammaitoni, H{\"a}nggi, Jung, and
+  Marchesoni]{gammaitoni1998stochastic}
+Luca Gammaitoni, Peter H{\"a}nggi, Peter Jung, and Fabio Marchesoni.
+\newblock Stochastic resonance.
+\newblock \emph{Reviews of Modern Physics}, 70\penalty0 (1):\penalty0 223--287,
+  1998.
+
+\bibitem[Hajek(1988)]{hajek1988cooling}
+Bruce Hajek.
+\newblock Cooling schedules for optimal annealing.
+\newblock \emph{Mathematics of Operations Research}, 13\penalty0 (2):\penalty0
+  311--329, 1988.
+
+\bibitem[Kauffman(1993)]{kauffman1993origins}
+Stuart~A Kauffman.
+\newblock \emph{The Origins of Order: Self-Organization and Selection in
+  Evolution}.
+\newblock Oxford University Press, 1993.
+
+\bibitem[Kemeny and Snell(1960)]{kemeny1960finite}
+John~G Kemeny and J~Laurie Snell.
+\newblock \emph{Finite {M}arkov Chains}.
+\newblock Van Nostrand, Princeton, NJ, 1960.
+
+\bibitem[Kirchhoff et~al.(2018)Kirchhoff, Parr, Palacios, Friston, and
+  Kiverstein]{kirchhoff2018markov}
+Michael Kirchhoff, Thomas Parr, Enrique Palacios, Karl Friston, and Julian
+  Kiverstein.
+\newblock The {M}arkov blankets of life: autonomy, active inference and the
+  free energy principle.
+\newblock \emph{Journal of The Royal Society Interface}, 15\penalty0
+  (138):\penalty0 20170792, 2018.
+
+\bibitem[Levin and Peres(2017)]{levin2017markov}
+David~A Levin and Yuval Peres.
+\newblock \emph{Markov Chains and Mixing Times}.
+\newblock American Mathematical Society, Providence, RI, 2nd edition, 2017.
+
+\bibitem[Maturana and Varela(1980)]{maturana1980autopoiesis}
+Humberto~R Maturana and Francisco~J Varela.
+\newblock \emph{Autopoiesis and Cognition: The Realization of the Living}.
+\newblock D. Reidel Publishing Company, 1980.
+
+\bibitem[Meyn and Tweedie(1993)]{meyn1993markov}
+Sean~P Meyn and Richard~L Tweedie.
+\newblock \emph{Markov Chains and Stochastic Stability}.
+\newblock Springer-Verlag, London, 1993.
+
+\bibitem[M{\'e}zard et~al.(2002)M{\'e}zard, Parisi, and
+  Zecchina]{mezard2002random}
+Marc M{\'e}zard, Giorgio Parisi, and Riccardo Zecchina.
+\newblock Random {K}-satisfiability problem: From an analytic solution to an
+  efficient algorithm.
+\newblock \emph{Physical Review E}, 66\penalty0 (5):\penalty0 056126, 2002.
+
+\bibitem[Powers et~al.(2024)Powers, Xu, Fotso, Thomay, and
+  Stojkovic]{powers2024statistical}
+Sam Powers, Guangpeng Xu, Herbert Fotso, Tim Thomay, and Dejan Stojkovic.
+\newblock A statistical model for quantum spin and photon number states.
+\newblock \emph{arXiv preprint arXiv:2304.13535}, 2024.
+
+\bibitem[Seth(2021)]{seth2021being}
+Anil Seth.
+\newblock \emph{Being You: A New Science of Consciousness}.
+\newblock Dutton, 2021.
+
+\bibitem[Tononi(2004)]{tononi2004information}
+Giulio Tononi.
+\newblock An information integration theory of consciousness.
+\newblock \emph{BMC Neuroscience}, 5\penalty0 (1):\penalty0 1--22, 2004.
+
+\bibitem[Tononi et~al.(2016)Tononi, Boly, Massimini, and
+  Koch]{tononi2016integrated}
+Giulio Tononi, Melanie Boly, Marcello Massimini, and Christof Koch.
+\newblock Integrated information theory: from consciousness to its physical
+  substrate.
+\newblock \emph{Nature Reviews Neuroscience}, 17\penalty0 (7):\penalty0
+  450--461, 2016.
+
+\bibitem[Vanchurin(2020)]{vanchurin2020world}
+Vitaly Vanchurin.
+\newblock The world as a neural network.
+\newblock \emph{Entropy}, 22\penalty0 (11):\penalty0 1210, 2020.
+
+\bibitem[Wheeler and Feynman(1945)]{wheeler1945interaction}
+John~Archibald Wheeler and Richard~Phillips Feynman.
+\newblock Interaction with the absorber as the mechanism of radiation.
+\newblock \emph{Reviews of Modern Physics}, 17\penalty0 (2--3):\penalty0
+  157--181, 1945.
+
+\bibitem[Whitehead(1929)]{whitehead1929process}
+Alfred~North Whitehead.
+\newblock \emph{Process and Reality}.
+\newblock Macmillan, 1929.
+
+\bibitem[Zurek(2003)]{zurek2003decoherence}
+Wojciech~Hubert Zurek.
+\newblock Decoherence, einselection, and the quantum origins of the classical.
+\newblock \emph{Reviews of Modern Physics}, 75\penalty0 (3):\penalty0 715,
+  2003.
+
+\end{thebibliography}
