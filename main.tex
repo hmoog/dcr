@@ -9,6 +9,7 @@
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{natbib}
 \usepackage{enumitem}
+\usepackage{microtype}
 
 % Theorem environments
 \newtheorem{definition}{Definition}[section]
@@ -52,11 +53,14 @@ dissolving the combination problem that plagues panpsychist theories.
 We show that the Free Energy Principle and
 Integrated Information Theory arise as special cases corresponding to
 particular choices of constraint structure and coherence measure. By
-demonstrating that fundamental physical processes---quantum decoherence,
+demonstrating that fundamental physical processes---quantum transactions,
 thermodynamic self-organization, and biological adaptation---satisfy the
 framework's axioms, we argue that the cosmos is cognitive at every scale,
 and that what we colloquially call ``intelligence'' is a particularly
-deep nesting of this universal process.
+deep nesting of this universal process. We further connect the framework
+to recent discrete-ontic models of quantum mechanics, arguing that the
+continuum of standard physics may itself emerge from finite combinatorial
+constraint resolution.
 \end{abstract}
 
 \paragraph{Keywords:} cognition, intelligence, constraint resolution, free energy
@@ -147,15 +151,39 @@ $\mathcal{F} = \{\omega \in \Omega \mid \forall e = \{s,s'\} \in E:
 (\omega_s, \omega_{s'}) \in R_e\}$.
 \end{definition}
 
+\noindent
+For the convergence results in \cref{ssec:convergence} and the
+coarse-graining construction in \cref{sec:scale-free}, we restrict to
+compact Polish state spaces~$D_s$ (hence compact metrizable~$\Omega$)
+in order to invoke standard Markov-chain stability results
+\citep{meyn1993markov}; the definitions above are stated in greater
+generality to clarify which results depend on compactness and which
+do not.
+
 \begin{remark}[Finiteness of $S$]\label{rem:finiteness}
 The formal development assumes $|S| < \infty$. This suffices for systems
 with a natural decomposition into discrete components (particles, neurons,
-organisms) but excludes continuum field theories. The physical examples in
-\cref{sec:physics} (e.g., fluid parcels in convection) should be read as
-finite-element discretizations of the underlying continuum; the formal
-extension to countable or measure-theoretic component spaces (replacing
-sums with integrals in \cref{eq:violation,eq:coherence}) is straightforward
-but introduces technical regularity conditions that we defer to future work.
+organisms) but appears to exclude continuum field theories. The physical
+examples in \cref{sec:physics} (e.g., fluid parcels in convection) should
+be read as finite-element discretizations of the underlying continuum; the
+formal extension to countable or measure-theoretic component spaces
+(replacing sums with integrals in \cref{eq:violation,eq:coherence}) is
+straightforward but introduces technical regularity conditions that we
+defer to future work.
+
+We note, however, that the discreteness assumption may be less restrictive
+than it appears. The continuity of the optical spectrum, for example, is
+not a testable prediction of quantum mechanics---all empirical data is
+inherently discrete. \citet{powers2024statistical} demonstrate that a
+model built entirely from finite binary sequences reproduces the
+probability distributions of canonical quantum mechanics, with small but
+unavoidable deviations at finite~$n$ that shrink as $n$ increases.  For
+any finite~$n$ the system is a finite constraint network in the sense of
+\cref{def:constraint-network}; the continuum of canonical quantum theory
+is recovered only in the limit.  This suggests that the continuum
+structure of standard physics may be an idealization of a fundamentally
+discrete substrate---precisely the kind of substrate that DCR is designed
+to describe (see \cref{rem:micro-choices}).
 \end{remark}
 
 \begin{definition}[Constraint Violation]\label{def:violation}
@@ -174,32 +202,46 @@ are.
 
 \begin{definition}[Coherence]\label{def:coherence}
 Given a probability distribution $\mu$ over $\Omega$, the \emph{coherence} of
-the system is the multi-information (total correlation):
+the system is the total correlation (multi-information), defined as the
+Kullback--Leibler divergence from the product of marginals:
 \begin{equation}\label{eq:coherence}
-  \Coh(\mu) = \sum_{s \in S} \Ent(\mu_s) - \Ent(\mu),
+  \Coh(\mu) = D_{\mathrm{KL}}\!\!\left(\mu \;\Big\|\; \bigotimes_{s \in S} \mu_s\right),
 \end{equation}
-where $\mu_s$ is the marginal of $\mu$ on $D_s$, and $\Ent$ denotes Shannon
-entropy (or differential entropy for continuous spaces).
+where $\mu_s$ is the marginal of $\mu$ on $D_s$.  In the discrete case
+(or for continuous distributions admitting densities with respect to a
+product reference measure), this equals
+$\sum_{s \in S} \Ent(\mu_s) - \Ent(\mu)$, where $\Ent$ denotes Shannon
+(or differential) entropy.  The KL formulation is preferred because it is
+non-negative by construction, invariant under reparametrization, and
+well-defined for arbitrary probability measures on Polish spaces.
 \end{definition}
 
-Coherence is non-negative and equals zero if and only if the components are
-statistically independent. High coherence indicates that the components have
+Coherence equals zero if and only if the components are statistically
+independent under~$\mu$.  High coherence indicates that the components have
 resolved into a coordinated pattern: knowing one component's state constrains
 the others.
 
 \subsection{The Cognitive Triad}\label{ssec:triad}
 
 \begin{definition}[Exploration]\label{def:exploration}
-An \emph{exploration process} on $\mathcal{N}$ is a stochastic process
-$\{X_t\}_{t \geq 0}$ on $\Omega$ such that there exists a measure
-$\nu$ on $\Omega$ with $\nu(\Omega) > 0$ satisfying:
+An \emph{exploration process} on $\mathcal{N}$ is a time-homogeneous
+Markov chain $\{X_t\}_{t \geq 0}$ on $\Omega$ with transition
+kernel~$K$ that is $\varphi$-irreducible for some measure~$\varphi$
+with \emph{full exploration support} on the feasible set:
+\[
+  \varphi(U) > 0 \quad \text{for every open }
+  U \subseteq \Omega \text{ with } U \cap \mathcal{F} \neq \emptyset,
+\]
+and such that for all $\omega \in \Omega$ and all measurable $A$ with
+$\varphi(A) > 0$,
 \begin{equation}\label{eq:exploration}
-  \forall A \subseteq \Omega \text{ with } \nu(A) > 0:
-  \quad \Pr\!\bigl[\exists\, t > 0 : X_t \in A\bigr] > 0.
+  \sum_{n=1}^{\infty} K^n(\omega, A) > 0.
 \end{equation}
-Informally: the process can reach any accessible region of configuration space
-with positive probability. This is a relaxed form of ergodicity restricted to
-the accessible set.
+Informally: the process can reach any region of configuration space that
+intersects the feasible set.  The same measure~$\varphi$ and the same
+conditions reappear as \ref{cond:irreducibility} and
+\ref{cond:full-support} in the convergence machinery of
+\cref{ssec:convergence}.
 \end{definition}
 
 \begin{definition}[Distributed Constraint Resolution]\label{def:resolution}
@@ -447,10 +489,8 @@ Then $\Coh(\mu^*) > 0$.
 \end{lemma}
 
 \begin{proof}
-The multi-information satisfies $\Coh(\mu) = D_{\mathrm{KL}}(\mu \,\|\,
-\bigotimes_{s \in S} \mu_s)$, where $D_{\mathrm{KL}}$ is the
-Kullback--Leibler divergence and $\bigotimes_s \mu_s$ is the product of
-marginals. This divergence equals zero if and only if
+By \cref{def:coherence}, $\Coh(\mu) = D_{\mathrm{KL}}(\mu \,\|\,
+\bigotimes_{s \in S} \mu_s)$.  This divergence equals zero if and only if
 $\mu = \bigotimes_s \mu_s$, i.e., the components are jointly independent
 under $\mu$.
 
@@ -616,19 +656,37 @@ maps} $\{g_{s'}\}_{s' \in S'}$ and is constructed as follows:
         exist group configurations in the preimages
         $g_{s'_j}^{-1}(\tilde{\omega}_{s'_j})$ satisfying all cross-group
         micro-constraints between $\pi^{-1}(s'_1)$ and $\pi^{-1}(s'_2)$.
+        Once the macro-violation $\tilde{v}_{e'}$ is available
+        (\cref{def:macro-violation}), the effective macro-constraint is
+        its zero set:
+        $\tilde{R}_{\{s'_1,s'_2\}} = \{(\tilde{\omega}_{s'_1},
+        \tilde{\omega}_{s'_2}) :
+        \tilde{v}_{\{s'_1,s'_2\}}(\tilde{\omega}_{s'_1},
+        \tilde{\omega}_{s'_2}) = 0\}$; the existential definition above
+        serves only to establish the edge set $E'$.
   \item \textbf{Macro-dynamics:} The compressed process
         $\{\tilde{X}_t\}$ on $\tilde{\Omega}$ is given by
         $\tilde{X}_t = g(X_t)$.
   \item \textbf{Macro-attractor:}
         $\tilde{\mathcal{A}} = g(\mathcal{A})$.
 \end{enumerate}
-The macro-configuration space $\tilde{\Omega}$ has dimension at most
-$\dim\Omega$, with strict inequality whenever any $g_{s'}$ is
-non-injective---the generic and intended case. Concrete choices of
+Whenever any $g_{s'}$ is non-injective---the generic and intended
+case---the compression discards degrees of freedom: $\tilde{\Omega}$
+carries strictly less information than $\Omega$ (and in
+Euclidean-state cases, has lower dimension). Concrete choices of
 $g_{s'}$ include empirical averages (mean-field), order parameters,
 sufficient statistics, or information-bottleneck summaries; the
 appropriate choice is determined by the physics of the system and the
 timescale separation structure (\cref{def:timescale}).
+
+We assume throughout that all state spaces $D_s$ (and hence
+$\tilde{D}_{s'}$) are Polish (complete separable metrizable) and that
+all maps and constraint relations are Borel. Under these standing
+assumptions, images and projections of Borel sets are analytic and
+hence universally measurable. In particular,
+$\tilde{\mathcal{R}}$, $\tilde{\mathcal{F}}$, and the pushforward
+measures arising in the construction are universally measurable
+(though not Borel in general).
 \end{definition}
 
 We now state the conditions precisely and prove closure through three lemmas,
@@ -640,51 +698,81 @@ $\eta$-\emph{timescale separation} with respect to partition $\pi$ and
 compression $\{g_{s'}\}$ if:
 \begin{enumerate}[nosep]
   \item \textbf{Fast intra-group mixing.} For each macro-component
-    $s' \in S'$ and each macro-state
-    $\tilde{\omega}_{s'} \in \tilde{D}_{s'}$, the intra-group dynamics
-    (freezing all components outside the group) admits a unique conditional
-    equilibrium $\nu_{s'}(\cdot \mid \tilde{\omega}_{s'})$ on the fast
-    degrees of freedom---those not captured by $g_{s'}$---and mixes to
-    this equilibrium in time $\tau_{\text{fast}}$.
+    $s' \in S'$, let $\partial s'$ denote the micro-components outside
+    $\pi^{-1}(s')$ that share an edge with some component inside
+    $\pi^{-1}(s')$ (the \emph{micro-boundary} of group $s'$). For each
+    boundary configuration $b_{s'} = (\omega_s)_{s \in \partial s'}$,
+    the restricted chain on $\prod_{s \in \pi^{-1}(s')} D_s$ with
+    $b_{s'}$ frozen has a unique conditional equilibrium
+    $\nu_{s'}(\cdot \mid b_{s'})$ and mixes to this equilibrium in time
+    $\tau_{\text{fast}}$.
   \item \textbf{Slow inter-group dynamics.} The inter-group updates (those
     involving edges in $E_{\text{cross}} = \{\{s_1,s_2\} \in E \mid
     \pi(s_1) \neq \pi(s_2)\}$) occur at rate $\eta$ relative to intra-group
     updates.
   \item $\eta\, \tau_{\text{fast}} \to 0$, i.e., fast degrees of freedom
     equilibrate before the next inter-group update.
-  \item \textbf{Macro-sufficiency.} For each inter-group edge
-    $\{s_1, s_2\} \in E_{\text{cross}}$ with $\pi(s_j) = s'_j$, the
-    expected micro-violation under the conditional equilibria,
-    $\mathbb{E}_{\nu_{s'_1}(\cdot \mid \tilde{\omega}_{s'_1}) \otimes
-    \nu_{s'_2}(\cdot \mid \tilde{\omega}_{s'_2})}
-    [v_{\{s_1,s_2\}}]$,
-    is determined by the macro-states
-    $(\tilde{\omega}_{s'_1}, \tilde{\omega}_{s'_2})$ alone.
+  \item \textbf{Macro-sufficiency (representative-independence).}
+    Define the \emph{macro-boundary} of group $s'$ as
+    $\tilde{b}_{s'}(\tilde{\omega}) =
+    (\tilde{\omega}_{s''})_{s'' \in \mathcal{N}_{G'}(s')}$.
+    For each global micro-configuration $\omega \in \Omega$ write
+    $b_{s'}(\omega) := (\omega_s)_{s \in \partial s'}$ for the induced
+    micro-boundary.  We require that for any two micro-configurations
+    $\omega, \omega' \in \Omega$ and any inter-group edge
+    $\{s_1, s_2\} \in E_{\text{cross}}$ with $\pi(s_j) = s'_j$,
+    if $\tilde{b}_{s'_1}(g(\omega)) = \tilde{b}_{s'_1}(g(\omega'))$
+    and
+    $\tilde{b}_{s'_2}(g(\omega)) = \tilde{b}_{s'_2}(g(\omega'))$,
+    then
+    \[
+      \mathbb{E}_{\nu_{s'_1}(\cdot \mid b_{s'_1}(\omega)) \otimes
+      \nu_{s'_2}(\cdot \mid b_{s'_2}(\omega))}
+      \bigl[v_{\{s_1,s_2\}}\bigr]
+      =
+      \mathbb{E}_{\nu_{s'_1}(\cdot \mid b_{s'_1}(\omega')) \otimes
+      \nu_{s'_2}(\cdot \mid b_{s'_2}(\omega'))}
+      \bigl[v_{\{s_1,s_2\}}\bigr].
+    \]
 \end{enumerate}
-Condition~4 says that the compression maps capture all information
-relevant to inter-group interactions: once the fast degrees of freedom
-have equilibrated, the macro-state is a sufficient statistic for the
-group's contribution to cross-group constraint violation.
+Condition~4 says that the compression maps capture all boundary
+information relevant to inter-group interactions: two global
+micro-configurations that agree on the macro-neighborhood of both
+endpoint groups yield the same expected cross-group violation after
+fast equilibration, even if their micro-boundaries differ in detail
+not captured by $g$.
+This is what makes $\tilde{v}_{e'}$ in \cref{def:macro-violation}
+well-defined as a function on $\tilde{D}_{s'_1} \times
+\tilde{D}_{s'_2}$.  We take macro-sufficiency as a sufficient
+condition ensuring well-defined macro-violations; weaker approximate
+forms (e.g., $\epsilon$-lumpability, where the displayed equality holds
+up to an error of order~$\epsilon$) are natural relaxations that we
+leave to future work.
 \end{definition}
 
 \begin{definition}[Macro-Violation]\label{def:macro-violation}
-Given the conditional equilibria
-$\{\nu_{s'}(\cdot \mid \tilde{\omega}_{s'})\}_{s' \in S'}$ from
-\cref{def:timescale}, the \emph{macro-violation} of a macro-configuration
+Given the conditional equilibria from \cref{def:timescale}, the
+\emph{macro-violation} of a macro-configuration
 $\tilde{\omega} = (\tilde{\omega}_{s'})_{s' \in S'} \in \tilde{\Omega}$
 with respect to an inter-group edge $e' = \{s'_1, s'_2\} \in E'$ is
 \begin{equation}\label{eq:macro-violation}
   \tilde{v}_{e'}(\tilde{\omega}_{s'_1}, \tilde{\omega}_{s'_2}) =
   \sum_{\substack{\{s_1,s_2\} \in E_{\text{cross}} \\
   \pi(s_1) = s'_1,\, \pi(s_2) = s'_2}}
-  \mathbb{E}_{\nu_{s'_1}(\cdot\,|\,\tilde{\omega}_{s'_1}) \otimes
-  \nu_{s'_2}(\cdot\,|\,\tilde{\omega}_{s'_2})}
+  \mathbb{E}_{\nu_{s'_1}(\cdot\,|\,b_{s'_1}) \otimes
+  \nu_{s'_2}(\cdot\,|\,b_{s'_2})}
   \bigl[v_{\{s_1,s_2\}}(x_{s_1}, x_{s_2})\bigr],
 \end{equation}
-and the total macro-violation is
+where $\omega \in \Omega$ is any micro-configuration satisfying
+$g(\omega) = \tilde{\omega}$ and $b_{s'_j} = b_{s'_j}(\omega)$ denotes
+the induced micro-boundary of group~$s'_j$.
+The total macro-violation is
 $\widetilde{\Viol}(\tilde{\omega}) = \sum_{e' \in E'}
-\tilde{v}_{e'}$. By macro-sufficiency, this is well-defined as a
-function on $\tilde{\Omega}$.
+\tilde{v}_{e'}$. By the representative-independence condition
+(\cref{def:timescale}, item~4), the right-hand side of
+\cref{eq:macro-violation} does not depend on the choice of~$\omega$,
+so $\tilde{v}_{e'}$ is well-defined as a function on
+$\tilde{D}_{s'_1} \times \tilde{D}_{s'_2}$.
 \end{definition}
 
 \begin{lemma}[Macro-Resolution Inherits Drift]\label{lem:macro-drift}
@@ -701,10 +789,11 @@ $\Viol(\omega) = \Viol_{\text{intra}}(\omega) + \Viol_{\text{inter}}(\omega)$.
 Under timescale separation, the fast dynamics drives
 $\Viol_{\text{intra}} \to 0$ within each group (by the micro-level drift
 condition applied to intra-group edges). Once each group has equilibrated to
-$\nu_{s'}(\cdot \mid \tilde{\omega}_{s'})$, the remaining violation is
-purely inter-group: $\Viol \approx \Viol_{\text{inter}}$. By
-macro-sufficiency, $\Viol_{\text{inter}}$ under local equilibrium depends on
-the micro-state only through the macro-state
+$\nu_{s'}(\cdot \mid b_{s'})$, the remaining violation is purely
+inter-group: $\Viol \approx \Viol_{\text{inter}}$. By
+macro-sufficiency, $\Viol_{\text{inter}}$ under local equilibrium
+depends on the micro-boundary only through the macro-boundary
+$\tilde{b}_{s'}$, and hence through the macro-state
 $\tilde{\omega} = g(\omega)$, so
 $\mathbb{E}[\Viol_{\text{inter}} \mid \text{local eq.}]
 = \widetilde{\Viol}(\tilde{\omega})$.
@@ -801,7 +890,8 @@ is well-defined by the construction in \cref{def:coarse-graining}. The
 macro-state spaces $\tilde{D}_{s'}$ are images of compact sets under
 continuous maps (hence compact). The macro-constraints
 $\tilde{\mathcal{R}}$ are images of micro-constraints under the
-compression (hence measurable).
+compression (hence universally measurable, as in
+\cref{def:coarse-graining}).
 
 \textbf{Exploration.}
 By \cref{lem:macro-explore}, the compressed process
@@ -889,6 +979,19 @@ feature representation. What we call ``unified experience'' at the human
 scale is the coherent attractor of a cognitive system whose components are
 themselves compressed cognitive systems, recursively.
 
+The \emph{micro-choices} framing (\cref{rem:micro-choices}) sharpens this
+point.  What is fundamental at each scale is not ``micro-experience'' or
+``micro-qualia'' but \emph{micro-degrees of freedom}---hidden variables,
+internal microstates, symbol orderings---whose structured resolution under
+constraints produces the exploration noise that the next scale up
+inherits.  Coarse-graining turns micro-choice variability into
+macro-level exploration (\cref{cor:combination}, item~1): the residual
+fluctuations of equilibrated groups, projected through the compression
+maps, are precisely the stochastic input that drives macro-level
+constraint resolution.  This avoids the ``combination of qualia'' trap
+entirely: there are no qualia to combine, only degrees of freedom to
+compress.
+
 \subsection{The Depth of Cognition}\label{ssec:depth}
 
 Not all cognitive systems are equally ``intelligent.'' We introduce a measure
@@ -945,7 +1048,10 @@ structure of quantum mechanics is most transparently exhibited by the
 absorber theory \citep{wheeler1945interaction}. In TIQM, every quantum
 event is a \emph{transaction}---a completed handshake between emitter and
 absorber mediated by retarded (offer) and advanced (confirmation) waves.
-This maps onto the DCR triad with structural precision:
+We use TIQM as a \emph{structural witness} that quantum dynamics can be
+read as a distributed constraint-resolution process; DCR does not require
+endorsing any particular interpretation of quantum mechanics.  The mapping
+onto the DCR triad is as follows:
 
 \begin{itemize}[nosep]
   \item \textbf{Components:} Emitter and absorber sites---the vertices of
@@ -1005,6 +1111,44 @@ fitness landscape), and the selection is local and distributed (each
 absorber / each organism evaluates constraints independently). DCR
 identifies both as instances of the same universal process, differing
 only in the physical substrate and timescale.
+\end{remark}
+
+\begin{remark}[Discrete ontic structure and micro-choices]\label{rem:micro-choices}
+The DCR picture of quantum mechanics does not require the continuum
+structure of canonical quantum theory.
+\citet{powers2024statistical} model measurement events as event
+networks whose nodes and edges are built from finite base-2 (and
+base-4/base-16) symbol sequences with XOR-like (addition modulo two)
+composition.  Observable quantum numbers correspond to symbol
+\emph{counts}---coarse summaries of the underlying sequences---while
+the ordering of symbols within each sequence remains hidden.  This
+hidden ordering is the source of non-determinism (in their phrase:
+``counts are generally observable, but sequences are not'')
+\citep{powers2024statistical}.
+
+In DCR terms, the space of admissible ontic configurations (all
+symbol orderings consistent with the quantum numbers) is the
+\emph{exploration space}; the contextual compatibility
+conditions---which orderings are consistent with both observers'
+measurement events---are the \emph{constraints}; and the observed
+probability distribution, given by relative frequencies of surviving
+configurations, is the \emph{stabilized pattern}.  The individual
+symbol orderings are \emph{micro-choices}: local, hidden degrees of
+freedom whose structured resolution produces the macroscopic outcome.
+
+For finite sequence length~$n$, the model predicts small but
+unavoidable deviations from canonical QM due to discrete granularity
+(e.g., rotation angles are effectively rational-valued), with
+improved agreement as~$n$ increases.  \citet{powers2024statistical}
+propose optical tabletop tests to constrain these $n$-dependent
+deviations.  Crucially, the continuity of standard quantum mechanics
+is never empirically confirmed---all measurement data is inherently
+discrete---so the finite-$n$ model is not an approximation to the
+``true'' continuous theory but a candidate for the more fundamental
+description.  This supports the DCR framework's assumption of finite
+discrete components (\cref{rem:finiteness}): the continuum may be an
+idealization of an underlying discrete cognitive process operating
+through micro-choices.
 \end{remark}
 
 \subsection{Thermodynamic Self-Organization}\label{ssec:thermo}
@@ -1441,6 +1585,18 @@ suggests that constraint resolution need not respect the arrow of time;
 it is a relation among boundary conditions, not a process confined to one
 temporal direction.
 
+The discrete ontic model of \citet{powers2024statistical} lends additional
+support to this picture.  If quantum probabilities arise from counting
+admissible configurations of binary sequences---\emph{micro-choices} at
+the level of symbol orderings---then what physics calls a ``quantum state''
+is already a coarse-grained summary of a discrete constraint resolution
+process (\cref{rem:micro-choices}).  The continuum of Hilbert space is
+recovered only in the limit $n \to \infty$; at every finite scale the
+system is a finite constraint network undergoing exploration, resolution,
+and stabilization.  This dissolves the objection that DCR's discrete
+formalism cannot capture continuous physics: the continuity is emergent,
+not fundamental.
+
 This is not panpsychism in the traditional sense. We do not claim that an
 emitter--absorber pair ``has experiences.'' We claim that the transaction
 by which a photon is emitted and absorbed is \emph{the same kind of
@@ -1556,7 +1712,11 @@ that:
         neural dynamics (\cref{sec:physics}). The quantum case, framed
         through the Transactional Interpretation, reveals that wavefunction
         collapse and natural selection are structurally identical instances
-        of distributed constraint resolution.
+        of distributed constraint resolution. The discrete ontic model of
+        \citet{powers2024statistical} provides independent evidence that
+        quantum mechanics is compatible with---and may emerge from---the
+        kind of finite combinatorial structure that DCR assumes
+        (\cref{rem:micro-choices}).
   \item The Free Energy Principle and Integrated Information Theory are
         recoverable as special cases (\cref{sec:recovery}).
   \item The framework makes falsifiable predictions about coherence--exploration
@@ -1568,8 +1728,8 @@ If DCR is correct, then cognition is not a biological accident but a
 fundamental feature of physical reality---the process by which the universe
 explores its own degrees of freedom and resolves into the coherent structures
 we observe at every scale. The offer wave and the mutation, the handshake
-and the selection, the transaction and the adapted species: one process,
-many substrates.
+and the selection, the transaction and the adapted species, the symbol
+ordering and the quantum outcome: one process, many substrates.
 
 \bigskip
 \bibliographystyle{plainnat}
