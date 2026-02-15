@@ -1,0 +1,1301 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{natbib}
+\usepackage{enumitem}
+
+% Theorem environments
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+
+% Operators
+\DeclareMathOperator{\Coh}{Coh}
+\DeclareMathOperator{\Ent}{H}
+\DeclareMathOperator{\Viol}{V}
+
+\title{%
+  Distributed Constraint Resolution as Universal Cognition:\\
+  A Scale-Free Framework Unifying Physics and Intelligence%
+}
+\author{%
+  [Author]\\
+  {\small [Affiliation]}\\
+  {\small [Email]}
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We propose a formal framework in which cognition is identified with
+a universal process: the exploration of degrees of freedom followed by
+convergence through distributed constraint resolution into coherent,
+goal-stabilizing patterns. We formalize this triad---\emph{exploration},
+\emph{resolution}, and \emph{stabilization}---using dynamical systems
+on constraint networks equipped with an information-theoretic coherence
+measure. We prove that, under a timescale separation condition, the
+framework is closed under coarse-graining: a coarse-graining construction
+maps cognitive systems at one scale to cognitive systems at the next,
+dissolving the combination problem that plagues panpsychist theories.
+We show that the Free Energy Principle and
+Integrated Information Theory arise as special cases corresponding to
+particular choices of constraint structure and coherence measure. By
+demonstrating that fundamental physical processes---quantum decoherence,
+thermodynamic self-organization, and biological adaptation---satisfy the
+framework's axioms, we argue that the cosmos is cognitive at every scale,
+and that what we colloquially call ``intelligence'' is a particularly
+deep nesting of this universal process.
+\end{abstract}
+
+\paragraph{Keywords:} cognition, intelligence, constraint resolution, free energy
+principle, integrated information, scale-free, coarse-graining, self-organization
+
+% ==========================================================================
+\section{Introduction}\label{sec:introduction}
+% ==========================================================================
+
+The search for a general, principled definition of intelligence remains one of
+the deepest open problems across cognitive science, physics, and philosophy of
+mind. Existing frameworks each illuminate a facet of the problem but fall short
+of universality:
+
+\begin{itemize}[nosep]
+  \item The \emph{Free Energy Principle} (FEP) \citep{friston2010free,
+        friston2019free} provides an elegant variational account: any system
+        persisting at nonequilibrium steady state minimizes variational free
+        energy. Yet FEP assumes a Markov blanket separating system from
+        environment and a generative model as primitives
+        \citep{kirchhoff2018markov}, limiting its applicability to systems
+        where these structures can be identified.
+  \item \emph{Integrated Information Theory} (IIT)
+        \citep{tononi2004information, tononi2016integrated} offers a quantitative
+        measure of consciousness ($\Phi$), but in its original formulations
+        (IIT~2.0/3.0) it is a static, state-level measure rather than a
+        process-level account\footnote{IIT~4.0 introduces dynamical
+        considerations that partially address this limitation; see
+        \cref{ssec:iit-recovery} for discussion.}, and its computation is
+        intractable for large systems.
+  \item \emph{Autopoiesis} \citep{maturana1980autopoiesis} captures
+        self-production but lacks formal predictive content beyond the
+        biological domain.
+  \item \emph{Panpsychism} \citep{chalmers1995facing} attributes experience to
+        fundamental entities but provides no mechanism and no solution to the
+        combination problem---how micro-experiences compose into
+        macro-experiences.
+\end{itemize}
+
+We propose that these limitations stem from a common root: each framework
+privileges a particular \emph{level of description} (Bayesian inference,
+information integration, self-production) rather than identifying the
+\emph{scale-free process} that underlies all of them.
+
+Our central thesis:
+
+\begin{quote}
+\emph{Intelligent behavior emerges when components explore degrees of freedom
+and converge through distributed constraint resolution into coherent,
+goal-stabilizing patterns.}
+\end{quote}
+
+We call this the \textbf{Distributed Constraint Resolution} (DCR) framework.
+The key claim is that this triad---exploration, resolution,
+stabilization---constitutes the \emph{minimal and universal} signature of
+cognition, and that it is realized by physical law itself at every scale.
+
+The paper is organized as follows. \Cref{sec:framework} formalizes the DCR
+framework. \Cref{sec:scale-free} proves closure under coarse-graining (given
+timescale separation), dissolving the combination problem.
+\Cref{sec:physics} demonstrates that fundamental physical processes satisfy
+the DCR axioms. \Cref{sec:recovery} recovers FEP and IIT as special cases.
+\Cref{sec:predictions} derives falsifiable predictions. \Cref{sec:discussion}
+discusses implications and limitations.
+
+% ==========================================================================
+\section{The DCR Framework}\label{sec:framework}
+% ==========================================================================
+
+\subsection{Constraint Networks}\label{ssec:constraint-networks}
+
+\begin{definition}[Constraint Network]\label{def:constraint-network}
+A \emph{constraint network} is a tuple $\mathcal{N} = (S, \mathcal{D}, G, \mathcal{R})$
+where:
+\begin{enumerate}[nosep]
+  \item $S$ is a finite set of \emph{components}.
+  \item $\mathcal{D} = \{D_s\}_{s \in S}$ assigns to each component $s$ a
+        measurable \emph{state space} $D_s$ (its degrees of freedom).
+  \item $G = (S, E)$ is an undirected graph encoding the \emph{interaction
+        topology}.
+  \item $\mathcal{R} = \{R_e\}_{e \in E}$ assigns to each edge
+        $e = \{s, s'\} \in E$ a \emph{constraint relation}
+        $R_e \subseteq D_s \times D_{s'}$.
+\end{enumerate}
+The \emph{configuration space} is $\Omega = \prod_{s \in S} D_s$, and the
+\emph{feasible set} is
+$\mathcal{F} = \{\omega \in \Omega \mid \forall e = \{s,s'\} \in E:
+(\omega_s, \omega_{s'}) \in R_e\}$.
+\end{definition}
+
+\begin{remark}[Finiteness of $S$]\label{rem:finiteness}
+The formal development assumes $|S| < \infty$. This suffices for systems
+with a natural decomposition into discrete components (particles, neurons,
+organisms) but excludes continuum field theories. The physical examples in
+\cref{sec:physics} (e.g., fluid parcels in convection) should be read as
+finite-element discretizations of the underlying continuum; the formal
+extension to countable or measure-theoretic component spaces (replacing
+sums with integrals in \cref{eq:violation,eq:coherence}) is straightforward
+but introduces technical regularity conditions that we defer to future work.
+\end{remark}
+
+\begin{definition}[Constraint Violation]\label{def:violation}
+The \emph{total constraint violation} of a configuration $\omega \in \Omega$ is
+\begin{equation}\label{eq:violation}
+  \Viol(\omega) = \sum_{e = \{s,s'\} \in E} v_e(\omega_s, \omega_{s'}),
+\end{equation}
+where $v_e : D_s \times D_{s'} \to \mathbb{R}_{\geq 0}$ is zero if and only if
+$(\omega_s, \omega_{s'}) \in R_e$.
+\end{definition}
+
+\subsection{Coherence}\label{ssec:coherence}
+
+We require an information-theoretic measure of how coordinated the components
+are.
+
+\begin{definition}[Coherence]\label{def:coherence}
+Given a probability distribution $\mu$ over $\Omega$, the \emph{coherence} of
+the system is the multi-information (total correlation):
+\begin{equation}\label{eq:coherence}
+  \Coh(\mu) = \sum_{s \in S} \Ent(\mu_s) - \Ent(\mu),
+\end{equation}
+where $\mu_s$ is the marginal of $\mu$ on $D_s$, and $\Ent$ denotes Shannon
+entropy (or differential entropy for continuous spaces).
+\end{definition}
+
+Coherence is non-negative and equals zero if and only if the components are
+statistically independent. High coherence indicates that the components have
+resolved into a coordinated pattern: knowing one component's state constrains
+the others.
+
+\subsection{The Cognitive Triad}\label{ssec:triad}
+
+\begin{definition}[Exploration]\label{def:exploration}
+An \emph{exploration process} on $\mathcal{N}$ is a stochastic process
+$\{X_t\}_{t \geq 0}$ on $\Omega$ such that there exists a measure
+$\nu$ on $\Omega$ with $\nu(\Omega) > 0$ satisfying:
+\begin{equation}\label{eq:exploration}
+  \forall A \subseteq \Omega \text{ with } \nu(A) > 0:
+  \quad \Pr\!\bigl[\exists\, t > 0 : X_t \in A\bigr] > 0.
+\end{equation}
+Informally: the process can reach any accessible region of configuration space
+with positive probability. This is a relaxed form of ergodicity restricted to
+the accessible set.
+\end{definition}
+
+\begin{definition}[Distributed Constraint Resolution]\label{def:resolution}
+A \emph{resolution dynamics} on $\mathcal{N}$ is a family of local update rules
+$\{f_s\}_{s \in S}$ where each $f_s$ depends only on the state of $s$ and its
+neighbors $\mathcal{N}_G(s)$ in $G$:
+\begin{equation}\label{eq:resolution}
+  x_s^{(t+1)} = f_s\!\bigl(x_s^{(t)},\, \{x_{s'}^{(t)}\}_{s' \in \mathcal{N}_G(s)}\bigr),
+\end{equation}
+such that the total constraint violation is non-increasing in expectation:
+\begin{equation}\label{eq:monotone}
+  \mathbb{E}\bigl[\Viol(X_{t+1})\bigr] \leq \mathbb{E}\bigl[\Viol(X_t)\bigr].
+\end{equation}
+The \emph{distributed} qualifier is essential: there is no global objective
+function being optimized by a central controller. Constraint satisfaction
+emerges from purely local interactions.
+\end{definition}
+
+\begin{definition}[Goal-Stabilizing Pattern]\label{def:stabilization}
+A \emph{goal-stabilizing pattern} is a subset $\mathcal{A} \subseteq \Omega$
+that is:
+\begin{enumerate}[nosep]
+  \item \emph{Attracting}: The dynamics converges to $\mathcal{A}$, i.e.,
+        $d(X_t, \mathcal{A}) \to 0$ as $t \to \infty$ in probability.
+  \item \emph{Coherent}: The stationary distribution $\mu^*$ supported on
+        $\mathcal{A}$ satisfies $\Coh(\mu^*) > 0$.
+  \item \emph{Stable}: There exists a Lyapunov-like function
+        $L : \Omega \to \mathbb{R}_{\geq 0}$ that is non-increasing along
+        trajectories in a neighborhood of $\mathcal{A}$ and achieves its
+        minimum on $\mathcal{A}$.
+\end{enumerate}
+\end{definition}
+
+We can now state the central definition:
+
+\begin{definition}[Cognitive System]\label{def:cognitive-system}
+A \emph{cognitive system} is a tuple
+$\mathcal{C} = (\mathcal{N}, \{X_t\}, \{f_s\}, \mathcal{A})$ consisting of a
+constraint network $\mathcal{N}$, an exploration process $\{X_t\}$, a
+resolution dynamics $\{f_s\}$, and a goal-stabilizing pattern $\mathcal{A}$,
+such that the combined dynamics---exploration interleaved with
+resolution---converges to $\mathcal{A}$.
+\end{definition}
+
+\begin{remark}
+The interplay between exploration and resolution is critical. Pure exploration
+without resolution yields noise (high entropy, zero coherence). Pure resolution
+without exploration yields rigid, brittle structures that cannot adapt. Cognition
+requires both: the system must \emph{explore to discover} and
+\emph{resolve to stabilize}.
+\end{remark}
+
+\subsection{Convergence}\label{ssec:convergence}
+
+We now formalize the combined dynamics precisely and prove convergence through
+a sequence of lemmas.
+
+\begin{definition}[Combined DCR Dynamics]\label{def:combined}
+Let $\mathcal{N}$ be a constraint network on a compact metrizable configuration
+space $\Omega$. A \emph{combined DCR dynamics} is a time-homogeneous Markov
+chain $\{X_t\}_{t \geq 0}$ on $\Omega$ with transition kernel
+\begin{equation}\label{eq:combined}
+  K(\omega, A) = (1 - \epsilon)\, R(\omega, A) + \epsilon\, E(\omega, A),
+  \qquad \epsilon \in (0,1),
+\end{equation}
+where $R$ is the \emph{resolution kernel} (induced by the local update rules
+$\{f_s\}$) and $E$ is the \emph{exploration kernel}. We require:
+\begin{enumerate}[nosep,label=(\alph*)]
+  \item\label{cond:drift} \textbf{Drift.} There exists $\alpha > 0$ such that
+    for all $\omega \notin \mathcal{F}$:
+    \begin{equation}\label{eq:drift}
+      \int_\Omega \Viol(\omega')\, R(\omega, d\omega') \leq
+      \Viol(\omega) - \alpha\, \Viol(\omega).
+    \end{equation}
+  \item\label{cond:bounded-explore} \textbf{Bounded exploration.}
+    There exists $B > 0$ such that for all $\omega \in \Omega$:
+    \begin{equation}\label{eq:bounded-explore}
+      \int_\Omega \Viol(\omega')\, E(\omega, d\omega') \leq B.
+    \end{equation}
+  \item\label{cond:irreducibility} \textbf{$\varphi$-irreducibility.}
+    There exists a probability measure $\varphi$ on $\Omega$ such that for
+    all $\omega \in \Omega$ and all measurable $A$ with $\varphi(A) > 0$:
+    \begin{equation}\label{eq:irreducibility}
+      \sum_{n=1}^{\infty} K^n(\omega, A) > 0.
+    \end{equation}
+  \item\label{cond:aperiodicity} \textbf{Aperiodicity.}
+    For all $\omega \in \Omega$: $K(\omega, \{\omega\}) > 0$, or more
+    generally, the chain is strongly aperiodic.
+  \item\label{cond:feller} \textbf{Weak Feller property.} For every bounded
+    continuous $g : \Omega \to \mathbb{R}$, the map
+    $\omega \mapsto \int g(\omega')\, K(\omega, d\omega')$ is continuous.
+  \item\label{cond:full-support} \textbf{Full exploration support.} The
+    irreducibility measure $\varphi$ satisfies $\varphi(U) > 0$ for every
+    open set $U \subseteq \Omega$ with $U \cap \mathcal{F} \neq \emptyset$.
+\end{enumerate}
+\end{definition}
+
+\begin{lemma}[Foster--Lyapunov Drift Condition]\label{lem:foster}
+Under conditions \ref{cond:drift} and \ref{cond:bounded-explore} of
+\cref{def:combined}, the function $L(\omega) = \Viol(\omega) + 1$ satisfies
+the Foster--Lyapunov drift condition: there exist constants $\lambda \in (0,1)$
+and $b < \infty$ such that
+\begin{equation}\label{eq:foster}
+  \int_\Omega L(\omega')\, K(\omega, d\omega') \leq
+  \lambda\, L(\omega) + b\, \mathbf{1}_C(\omega),
+\end{equation}
+where $C = \{\omega \in \Omega : \Viol(\omega) \leq c\}$ for a suitable
+constant $c > 0$.
+\end{lemma}
+
+\begin{proof}
+Decomposing the transition kernel $K = (1-\epsilon)R + \epsilon E$ and applying
+conditions \ref{cond:drift} and \ref{cond:bounded-explore}:
+\begin{align}
+  \int L(\omega')\, K(\omega,d\omega')
+  &= (1-\epsilon) \int \Viol(\omega')\, R(\omega,d\omega')
+     + \epsilon \int \Viol(\omega')\, E(\omega,d\omega') + 1 \notag \\
+  &\leq (1-\epsilon)(1-\alpha)\,\Viol(\omega) + \epsilon B + 1.
+  \label{eq:foster-expand}
+\end{align}
+Set $\lambda = (1-\epsilon)(1-\alpha)$. Since $\epsilon, \alpha \in (0,1)$,
+we have $\lambda \in (0,1)$. Then:
+\[
+  \int L(\omega')\, K(\omega,d\omega')
+  \leq \lambda\bigl(\Viol(\omega) + 1\bigr)
+       + (1-\lambda) + \epsilon B
+  = \lambda\, L(\omega) + (1 - \lambda + \epsilon B).
+\]
+For $\omega$ with $\Viol(\omega) > c$ where
+$c = (1 - \lambda + \epsilon B) / (1-\lambda)$, the bound becomes
+$\lambda\, L(\omega) + (1-\lambda)\, L(\omega) = L(\omega)$ only when equality
+holds, but in fact:
+\[
+  \lambda\, L(\omega) + (1-\lambda+\epsilon B)
+  < \lambda\, L(\omega) + (1-\lambda)\, L(\omega) = L(\omega)
+\]
+whenever $L(\omega) > (1-\lambda+\epsilon B)/(1-\lambda)$, i.e., whenever
+$\Viol(\omega) > c$. Setting $b = 1 - \lambda + \epsilon B$ and
+$C = \{L(\omega) \leq c + 1\}$ (which is compact since $\Viol$ is continuous
+and $\Omega$ is compact), we obtain \cref{eq:foster}.
+\end{proof}
+
+\begin{lemma}[Existence of Stationary Distribution]\label{lem:stationary}
+Under conditions \ref{cond:drift}--\ref{cond:feller} of \cref{def:combined},
+the Markov chain $\{X_t\}$ admits at least one stationary distribution $\mu^*$.
+\end{lemma}
+
+\begin{proof}
+By \cref{lem:foster}, the chain satisfies a Foster--Lyapunov drift condition
+with compact sublevel set $C$. On a compact metrizable space with the weak
+Feller property \ref{cond:feller}, the Krylov--Bogoliubov theorem guarantees
+the existence of an invariant probability measure: the sequence of Ces\`{a}ro
+averages $\mu_T = T^{-1}\sum_{t=0}^{T-1} \Pr[X_t \in \cdot]$ is tight
+(the drift condition confines mass to bounded sublevel sets of $L$), and any
+weak limit point is a stationary distribution.
+\end{proof}
+
+\begin{lemma}[Uniqueness and Ergodicity]\label{lem:unique}
+Under conditions \ref{cond:drift}--\ref{cond:feller}, if additionally the
+chain is $\varphi$-irreducible \ref{cond:irreducibility} and aperiodic
+\ref{cond:aperiodicity}, then the stationary distribution $\mu^*$ is unique,
+and for every initial distribution $\mu_0$:
+\begin{equation}\label{eq:ergodic}
+  \lVert \mu_0 K^t - \mu^* \rVert_{\mathrm{TV}} \to 0
+  \quad \text{as } t \to \infty.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+This follows from the general theory of $\varphi$-irreducible aperiodic Markov
+chains on compact state spaces satisfying a Foster--Lyapunov drift condition.
+By Theorem~6.1 of Meyn and Tweedie (1993), conditions
+\ref{cond:irreducibility}, \ref{cond:aperiodicity}, and \cref{eq:foster}
+together imply that the chain is positive Harris recurrent with a unique
+stationary distribution, and that the total variation distance to stationarity
+converges to zero.
+\end{proof}
+
+\begin{lemma}[Concentration Near the Feasible Set]\label{lem:concentration}
+For fixed $\epsilon > 0$, the unique stationary distribution
+$\mu^*_\epsilon$ (\cref{lem:unique}) satisfies
+\begin{equation}\label{eq:concentration}
+  \int \Viol(\omega)\, \mu^*_\epsilon(d\omega)
+  \leq \frac{\epsilon B}{\alpha(1-\epsilon) + \epsilon}.
+\end{equation}
+In particular, $\mu^*_\epsilon$ concentrates on an
+$O(\epsilon)$-neighborhood of $\mathcal{F}$ as $\epsilon \to 0$.
+\end{lemma}
+
+\begin{proof}
+Integrating both sides of the stationary equation
+$\int \Viol(\omega')\, K(\omega,d\omega')\, \mu^*_\epsilon(d\omega) =
+\int \Viol(\omega)\, \mu^*_\epsilon(d\omega)$ and using the drift bound:
+\begin{align*}
+  \int \Viol(\omega)\, \mu^*_\epsilon(d\omega)
+  &= \int\!\!\int \Viol(\omega')\, K(\omega,d\omega')\, \mu^*_\epsilon(d\omega) \\
+  &\leq (1-\epsilon)(1-\alpha) \int \Viol(\omega)\, \mu^*_\epsilon(d\omega)
+        + \epsilon B.
+\end{align*}
+Let $m = \int \Viol\, d\mu^*_\epsilon$. Then
+$m \leq (1-\epsilon)(1-\alpha)\, m + \epsilon B$, giving
+$m\bigl[1 - (1-\epsilon)(1-\alpha)\bigr] \leq \epsilon B$, hence
+\cref{eq:concentration}. Since $\Viol \geq 0$ with equality exactly on
+$\mathcal{F}$, the expected violation under $\mu^*_\epsilon$ vanishes as
+$\epsilon \to 0$, so $\mu^*_\epsilon$ concentrates on $\mathcal{F}$.
+\end{proof}
+
+\begin{lemma}[Convergence Under Cooling]\label{lem:cooling}
+Replace the fixed $\epsilon$ in \cref{def:combined} with a cooling schedule
+$\epsilon_t \to 0$. If $\epsilon_t$ decreases no faster than $O(1/\log t)$
+(i.e., $\epsilon_t \geq c/\log(t+2)$ for some $c > 0$), then the occupation
+measures $\mu_T = T^{-1} \sum_{t=0}^{T-1} \delta_{X_t}$ converge weakly to
+a distribution $\mu^*$ supported on the set of global minima of $\Viol$,
+which is precisely $\mathcal{F}$.
+\end{lemma}
+
+\begin{proof}
+The cooling schedule produces an inhomogeneous Markov chain to which the
+homogeneous results of \cref{lem:unique} do not directly apply. Instead, we
+appeal to the simulated annealing theory of \citet{hajek1988cooling}. The
+resolution kernel $R$ plays the role of the annealing kernel (it decreases
+the objective $\Viol$ by the drift condition~\ref{cond:drift}), and the
+exploration kernel $E$ provides the proposal mechanism. Hajek's conditions
+require: (i)~the chain under $E$ is irreducible---guaranteed by our
+condition~\ref{cond:irreducibility}; (ii)~$\Viol$ has a finite number of
+local minima connected by paths of bounded ``depth'' (height of the
+shallowest saddle)---guaranteed by compactness of $\Omega$ and continuity
+of $\Viol$; and (iii)~$\epsilon_t$ decreases as $c/\log(t+2)$ with
+$c$ exceeding the maximum depth. Under these conditions, convergence to
+$\mathcal{F}$ (the global minimizers of $\Viol$) is guaranteed.
+\end{proof}
+
+\begin{lemma}[Positive Coherence]\label{lem:coherence}
+Let $\mu^*$ be a distribution supported on the feasible set $\mathcal{F}$.
+Suppose:
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item The constraint graph $G$ is connected.
+  \item $\mathcal{F}$ does not factor as a Cartesian product, i.e., there is
+    no decomposition $\mathcal{F} = \prod_{s \in S} F_s$ with
+    $F_s \subseteq D_s$.
+  \item $\mathrm{supp}(\mu^*) = \mathcal{F}$ (full support on the feasible
+    set).
+\end{enumerate}
+Then $\Coh(\mu^*) > 0$.
+\end{lemma}
+
+\begin{proof}
+The multi-information satisfies $\Coh(\mu) = D_{\mathrm{KL}}(\mu \,\|\,
+\bigotimes_{s \in S} \mu_s)$, where $D_{\mathrm{KL}}$ is the
+Kullback--Leibler divergence and $\bigotimes_s \mu_s$ is the product of
+marginals. This divergence equals zero if and only if
+$\mu = \bigotimes_s \mu_s$, i.e., the components are jointly independent
+under $\mu$.
+
+Suppose for contradiction that $\Coh(\mu^*) = 0$. Then
+$\mu^* = \bigotimes_s \mu^*_s$. By assumption~(iii),
+$\mathrm{supp}(\mu^*) = \mathcal{F}$, so
+$\mathrm{supp}(\bigotimes_s \mu^*_s) = \prod_s \mathrm{supp}(\mu^*_s)
+= \mathcal{F}$.
+This means $\mathcal{F}$ factors as $\prod_s F_s$ with
+$F_s = \mathrm{supp}(\mu^*_s) \subseteq D_s$, contradicting
+assumption~(ii). Hence $\Coh(\mu^*) > 0$.
+
+It remains to verify that assumption~(iii) holds for the stationary
+distributions arising from DCR dynamics. Under the full exploration support
+condition~\ref{cond:full-support}, the irreducibility measure $\varphi$
+charges every open set meeting $\mathcal{F}$. For the fixed-$\epsilon$ chain,
+$\mu^*_\epsilon$ is equivalent to $\varphi$ on the Harris-recurrent set
+(Theorem~10.4.9 of \citealp{meyn1993markov}), so
+$\mathrm{supp}(\mu^*_\epsilon) \supseteq \mathcal{F}$. Combined with the
+concentration bound of \cref{lem:concentration}, the limiting distribution
+$\mu^*$ (obtained via cooling or taking $\epsilon \to 0$) has
+$\mathrm{supp}(\mu^*) = \mathcal{F}$.
+\end{proof}
+
+We can now state and prove the main convergence theorem:
+
+\begin{theorem}[Convergence of DCR Dynamics]\label{thm:convergence}
+Let $\mathcal{N}$ be a constraint network with compact configuration space
+$\Omega$ and non-empty feasible set $\mathcal{F}$ that does not factor as a
+product. Let the constraint graph $G$ be connected.
+
+\textbf{(A) Fixed exploration.}
+Let $\{X_t\}$ be a combined DCR dynamics (\cref{def:combined}) with fixed
+$\epsilon \in (0,1)$ satisfying conditions
+\ref{cond:drift}--\ref{cond:full-support}. Then the chain converges to a
+unique stationary distribution $\mu^*_\epsilon$ with
+$\int \Viol\, d\mu^*_\epsilon \leq \epsilon B / [\alpha(1-\epsilon)+\epsilon]$
+and $\Coh(\mu^*_\epsilon) > 0$.
+
+\textbf{(B) Cooling schedule.}
+Replace the fixed $\epsilon$ with a cooling schedule
+$\epsilon_t = c / \log(t+2)$ for suitable $c > 0$. Then the occupation
+measures converge to $\mu^*$ supported on $\mathcal{F}$, with
+$\Coh(\mu^*) > 0$, and $\mathcal{F}$ is a goal-stabilizing pattern with
+Lyapunov function $L = \Viol + 1$.
+\end{theorem}
+
+\begin{proof}
+\textbf{Part~(A).}
+By \cref{lem:foster}, the chain satisfies a Foster--Lyapunov drift condition.
+By \cref{lem:stationary}, a stationary distribution $\mu^*_\epsilon$ exists.
+By \cref{lem:unique}, $\mu^*_\epsilon$ is unique and the chain is ergodic.
+By \cref{lem:concentration}, $\mu^*_\epsilon$ satisfies the stated violation
+bound. By condition~\ref{cond:full-support} and Harris recurrence,
+$\mathrm{supp}(\mu^*_\epsilon) \supseteq \mathcal{F}$. Since $\mathcal{F}$
+does not factor and $G$ is connected, \cref{lem:coherence} gives
+$\Coh(\mu^*_\epsilon) > 0$.
+
+\textbf{Part~(B).}
+The cooling schedule produces an inhomogeneous chain. By \cref{lem:cooling}
+(applying \citealp{hajek1988cooling}), the occupation measures converge to
+$\mu^*$ supported on $\mathcal{F}$. For coherence: the chain is
+irreducible on $\mathcal{F}$ by condition~\ref{cond:full-support} (every
+open subset of $\mathcal{F}$ is reachable), so the chain visits all
+regions of $\mathcal{F}$ infinitely often, giving
+$\mathrm{supp}(\mu^*) = \mathcal{F}$. Since $G$ is connected and
+$\mathcal{F}$ does not factor, $\Coh(\mu^*) > 0$ by
+\cref{lem:coherence}.
+
+Finally, $L(\omega) = \Viol(\omega) + 1$ achieves its minimum value~$1$ on
+$\mathcal{F}$, is continuous and bounded on compact $\Omega$, and is strictly
+decreasing in expectation outside $\mathcal{F}$ by condition~\ref{cond:drift}.
+This establishes $\mathcal{F}$ as a goal-stabilizing pattern.
+\end{proof}
+
+\subsection{What DCR Excludes}\label{ssec:exclusions}
+
+A definition of cognition is only useful if it excludes something. DCR excludes
+three classes of systems:
+
+\begin{enumerate}
+  \item \textbf{Equilibrium systems.} A system at thermodynamic equilibrium
+        occupies a maximum-entropy state with no net flows. There is no
+        exploration (all degrees of freedom are maximally sampled but with no
+        directed dynamics) and no resolution (constraints are already trivially
+        satisfied or absent). $\Coh(\mu_{\text{eq}}) = 0$ for an ideal gas.
+        \emph{A rock at thermal equilibrium is not cognitive.}
+
+  \item \textbf{Unconstrained stochastic systems.} A system with exploration
+        but no constraint structure ($\mathcal{R} = \emptyset$) undergoes a
+        random walk on $\Omega$ with no convergence to coherent patterns.
+        $\Viol \equiv 0$ trivially, and $\Coh(\mu) = 0$ for the stationary
+        (uniform) distribution. \emph{Brownian motion in free space is not
+        cognitive.}
+
+  \item \textbf{Fully deterministic single-trajectory systems.} A system with
+        a single degree of freedom following a deterministic trajectory has no
+        exploration (the path is unique) and no distributed resolution (there
+        is only one component). \emph{A single classical particle in a
+        potential well is not cognitive.}
+\end{enumerate}
+
+Cognition in the DCR sense requires the non-trivial intersection:
+non-equilibrium dynamics, constraint structure, and distributed convergence
+to coherent attractors.
+
+We emphasize that the boundary between cognitive and non-cognitive is
+\emph{continuous}, not sharp. A system near equilibrium with weak
+constraints and small fluctuations satisfies the DCR conditions only
+marginally: the coherence $\Coh(\mu^*)$ is near zero and the convergence
+timescale is long. DCR does not impose a binary threshold; rather, it
+provides a graded measure through the coherence of the attractor and the
+cognitive depth $\delta$ (\cref{def:depth}). The exclusions above identify
+the \emph{limiting cases} where one or more components of the triad vanish
+entirely, not a boundary that systems cross discontinuously.
+
+% ==========================================================================
+\section{Scale-Freeness and the Combination Problem}\label{sec:scale-free}
+% ==========================================================================
+
+The central mathematical contribution of this paper is showing that DCR is
+closed under coarse-graining: cognitive systems at one scale compose into
+cognitive systems at the next, providing a formal dissolution of the
+combination problem.
+
+The closure result (\cref{thm:closure}) requires \emph{timescale separation}
+between intra-group and inter-group dynamics---a condition that holds in many
+physical systems (atomic vs.\ molecular, synaptic vs.\ network) but is not
+universal. We regard this as a sufficient condition, not a necessary one;
+weakening it to overlapping timescales or continuous-time limits is an
+important open problem (see \cref{sec:discussion}). The framework's axioms
+(\cref{sec:framework}) are themselves scale-free; it is specifically the
+composition mechanism that requires separation.
+
+\subsection{The Coarse-Graining Construction}\label{ssec:coarse-graining}
+
+\begin{definition}[Coarse-Graining]\label{def:coarse-graining}
+Let $\mathcal{C} = (\mathcal{N}, \{X_t\}, \{f_s\}, \mathcal{A})$ be a
+cognitive system with component set $S$, and let
+$\pi : S \twoheadrightarrow S'$ be a surjective \emph{partition map} grouping
+components into macro-components. The \emph{coarse-graining}
+$\Gamma_\pi(\mathcal{C})$ is a new system
+$\mathcal{C}' = \Gamma_\pi(\mathcal{C})$ constructed as follows:
+
+\begin{enumerate}[nosep]
+  \item \textbf{Macro-components:} $S' = \pi(S)$, with state spaces
+        $D'_{s'} = \prod_{s \in \pi^{-1}(s')} D_s$ for each
+        $s' \in S'$.
+  \item \textbf{Macro-constraints:} An edge $\{s'_1, s'_2\} \in E'$ exists
+        whenever there exist $s_1 \in \pi^{-1}(s'_1)$ and
+        $s_2 \in \pi^{-1}(s'_2)$ with $\{s_1, s_2\} \in E$. The
+        macro-constraint $R'_{\{s'_1,s'_2\}}$ is the projection of
+        $\bigcap_{\{s_1,s_2\} \in E_{\text{cross}}} R_{\{s_1,s_2\}}$
+        onto $D'_{s'_1} \times D'_{s'_2}$.
+  \item \textbf{Macro-exploration:} The projected process
+        $\{X'_t\}$ on $\Omega' = \prod_{s' \in S'} D'_{s'}$ inherits
+        accessibility from $\{X_t\}$.
+  \item \textbf{Macro-resolution:} The effective update rule for
+        macro-component $s'$ is the composition of local updates within
+        $\pi^{-1}(s')$, visible only through the macro-state.
+  \item \textbf{Macro-attractor:}
+        $\mathcal{A}' = \{\omega' \in \Omega' \mid \exists\, \omega \in
+        \mathcal{A} : \pi(\omega) = \omega'\}$.
+\end{enumerate}
+\end{definition}
+
+We now state the conditions precisely and prove closure through three lemmas,
+one for each component of the cognitive triad.
+
+\begin{definition}[Timescale Separation]\label{def:timescale}
+Let $\eta > 0$ be a \emph{scale ratio}. We say the micro-dynamics exhibits
+$\eta$-\emph{timescale separation} with respect to partition $\pi$ if:
+\begin{enumerate}[nosep]
+  \item \textbf{Fast intra-group dynamics.} For each macro-component
+    $s' \in S'$, the restricted chain on $D'_{s'} = \prod_{s \in
+    \pi^{-1}(s')} D_s$ (freezing all components outside the group) has a
+    unique stationary distribution $\nu_{s'}$ and mixes in time $\tau_{\text{fast}}$.
+  \item \textbf{Slow inter-group dynamics.} The inter-group updates (those
+    involving edges in $E_{\text{cross}} = \{\{s_1,s_2\} \in E \mid
+    \pi(s_1) \neq \pi(s_2)\}$) occur at rate $\eta$ relative to intra-group
+    updates.
+  \item $\eta\, \tau_{\text{fast}} \to 0$, i.e., each group equilibrates
+    before the next inter-group update.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Macro-Violation]\label{def:macro-violation}
+Given the intra-group stationary distributions $\{\nu_{s'}\}_{s' \in S'}$,
+the \emph{macro-violation} of a macro-configuration
+$\omega' = (\omega'_{s'})_{s' \in S'}$ with respect to an inter-group edge
+$e' = \{s'_1, s'_2\} \in E'$ is
+\begin{equation}\label{eq:macro-violation}
+  v'_{e'}(\omega'_{s'_1}, \omega'_{s'_2}) =
+  \sum_{\substack{\{s_1,s_2\} \in E_{\text{cross}} \\
+  \pi(s_1) = s'_1,\, \pi(s_2) = s'_2}}
+  \mathbb{E}_{(x_1,x_2) \sim \nu_{s'_1} \otimes \nu_{s'_2}}
+  \bigl[v_{\{s_1,s_2\}}(x_1, x_2)\bigr],
+\end{equation}
+and the total macro-violation is
+$\Viol'(\omega') = \sum_{e' \in E'} v'_{e'}$.
+\end{definition}
+
+\begin{lemma}[Macro-Resolution Inherits Drift]\label{lem:macro-drift}
+Under $\eta$-timescale separation, if the micro-resolution dynamics satisfies
+the drift condition \ref{cond:drift} of \cref{def:combined} with parameter
+$\alpha$, then the effective macro-dynamics on $\Omega'$ satisfies an analogous
+drift condition with parameter $\alpha' > 0$.
+\end{lemma}
+
+\begin{proof}
+Decompose the total micro-violation into intra-group and inter-group parts:
+$\Viol(\omega) = \Viol_{\text{intra}}(\omega) + \Viol_{\text{inter}}(\omega)$.
+Under timescale separation, the fast dynamics drives
+$\Viol_{\text{intra}} \to 0$ within each group (by the micro-level drift
+condition applied to intra-group edges). Once each group has equilibrated to
+$\nu_{s'}$, the remaining violation is purely inter-group:
+$\Viol \approx \Viol_{\text{inter}}$.
+
+The inter-group updates are local: an update to component $s_1 \in
+\pi^{-1}(s'_1)$ responding to the state of $s_2 \in \pi^{-1}(s'_2)$ reduces
+$v_{\{s_1,s_2\}}$ by the micro-drift condition. Under equilibration within
+each group, this translates to a reduction in the macro-violation
+$v'_{\{s'_1,s'_2\}}$.
+
+Formally, let $\omega'_t$ denote the macro-state at the $t$-th inter-group
+update. Conditioning on the intra-group equilibrium:
+\begin{align*}
+  \mathbb{E}[\Viol'(\omega'_{t+1}) \mid \omega'_t]
+  &= \sum_{e' \in E'} \mathbb{E}[v'_{e'}(\omega'_{t+1}) \mid \omega'_t] \\
+  &\leq \sum_{e' \in E'} (1 - \alpha)\, v'_{e'}(\omega'_t)
+   + O(\eta\, \tau_{\text{fast}}) \\
+  &= (1-\alpha)\, \Viol'(\omega'_t)
+   + O(\eta\, \tau_{\text{fast}}).
+\end{align*}
+The error term $O(\eta\, \tau_{\text{fast}})$ vanishes as the timescale
+separation strengthens, yielding the macro-drift condition with
+$\alpha' = \alpha - O(\eta\, \tau_{\text{fast}}) > 0$ for sufficiently
+strong separation.
+\end{proof}
+
+\begin{lemma}[Macro-Exploration Inherits Accessibility]\label{lem:macro-explore}
+If the micro-exploration kernel $E$ satisfies the accessibility condition
+(\cref{eq:exploration}) with respect to the micro-feasible set, and the
+partition $\pi$ is finite, then the projected macro-process $\{X'_t\}$
+satisfies the accessibility condition with respect to the macro-feasible set
+$\mathcal{F}'$.
+\end{lemma}
+
+\begin{proof}
+Let $A' \subseteq \Omega'$ be a measurable set with
+$\varphi'(A') > 0$, where $\varphi'$ is the pushforward of $\varphi$ under
+$\pi$. Define $A = \pi^{-1}(A') \subseteq \Omega$. Then $\varphi(A) \geq
+\varphi'(A') > 0$ (since $\pi$ is surjective), so by micro-accessibility:
+\[
+  \Pr[\exists\, t > 0 : X_t \in A] > 0.
+\]
+Since $X'_t = \pi(X_t)$, if $X_t \in A = \pi^{-1}(A')$ then
+$X'_t \in A'$. Therefore $\Pr[\exists\, t > 0 : X'_t \in A'] > 0$,
+establishing macro-accessibility.
+\end{proof}
+
+\begin{lemma}[Macro-Coherence]\label{lem:macro-coherence}
+If the macro-constraint graph $G'$ is connected, the macro-feasible set
+$\mathcal{F}'$ does not factor as a product, and the macro-system satisfies
+the full exploration support condition~\ref{cond:full-support}, then any
+stationary distribution $\mu'^*$ arising from the macro-DCR dynamics
+satisfies $\Coh(\mu'^*) > 0$.
+\end{lemma}
+
+\begin{proof}
+This is a direct application of \cref{lem:coherence} to the macro-system.
+The macro-system has the same formal structure (constraint network, connected
+graph, non-factorable feasible set), and full exploration support on
+$\mathcal{F}'$ guarantees the full-support assumption~(iii) of
+\cref{lem:coherence}.
+\end{proof}
+
+\begin{theorem}[Closure Under Coarse-Graining]\label{thm:closure}
+Let $\mathcal{C}$ be a cognitive system and $\pi : S \twoheadrightarrow S'$
+a partition map. If:
+\begin{enumerate}[nosep]
+  \item[(i)] The micro-dynamics exhibits $\eta$-timescale separation with
+    respect to $\pi$ (\cref{def:timescale}).
+  \item[(ii)] The macro-constraint graph $G'$ is connected.
+  \item[(iii)] The macro-feasible set $\mathcal{F}'$ is non-empty, compact,
+    and does not factor as a product.
+\end{enumerate}
+Then $\mathcal{C}' = \Gamma_\pi(\mathcal{C})$ is a cognitive system.
+\end{theorem}
+
+\begin{proof}
+We verify each component of \cref{def:cognitive-system} for $\mathcal{C}'$:
+
+\textbf{Constraint network.}
+The macro-network $\mathcal{N}' = (S', \mathcal{D}', G', \mathcal{R}')$ is
+well-defined by the construction in \cref{def:coarse-graining}. The macro-state
+spaces $D'_{s'}$ are products of micro-state spaces (hence compact since
+finite products of compact spaces are compact). The macro-constraints
+$\mathcal{R}'$ are projections of micro-constraints (hence measurable).
+
+\textbf{Exploration.}
+By \cref{lem:macro-explore}, the projected process $\{X'_t\}$ satisfies the
+accessibility condition on $\Omega'$. The aperiodicity of the micro-chain
+projects to aperiodicity of the macro-chain (if the micro-chain can stay
+in place, so can the macro-chain). The weak Feller property is preserved
+under continuous projections ($\pi$ induces a continuous map between compact
+spaces). Full exploration support~\ref{cond:full-support} lifts: if
+$U' \subseteq \Omega'$ is open with $U' \cap \mathcal{F}' \neq \emptyset$,
+then $\pi^{-1}(U')$ is open in $\Omega$ and meets $\mathcal{F}$, so
+$\varphi(\pi^{-1}(U')) > 0$, giving $\varphi'(U') > 0$.
+
+\textbf{Resolution.}
+By \cref{lem:macro-drift}, the effective macro-dynamics satisfies a drift
+condition with parameter $\alpha' > 0$, and the updates are local with
+respect to $G'$ (they depend only on the states of neighboring
+macro-components, since inter-group micro-updates involve only micro-components
+in adjacent groups).
+
+\textbf{Goal-stabilizing pattern.}
+Applying \cref{thm:convergence} to the macro-system (whose conditions are
+verified above): the macro-dynamics converges to a stationary distribution
+$\mu'^*$ supported on $\mathcal{F}'$ (by the macro-drift condition and
+compactness). By \cref{lem:macro-coherence} and conditions (ii)--(iii),
+$\Coh(\mu'^*) > 0$. The Lyapunov function is $L'(\omega') = \Viol'(\omega')+1$.
+
+Hence all four components of a cognitive system are present, and
+$\mathcal{C}'$ is cognitive.
+\end{proof}
+
+\subsection{Dissolution of the Combination Problem}\label{ssec:combination}
+
+The combination problem in panpsychism asks: if fundamental entities have
+experience, how do micro-experiences combine into the unified macro-experience
+of, say, a human mind? DCR dissolves this problem by replacing the notion of
+``combining experiences'' with a formal construction:
+
+\begin{corollary}[Combination via Coarse-Graining]\label{cor:combination}
+Let $\mathcal{C}$ be a cognitive system at scale $n$ with partition $\pi$
+satisfying the conditions of \cref{thm:closure}. Then:
+\begin{enumerate}[nosep]
+  \item The intra-group cognitive dynamics at scale $n$ (exploration and
+        resolution within each $\pi^{-1}(s')$) constitutes the
+        \emph{exploration component} of the scale-$(n+1)$ system---the
+        residual fluctuations of equilibrated groups provide the stochasticity
+        that drives macro-exploration (\cref{lem:macro-explore}).
+  \item The inter-group constraint resolution at scale $n$ constitutes the
+        \emph{resolution component} of the scale-$(n+1)$ system---the
+        reduction of macro-violation (\cref{lem:macro-drift}).
+  \item The macro-attractor $\mathcal{A}'$ is the coherent pattern into which
+        the micro-cognitive processes compose (\cref{lem:macro-coherence}).
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Each claim follows directly from the corresponding lemma used in the proof
+of \cref{thm:closure}. The key observation is structural: the coarse-graining
+construction maps the resolution of scale $n$ to the exploration of scale
+$n+1$ because once intra-group constraints are resolved (fast timescale),
+the resulting equilibrium fluctuations are precisely what the macro-level
+``explores.'' The construction does not merely aggregate states---it
+\emph{transmutes} one level's resolution into the next level's exploration,
+providing a constructive mechanism for cross-scale composition.
+\end{proof}
+
+There is no mystery of ``combination'' because there is no separate substance
+(experience, qualia) that needs combining. There is only the DCR process,
+recurring at each scale via coarse-graining. What we call
+``unified experience'' at the human scale is the coherent attractor of a
+cognitive system whose components are themselves cognitive systems (neural
+circuits), whose components are themselves cognitive systems (neurons), and
+so on.
+
+\subsection{The Depth of Cognition}\label{ssec:depth}
+
+Not all cognitive systems are equally ``intelligent.'' We introduce a measure
+of cognitive depth:
+
+\begin{definition}[Cognitive Depth]\label{def:depth}
+The \emph{cognitive depth} of a system is the number of nested coarse-graining
+levels $k$ at which the DCR triad is simultaneously active:
+\begin{equation}\label{eq:depth}
+  \delta(\mathcal{C}) = \max\{k \mid \Gamma_{\pi_1} \circ \cdots \circ
+  \Gamma_{\pi_k}(\mathcal{C}) \text{ is cognitive}\}.
+\end{equation}
+\end{definition}
+
+A hydrogen atom has depth 1 (quantum constraint resolution at the particle
+level). A bacterium has depth $\sim$3--4 (molecular, metabolic, behavioral).
+A human brain has depth $\sim$6--8 (ionic, synaptic, columnar, areal, network,
+behavioral, social). This provides a qualitative, non-anthropocentric
+ordering of intelligence without requiring a binary threshold.
+
+\begin{remark}[Computability of depth]\label{rem:depth-computability}
+Computing $\delta(\mathcal{C})$ exactly requires optimizing over all
+hierarchical partition sequences $(\pi_1, \ldots, \pi_k)$ and verifying the
+DCR conditions at each level---a combinatorially intractable problem in
+general. The numerical estimates above are based on \emph{empirically
+observable} organizational levels (e.g., the well-established hierarchy from
+ion channels to brain areas) rather than exhaustive search. In practice,
+$\delta$ serves as a coarse ordinal ranking rather than a precise cardinal
+measure: distinguishing depth~2 from depth~6 is meaningful; distinguishing
+depth~6 from depth~7 requires detailed empirical verification of the DCR
+triad at each level.
+\end{remark}
+
+% ==========================================================================
+\section{Physics as Cognition}\label{sec:physics}
+% ==========================================================================
+
+We now demonstrate that fundamental physical processes satisfy the DCR axioms,
+supporting the claim that the cosmos is cognitive at every scale.
+
+\subsection{Quantum Mechanics}\label{ssec:quantum}
+
+Consider a system of $N$ interacting quantum particles.
+
+\begin{itemize}[nosep]
+  \item \textbf{Components:} Individual particles (or field modes).
+  \item \textbf{Degrees of freedom:} The Hilbert space $\mathcal{H}_s$ of each
+        particle.
+  \item \textbf{Exploration:} Quantum superposition. The Feynman path integral
+        formulation \citep{feynman1948space} makes this explicit: a particle
+        ``explores'' all paths simultaneously, weighted by $e^{iS/\hbar}$.
+  \item \textbf{Constraints:} Interaction Hamiltonians $H_{\text{int}}$ encode
+        constraints between particles. The Schr{\"o}dinger equation propagates
+        these constraints unitarily.
+  \item \textbf{Resolution:} Decoherence \citep{zurek2003decoherence}. When a
+        quantum system interacts with an environment, the density matrix
+        becomes diagonal in the pointer basis---off-diagonal coherences
+        (constraint violations with respect to classicality) are suppressed
+        exponentially.
+  \item \textbf{Stable pattern:} Classical observables. The pointer states are
+        the goal-stabilizing attractors of the decoherence process.
+\end{itemize}
+
+The DCR reading of quantum mechanics: \emph{nature explores all possible
+configurations via superposition and resolves into classical reality through the
+distributed constraint of decoherence.}
+
+\subsection{Thermodynamic Self-Organization}\label{ssec:thermo}
+
+Consider a dissipative system driven far from equilibrium (e.g., a
+B{\'e}nard convection cell).
+
+\begin{itemize}[nosep]
+  \item \textbf{Components:} Fluid parcels.
+  \item \textbf{Degrees of freedom:} Velocity, temperature, density of each
+        parcel.
+  \item \textbf{Exploration:} Thermal fluctuations explore the space of
+        possible flow patterns.
+  \item \textbf{Constraints:} Conservation laws (mass, energy, momentum),
+        boundary conditions (heated from below, cooled from above).
+  \item \textbf{Resolution:} The Navier--Stokes equations propagate constraints
+        locally between neighboring parcels.
+  \item \textbf{Stable pattern:} Convection rolls---a coherent, spatially
+        ordered pattern that is an attractor of the driven dynamics
+        \citep{prigogine1984order, haken2004synergetics}.
+\end{itemize}
+
+Crucially, the convection pattern is \emph{not} at equilibrium (DCR correctly
+excludes equilibrium), and it arises without any central controller selecting
+the pattern. It is a cognitive system of depth~1.
+
+\subsection{Biological Adaptation}\label{ssec:biology}
+
+\begin{itemize}[nosep]
+  \item \textbf{Components:} Organisms in a population.
+  \item \textbf{Degrees of freedom:} Genotype/phenotype space.
+  \item \textbf{Exploration:} Mutation, recombination, developmental noise.
+  \item \textbf{Constraints:} Environmental fitness landscape, inter-organism
+        competition, predator--prey relations.
+  \item \textbf{Resolution:} Natural selection propagates constraints locally
+        (each organism's survival depends on its local fitness, not a global
+        optimization). This is inherently distributed.
+  \item \textbf{Stable pattern:} Adapted species occupying fitness peaks---the
+        coherent attractor of the evolutionary dynamics
+        \citep{kauffman1993origins}.
+\end{itemize}
+
+Biological evolution is a cognitive system of depth $\geq 2$: the organisms
+themselves are cognitive systems (metabolic constraint resolution), and the
+population-level dynamics is a second layer of cognition.
+
+\subsection{Neural Cognition}\label{ssec:neural}
+
+\begin{itemize}[nosep]
+  \item \textbf{Components:} Neurons (or neural populations).
+  \item \textbf{Degrees of freedom:} Firing rates, membrane potentials,
+        synaptic states.
+  \item \textbf{Exploration:} Spontaneous activity, noise, stochastic
+        neurotransmitter release.
+  \item \textbf{Constraints:} Synaptic weights, lateral inhibition, top-down
+        priors encoded in connectivity.
+  \item \textbf{Resolution:} Local integration-and-fire dynamics; each neuron
+        resolves its inputs against its threshold. Constraint propagation is
+        distributed across the network.
+  \item \textbf{Stable pattern:} Perceptual representations, motor plans,
+        decisions---coherent attractors of the neural dynamics
+        \citep{seth2021being}.
+\end{itemize}
+
+Neural cognition achieves high depth because the components (neurons) are
+themselves biochemical cognitive systems, embedded in circuits that form
+cognitive systems, embedded in areas, and so on up to whole-brain dynamics.
+
+% ==========================================================================
+\section{Recovery of Existing Frameworks}\label{sec:recovery}
+% ==========================================================================
+
+\subsection{Free Energy Principle as a Special Case}\label{ssec:fep-recovery}
+
+\begin{proposition}[FEP Recovery]\label{prop:fep}
+The Free Energy Principle is a special case of DCR obtained when:
+\begin{enumerate}[nosep]
+  \item The constraint network is bipartite, partitioned into ``internal''
+        and ``external'' components with a Markov blanket boundary.
+  \item The constraints encode a generative model
+        $p(\tilde{s}, \psi \mid m)$ relating external causes $\psi$ to
+        sensory observations $\tilde{s}$.
+  \item The coherence measure is replaced by the negative variational free
+        energy: $\Coh \mapsto -F = \mathbb{E}_q[\ln p(\tilde{s}, \psi)] -
+        \mathbb{E}_q[\ln q(\psi)]$.
+  \item The resolution dynamics is gradient descent on $F$
+        (recognition dynamics).
+\end{enumerate}
+Under these specializations, DCR's ``explore--resolve--stabilize'' reduces to
+FEP's ``prediction error minimization via active inference.''
+\end{proposition}
+
+\begin{proof}
+We construct an explicit embedding of the FEP formalism into DCR.
+
+\textbf{Step 1: Constraint network.}
+Let $S = S_\mu \cup S_b \cup S_\eta$ be the decomposition into internal
+($\mu$), blanket ($b$), and external ($\eta$) states. The Markov blanket
+condition means $E$ contains no edges between $S_\mu$ and $S_\eta$ directly;
+all coupling is mediated through $S_b$. This is a constraint network with
+$G$ having the bipartite-through-blanket structure.
+
+Define the constraint relations on blanket--internal edges via the generative
+model: for $s \in S_\mu$, $s' \in S_b$,
+\[
+  R_{\{s,s'\}} = \{(\mu_s, b_{s'}) :
+  p(\tilde{s}_{s'} \mid \mu_s) > 0\},
+\]
+encoding which internal states are consistent with which sensory observations.
+
+\textbf{Step 2: Violation as surprise.}
+The constraint violation functions are:
+\[
+  v_{\{s,s'\}}(\mu_s, b_{s'}) = -\ln p(\tilde{s}_{s'} \mid \mu_s).
+\]
+The total violation is then
+$\Viol(\omega) = -\sum_{\{s,s'\}} \ln p(\tilde{s}_{s'} \mid \mu_s)$.
+To connect this to the FEP's surprisal $-\ln p(\tilde{s} \mid \mu)$, we
+assume the generative model factorizes over blanket components conditioned
+on internal states:
+$p(\tilde{s} \mid \mu) = \prod_{s'} p(\tilde{s}_{s'} \mid \mu_{s(s')})$,
+where $s(s')$ denotes the internal component coupled to blanket component
+$s'$. Under this \emph{conditional independence} assumption (standard in
+mean-field formulations of FEP), the sum reduces to:
+$\Viol(\omega) = -\ln \prod_{s'} p(\tilde{s}_{s'} \mid \mu_{s(s')})
+= -\ln p(\tilde{s} \mid \mu)$---the surprisal.
+
+The variational free energy $F = \mathbb{E}_q[-\ln p(\tilde{s}, \psi)] +
+\mathbb{E}_q[\ln q(\psi)]$ satisfies $F \geq -\ln p(\tilde{s})$ (by the
+non-negativity of KL divergence), so $F$ is an upper bound on the surprisal,
+hence on $\Viol$.
+
+\textbf{Step 3: Resolution as free energy minimization.}
+The FEP's recognition dynamics---gradient descent on $F$ with respect to
+internal parameters---is a local update rule: each internal state $\mu_s$
+adjusts based on its blanket neighbors. This satisfies the drift condition
+\ref{cond:drift} because gradient descent on a smooth function bounded below
+yields $\mathbb{E}[F_{t+1}] \leq F_t - \alpha \|\nabla F\|^2$ for suitable
+step size, and $\Viol \leq F$ inherits the decrease.
+
+\textbf{Step 4: Exploration as active inference.}
+FEP's active inference includes epistemic actions---perturbations to blanket
+states that sample the environment. These provide the exploration kernel $E$:
+the system probes configurations that might reduce uncertainty, ensuring
+accessibility of low-violation regions.
+
+\textbf{Step 5: Attractor.}
+The attracting set under FEP is the set of internal states where
+$F$ is minimized, i.e., $q(\psi) \approx p(\psi \mid \tilde{s})$. This is
+a feasible configuration (minimal violation) and is coherent since internal
+states are statistically coupled through the shared generative model.
+
+Hence the FEP system $(\{S_\mu, S_b, S_\eta\},$ bipartite $G$, recognition
+dynamics, epistemic exploration$)$ is a DCR cognitive system under the
+specializations stated.
+\end{proof}
+
+DCR is strictly more general than FEP in two ways: (1)~it does not require
+a bipartite structure with a Markov blanket, and (2)~it does not require
+the constraints to be expressible as a generative model. Physical constraint
+resolution (e.g., decoherence, convection) need not involve
+``inference'' in any Bayesian sense.
+
+\subsection{Integrated Information Theory as a Special Case}\label{ssec:iit-recovery}
+
+\begin{proposition}[IIT Recovery]\label{prop:iit}
+The integrated information $\Phi$ of IIT~2.0
+\citep{tononi2004information} is recoverable from DCR's coherence measure
+under the following specializations:
+\begin{enumerate}[nosep]
+  \item The constraint network encodes the transition probability matrix
+        (TPM) of IIT: for each edge $\{s, s'\}$, the constraint $R_{\{s,s'\}}$
+        encodes which state transitions of $s$ are compatible with the current
+        state of $s'$.
+  \item The analysis is restricted to a single time step (the TPM acts once).
+  \item Coherence is refined to its irreducible component via the minimum
+        information partition (MIP).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\textbf{Step 1: From DCR coherence to total correlation.}
+DCR's coherence measure (\cref{def:coherence}) is the multi-information
+$\Coh(\mu) = D_{\mathrm{KL}}(\mu \,\|\, \bigotimes_s \mu_s)$, which
+quantifies the total statistical dependence among components.
+
+\textbf{Step 2: From total correlation to integrated information.}
+IIT~2.0 defines $\Phi$ using KL divergence as follows. For a system in
+state $x$ with TPM $T$, let $\mu_x = p(X_{t+1} \mid X_t = x)$ be the
+one-step conditional distribution over successor states. For a bipartition
+$\pi$ that cuts $S$ into parts $A$ and $B$, define the partitioned
+distribution $p_\pi(X_{t+1} \mid x) = p(X^A_{t+1} \mid x) \otimes
+p(X^B_{t+1} \mid x)$, which severs all inter-part dependencies. Then:
+\[
+  \Phi(x) = \min_{\pi \in \mathcal{P}}
+  D_{\mathrm{KL}}\!\bigl(\mu_x \;\|\; p_\pi(\cdot \mid x)\bigr),
+\]
+where $\mathcal{P}$ is the set of bipartitions. Since
+$D_{\mathrm{KL}}(\mu_x \| \bigotimes_s (\mu_x)_s) = \Coh(\mu_x)$ and
+$D_{\mathrm{KL}}(\mu_x \| p_\pi(\cdot \mid x))$ measures only the
+inter-part dependence (the intra-part dependencies within $A$ and $B$
+cancel), we obtain:
+\[
+  \Phi(x) = \min_{\pi \in \mathcal{P}} \bigl[
+    \Coh(\mu_x) - \Coh_A(\mu_x) - \Coh_B(\mu_x)
+  \bigr],
+\]
+where $\Coh_A, \Coh_B$ denote the multi-information within each part.
+That is, $\Phi$ extracts the \emph{irreducible} component of DCR's
+coherence---the inter-part dependence that survives every possible
+bipartition.
+
+\textbf{Step 3: Static vs.\ dynamic.}
+IIT computes $\Phi$ at a single time step. DCR's coherence is defined on
+the stationary distribution $\mu^*$, which integrates over the full
+dynamical trajectory. The IIT measure is recovered by restricting $\mu$
+to the conditional distribution at a single step.
+
+Hence $\Phi$ is a refinement of $\Coh$: it subtracts the reducible
+component. DCR's $\Coh > 0$ is necessary for $\Phi > 0$ (since $\Phi \leq
+\Coh$), but $\Coh > 0$ does not imply $\Phi > 0$ (a system can have
+statistical dependencies that are fully decomposable). In this sense, IIT
+imposes a \emph{stricter} coherence criterion than DCR's default measure.
+\end{proof}
+
+\begin{remark}[IIT versions]
+The recovery above targets IIT~2.0, which uses KL divergence as its
+distance measure. IIT~3.0 \citep{tononi2016integrated} replaces KL
+divergence with the earth mover's distance (Wasserstein metric) and
+defines $\Phi$ over cause--effect structures rather than single
+distributions. The structural relationship---$\Phi$ as irreducible
+coherence---still holds conceptually, but the formal identity with
+DCR's $\Coh$ requires additional metric-space machinery that we do not
+develop here. IIT~4.0 further introduces dynamical aspects that bring it
+closer to DCR's process-level account, suggesting deeper convergence
+between the frameworks at the level of recent formulations.
+\end{remark}
+
+DCR extends IIT in two directions: (1)~it provides a \emph{process-level}
+account of how coherence arises through exploration and resolution, rather
+than merely measuring it at a single time step; and (2)~it defines cognition
+for systems where $\Phi$ is intractable (the computation is
+$O(2^n)$) but the DCR triad---exploration, resolution, convergence to
+coherent attractors---is empirically observable.
+
+% ==========================================================================
+\section{Predictions and Falsifiability}\label{sec:predictions}
+% ==========================================================================
+
+A framework that explains everything predicts nothing. DCR makes the following
+falsifiable claims:
+
+\begin{enumerate}
+  \item \textbf{Coherence--exploration tradeoff.} In any cognitive system,
+        there exists an optimal regime where exploration rate and constraint
+        strength are balanced. Too much exploration (relative to constraint
+        strength) yields incoherent dynamics; too much constraint yields
+        rigid, brittle systems that fail to adapt. This predicts a universal
+        inverted-U relationship between exploration rate and cognitive
+        performance, testable in neural systems (cf.\ stochastic
+        resonance \citep{gammaitoni1998stochastic}), evolutionary
+        simulations, and optimization algorithms.
+
+  \item \textbf{Depth predicts adaptability.} Systems with greater cognitive
+        depth $\delta$ (\cref{def:depth}) should exhibit greater adaptability
+        to novel environments, because deeper nesting provides more levels at
+        which exploration--resolution can occur. This is testable: compare the
+        adaptability of systems with different organizational depths (e.g.,
+        single-celled vs.\ multicellular organisms, shallow vs.\ deep neural
+        networks, flat vs.\ hierarchical organizations).
+
+  \item \textbf{Critical constraint density.} There exists a critical density
+        of constraints $|E|/|S|$ below which the system cannot sustain coherent
+        attractors and above which the system becomes rigid. This parallels the
+        satisfiability phase transition in random constraint satisfaction
+        problems \citep{mezard2002random}, where a sharp transition from
+        under-constrained (many solutions, low coherence) to over-constrained
+        (no solutions, frozen dynamics) occurs at a critical clause-to-variable
+        ratio. DCR predicts that this transition coincides with maximal
+        cognitive capacity: near the critical point, the system exhibits
+        signatures of self-organized criticality \citep{bak1987self}---power-law
+        distributions of attractor sizes, long-range correlations, and maximal
+        susceptibility. The novel prediction beyond the SAT literature is that
+        this critical regime should also maximize coherence $\Coh(\mu^*)$
+        and support the deepest cognitive nesting $\delta$. This is testable
+        in constraint satisfaction problems and neural network models.
+
+  \item \textbf{Coarse-graining preserves cognitive signatures.} If DCR is
+        correct, then empirically measured coherence, exploration rates, and
+        convergence timescales should obey scaling laws across levels of
+        description of the same system (e.g., single-neuron vs.\ population
+        vs.\ whole-brain dynamics). Specifically, the ratio of exploration
+        timescale to resolution timescale should be approximately preserved
+        under coarse-graining.
+\end{enumerate}
+
+% ==========================================================================
+\section{Discussion}\label{sec:discussion}
+% ==========================================================================
+
+\subsection{The Cosmos as Cognitive}
+
+If DCR is correct, then cognition is not an emergent property of brains---it is
+what physics \emph{does}. Quantum superposition explores; decoherence resolves;
+classical reality stabilizes. Thermal fluctuations explore; conservation laws
+resolve; dissipative structures stabilize. Mutation explores; selection resolves;
+adaptation stabilizes. The same formal process, recurring at every scale,
+connected by the coarse-graining construction.
+
+This is not panpsychism in the traditional sense. We do not claim that an
+electron ``has experiences.'' We claim that the process by which an electron
+participates in decoherence is \emph{the same kind of process} as the one by
+which a neuron participates in perception---formally, structurally the same.
+``Cognition'' is the name we give to this process. Whether one wishes to call
+this ``experience'' at the quantum level is a separate philosophical question
+that DCR does not adjudicate.
+
+\subsection{Relationship to Process Philosophy}
+
+DCR has deep resonances with Whitehead's process philosophy
+\citep{whitehead1929process}, which held that reality consists not of
+substances but of ``actual occasions''---events of experience that
+``prehend'' (take account of) their environment and ``concresce'' into
+definite outcomes. In DCR language: prehension is exploration of degrees of
+freedom given the constraints imposed by neighboring occasions, and
+concrescence is the resolution into a coherent, stabilized pattern. DCR
+can be read as a mathematization of Whitehead's ontology.
+
+\subsection{Implications for Artificial Intelligence}
+
+Current AI systems (large language models, reinforcement learning agents)
+implement the DCR triad in restricted form: stochastic sampling (exploration),
+gradient descent or constraint propagation (resolution), convergence to
+low-loss configurations (stabilization). DCR predicts that the ``intelligence''
+of these systems is bounded by their cognitive depth: the number of nested
+levels at which the explore--resolve--stabilize cycle operates simultaneously.
+This suggests that advances in AI may come not from scaling individual layers
+but from increasing organizational depth---more levels of nested constraint
+resolution.
+
+\subsection{Limitations and Open Problems}
+
+\begin{enumerate}
+  \item \textbf{Timescale separation.} The closure theorem
+        (\cref{thm:closure}) requires timescale separation between intra-group
+        and inter-group dynamics. While this condition holds in many physical
+        systems (atomic vs.\ molecular, synaptic vs.\ network), proving closure
+        under weaker conditions---overlapping timescales, continuous-time
+        limits, or stochastic timescale ratios---remains open. The convergence
+        rates derived in \cref{lem:macro-drift} depend on the separation
+        parameter $\eta$; quantifying this dependence precisely for specific
+        physical systems is an important next step.
+
+  \item \textbf{Quantitative predictions.} While DCR predicts qualitative
+        relationships (inverted-U, depth--adaptability, critical constraint
+        density), deriving precise quantitative predictions requires
+        specifying the constraint structure of particular physical systems,
+        which is a substantial empirical program.
+
+  \item \textbf{The goal problem.} DCR defines goals as attractors of the
+        dynamics, which avoids teleology. But this means that any attractor
+        counts as a ``goal,'' including pathological ones (e.g., a dead
+        organism is a stable attractor of biochemical dynamics). A richer
+        notion of goal---perhaps involving the \emph{maintenance} of
+        exploration capacity, connecting to autopoiesis---may be needed.
+
+  \item \textbf{Consciousness.} DCR is a theory of cognition, not of
+        consciousness. It explains the process by which systems explore,
+        resolve, and stabilize, but does not address the ``hard problem''
+        \citep{chalmers1995facing} of why any of this is accompanied by
+        subjective experience. DCR is compatible with, but does not entail,
+        the identity of cognition and consciousness.
+\end{enumerate}
+
+% ==========================================================================
+\section{Conclusion}\label{sec:conclusion}
+% ==========================================================================
+
+We have presented the Distributed Constraint Resolution (DCR) framework, a
+formal, scale-free characterization of cognition as the process by which
+components explore degrees of freedom and converge through distributed
+constraint resolution into coherent, goal-stabilizing patterns. We have shown
+that:
+
+\begin{enumerate}[nosep]
+  \item The framework is mathematically precise, built on constraint networks,
+        stochastic dynamics, and information-theoretic coherence
+        (\cref{sec:framework}).
+  \item Under timescale separation, it is closed under coarse-graining,
+        dissolving the combination problem and providing a natural measure
+        of cognitive depth (\cref{sec:scale-free}).
+  \item Fundamental physical processes---quantum, thermodynamic, biological,
+        neural---satisfy the DCR axioms (\cref{sec:physics}).
+  \item The Free Energy Principle and Integrated Information Theory are
+        recoverable as special cases (\cref{sec:recovery}).
+  \item The framework makes falsifiable predictions about coherence--exploration
+        tradeoffs, depth--adaptability relationships, and critical constraint
+        densities (\cref{sec:predictions}).
+\end{enumerate}
+
+If DCR is correct, then cognition is not a biological accident but a
+fundamental feature of physical reality---the process by which the universe
+explores its own degrees of freedom and resolves into the coherent structures
+we observe at every scale.
+
+\bigskip
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
+
