@@ -5,11 +5,6 @@
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Bak et~al.(1987)Bak, Tang, and Wiesenfeld]{bak1987self}
-Per Bak, Chao Tang, and Kurt Wiesenfeld.
-\newblock Self-organized criticality: An explanation of the 1/f noise.
-\newblock \emph{Physical Review Letters}, 59\penalty0 (4):\penalty0 381, 1987.
-
 \bibitem[Chalmers(1995)]{chalmers1995facing}
 David~J Chalmers.
 \newblock Facing up to the problem of consciousness.
@@ -82,6 +77,11 @@ Michael Kirchhoff, Thomas Parr, Enrique Palacios, Karl Friston, and Julian
   free energy principle.
 \newblock \emph{Journal of The Royal Society Interface}, 15\penalty0
   (138):\penalty0 20170792, 2018.
+
+\bibitem[Lauritzen(1996)]{lauritzen1996graphical}
+Steffen~L Lauritzen.
+\newblock \emph{Graphical Models}.
+\newblock Oxford University Press, Oxford, 1996.
 
 \bibitem[Levin and Peres(2017)]{levin2017markov}
 David~A Levin and Yuval Peres.
